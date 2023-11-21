@@ -25,9 +25,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/studyRecords', function () {
-    return Inertia::render('StudyRecords');
-})->middleware(['auth', 'verified'])->name('studyRecords');
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
