@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudyRecordController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,5 +35,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('/study_records', StudyRecordController::class)
+    ->names(['index' => 'study_record.index',
+            'create' => 'study_record.create',
+            'store' => 'study_record.store',
+            'destroy' => 'study_record.destroy',
+            'edit' => 'study_record.edit',
+            'update' => 'study_record.update',
+            'show' => 'study_record.show'
+            ])
+    ->middleware('auth');
 
 require __DIR__.'/auth.php';
