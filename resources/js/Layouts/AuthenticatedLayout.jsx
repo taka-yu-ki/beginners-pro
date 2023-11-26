@@ -16,13 +16,16 @@ export default function Authenticated({ auth, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <div className="myfont-semibold text-black">Beginners Pro</div>
                                 </Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
+                                </NavLink>
+                                <NavLink href={route('study_record.index')} active={route().current('study_record.index')}>
+                                    学習記録
                                 </NavLink>
                             </div>
                         </div>
