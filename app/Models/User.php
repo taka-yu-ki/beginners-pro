@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\StudyRecord;
+use App\Models\NoteRecord;
 
 class User extends Authenticatable
 {
@@ -17,6 +19,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public function study_records() {    
+        return $this->hasMany(StudyRecord::class);  
+    }
+    
+    public function note_records() {    
+        return $this->hasMany(NoteRecord::class);  
+    }
+    
     protected $fillable = [
         'name',
         'email',

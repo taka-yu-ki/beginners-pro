@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Category;
 
-class StudyRecord extends Model
+class NoteRecord extends Model
 {
     use HasFactory;
     
@@ -18,12 +18,4 @@ class StudyRecord extends Model
     public function categories() {    
         return $this->belongsToMany(Category::class);  
     }
-    
-     protected $fillable = [
-        'user_id',
-        'date',
-        'time',
-        'title',
-        'body'
-    ];
 }

@@ -50,7 +50,7 @@ export default function Index(props) {
                         <Link key={study_record.id} href={route("study_record.show", study_record.id)}>
                             <div className="bg-red-500 p-5 m-5 sm:rounded-lg relative">
                                 <div className="absolute top-0 left-0 text-white text-sm font-bold p-3">
-                                    <div>{props.auth.user.name}</div>
+                                    <div>{study_record.user.name}</div>
                                     <div>{study_record.date}</div>
                                 </div>
                                 <div className="flex justify-evenly">
