@@ -7,7 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Create(props) {
     const { data, setData, patch, processing, errors } = useForm({
-        user_id: props.auth.user.id,
+        user_id: props.study_record.user_id,
         date: props.study_record.date,
         time: props.study_record.time,
         title: props.study_record.title,

@@ -9,7 +9,9 @@ use App\Models\StudyRecord;
 class StudyRecordController extends Controller
 {
     public function index() {
-        return Inertia::render('StudyRecord/Index', ['study_records' => StudyRecord::all()]);
+        $study_records = StudyRecord::with('user')->get();    
+        
+        return Inertia::render('StudyRecord/Index', ['study_records' => $study_records]);
     }
     
     public function create() {
