@@ -28,6 +28,8 @@ export default function Create(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
+                            <div>{props.study_record.user.name}</div>
+                            <div>{props.study_record.categories.map((category) => category.name)}</div>
                             <div>{props.study_record.date}</div>
                             <div>{props.study_record.time}</div>
                             <div>{props.study_record.title}</div>

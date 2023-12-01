@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('note_records_categories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('note_record_id')->constrained();
-            $table->foreignId('category_id')->constrained();
-            $table->timestamps();
+        Schema::create('category_study_record', function (Blueprint $table) {
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('study_record_id')->constrained('study_records')->onDelete('cascade');
+            $table->primary(['category_id', 'study_record_id']);
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('note_records_categories');
+        Schema::dropIfExists('category_study_record');
     }
 };
