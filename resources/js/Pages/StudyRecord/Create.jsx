@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm} from '@inertiajs/react';
+import { Head, Link, useForm, useState} from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -11,11 +11,17 @@ export default function Create(props) {
         date: '',
         time: '',
         title: '',
-        body: ''
+        body: '',
+        category_ids: [],
     });
     
     const handleOnChange = (event) => {
-        setData(event.target.name, event.target.value);
+        if (event.target.name === 'category_ids') {
+            const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
+            setData('category_ids', selectedOptions);
+        } else {
+            setData(event.target.name, event.target.value);
+        }
     };
     
     const submit = (e) => {
@@ -97,6 +103,26 @@ export default function Create(props) {
                                 
                                 <InputError message={errors.body} className="mt-2" />
                             </div>
+                            
+                            <div className="mt-4">
+                                <InputLabel htmlFor="category" value="Category" />
+                                <select
+                                    id="category"
+                                    name="category_ids"
+                                    value={data.category_ids}
+                                    className="mt-1 block w-full"
+                                    onChange={handleOnChange}
+                                    multiple
+                                >
+                                    {props.categories.map(category => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            
+                                <InputError message={errors.category} className="mt-2" />
+                            </div>                     
                             
                             <div className="flex items-center justify-end mt-4">
                                 <PrimaryButton className="ml-4" processing={processing}>

@@ -24,6 +24,7 @@ class StudyRecord extends Model
         'date',
         'time',
         'title',
-        'body'
+        'body',
+        'category_ids',
     ];
 }

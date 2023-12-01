@@ -27,6 +27,9 @@ export default function Authenticated({ auth, header, children }) {
                                 <NavLink href={route('study_record.index')} active={route().current('study_record.index')}>
                                     学習記録
                                 </NavLink>
+                                <NavLink href={route('category.index')} active={route().current('category.index')}>
+                                    カテゴリー
+                                </NavLink>
                             </div>
                         </div>
 

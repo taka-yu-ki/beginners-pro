@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudyRecordController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -44,6 +45,14 @@ Route::resource('/study_records', StudyRecordController::class)
             'edit' => 'study_record.edit',
             'update' => 'study_record.update',
             'show' => 'study_record.show'
+            ])
+    ->middleware('auth');
+    
+Route::resource('/category', CategoryController::class)
+    ->names(['index' => 'category.index',
+            'create' => 'category.create',
+            'store' => 'category.store',
+            'destroy' => 'category.destroy',
             ])
     ->middleware('auth');
 

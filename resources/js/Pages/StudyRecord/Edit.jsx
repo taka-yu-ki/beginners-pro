@@ -11,11 +11,17 @@ export default function Create(props) {
         date: props.study_record.date,
         time: props.study_record.time,
         title: props.study_record.title,
-        body: props.study_record.body
+        body: props.study_record.body,
+        category_ids: props.study_record.categories.map((category) => category.id),
     });
     
     const handleOnChange = (event) => {
-        setData(event.target.name, event.target.value);
+        if (event.target.name === 'category_ids') {
+            const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
+            setData('category_ids', selectedOptions);
+        } else {
+            setData(event.target.name, event.target.value);
+        }
     };
     
     const submit = (e) => {
@@ -42,7 +48,7 @@ export default function Create(props) {
                             <form onSubmit={submit}>
                                 <div>
                                     <InputLabel htmlFor="date" value="Date" />
-                                    
+
                                     <TextInput
                                         id="date"
                                         type="date"
@@ -66,7 +72,7 @@ export default function Create(props) {
                                         className="mt-1 block w-full"
                                         onChange={handleOnChange}
                                     />
-                                    
+
                                     <InputError message={errors.time} className="mt-2" />
                                 </div>
                                 <div className="mt-4">
@@ -96,6 +102,25 @@ export default function Create(props) {
                                     />
                                     
                                     <InputError message={errors.body} className="mt-2" />
+                                </div>
+                                <div className="mt-4">
+                                    <InputLabel htmlFor="category" value="Category" />
+                                    <select
+                                        id="category"
+                                        name="category_ids"
+                                        value={data.category_ids}
+                                        className="mt-1 block w-full"
+                                        onChange={handleOnChange}
+                                        multiple
+                                    >
+                                        {props.categories.map(category => (
+                                            <option key={category.id} value={category.id}>
+                                                {category.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                
+                                    <InputError message={errors.category} className="mt-2" />
                                 </div>
                                 
                                 <div className="flex items-center justify-end mt-4">

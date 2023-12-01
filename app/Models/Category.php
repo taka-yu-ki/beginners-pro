@@ -18,4 +18,8 @@ class Category extends Model
     public function note_records() {    
         return $this->belongsToMany(NoteRecord::class);  
     }
+    
+     protected $fillable = [
+        'name',
+    ];
 }
