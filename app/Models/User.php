@@ -31,6 +31,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image_url',
+        'text',
+        'goal_text',
+        'goal_time',
     ];
 
     /**
