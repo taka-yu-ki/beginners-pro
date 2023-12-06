@@ -11,6 +11,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,
+        text: user.text,
+        goal_text: user.goal_text,
+        goal_time: user.goal_time,
     });
 
     const submit = (e) => {
@@ -29,7 +32,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
+            <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -56,10 +59,51 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required
-                        autoComplete="username"
                     />
 
                     <InputError className="mt-2" message={errors.email} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="text" value="自己紹介文" />
+
+                    <TextInput
+                        id="text"
+                        className="mt-1 block w-full"
+                        value={data.text}
+                        onChange={(e) => setData('text', e.target.value)}
+                        isFocused
+                    />
+
+                    <InputError className="mt-2" message={errors.text} />
+                </div>
+                <div>
+                    <InputLabel htmlFor="goal_text" value="目標" />
+
+                    <TextInput
+                        id="goal_text"
+                        className="mt-1 block w-full"
+                        value={data.goal_text}
+                        onChange={(e) => setData('goal_text', e.target.value)}
+                        isFocused
+                    />
+
+                    <InputError className="mt-2" message={errors.goal_text} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="goal_time" value="目標時間" />
+
+                    <TextInput
+                        id="goal_time"
+                        type="number"
+                        className="mt-1 block w-full"
+                        value={data.goal_time}
+                        onChange={(e) => setData('goal_time', e.target.value)}
+                        isFocused
+                    />
+
+                    <InputError className="mt-2" message={errors.goal_time} />
                 </div>
 
                 {mustVerifyEmail && user.email_verified_at === null && (

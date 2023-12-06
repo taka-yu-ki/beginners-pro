@@ -35,25 +35,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-Route::resource('/study_records', StudyRecordController::class)
-    ->names(['index' => 'study_record.index',
-            'create' => 'study_record.create',
-            'store' => 'study_record.store',
-            'destroy' => 'study_record.destroy',
-            'edit' => 'study_record.edit',
-            'update' => 'study_record.update',
-            'show' => 'study_record.show'
-            ])
-    ->middleware('auth');
     
-Route::resource('/category', CategoryController::class)
-    ->names(['index' => 'category.index',
-            'create' => 'category.create',
-            'store' => 'category.store',
-            'destroy' => 'category.destroy',
-            ])
-    ->middleware('auth');
+    Route::resource('/study_records', StudyRecordController::class)
+        ->names(['index' => 'study_record.index',
+                'create' => 'study_record.create',
+                'store' => 'study_record.store',
+                'destroy' => 'study_record.destroy',
+                'edit' => 'study_record.edit',
+                'update' => 'study_record.update',
+                'show' => 'study_record.show'
+                ]);
+    
+    Route::resource('/category', CategoryController::class)
+        ->names(['index' => 'category.index',
+                'create' => 'category.create',
+                'store' => 'category.store',
+                'destroy' => 'category.destroy',
+                ]);
+});
 
 require __DIR__.'/auth.php';

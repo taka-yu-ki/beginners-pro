@@ -16,6 +16,16 @@ export default function Index(props) {
           }
         >
             <Head title="Study_records Index" />
+            <div className="py-10">
+                <div className="w-5/6 m-auto my-5 text-center">
+                    <div className="p-3 bg-cyan-200 rounded-t-lg">目標</div>
+                    <div className="p-5 bg-slate-50 rounded-b-lg">{props.auth.user.goal_text}</div>
+                </div>
+                <div className="w-5/6 m-auto my-5 text-center">
+                    <div className="p-3 bg-cyan-200 rounded-t-lg">目標時間</div>
+                    <div className="p-5 bg-slate-50 rounded-b-lg">{props.auth.user.goal_time}</div>
+                </div>
+            </div>
             <div className="py-20">
             <div className="w-5/6 m-auto p-10 bg-slate-50 rounded-lg">
                 <div className="flex justify-between mb-10 text-center">

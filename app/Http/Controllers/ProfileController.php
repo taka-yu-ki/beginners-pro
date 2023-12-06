@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Cloudinary;
 
 class ProfileController extends Controller
 {
@@ -38,6 +39,24 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit');
+        //画像アップロード検討中
+        
+        // $validatedData = $request->except('image');
+        // $request->user()->fill($validatedData);
+        
+        // if ($request->hasFile('image')) {
+        //     $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        //     dd($image_url);
+        //     $request->user()->image_url = $image_url;
+        // }
+        
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
+
+        // $request->user()->save();
+
+        // return Redirect::route('profile.edit');
     }
 
     /**
