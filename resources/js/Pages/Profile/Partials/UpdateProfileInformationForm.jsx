@@ -11,6 +11,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,
+        image: "",
         text: user.text,
         goal_text: user.goal_text,
         goal_time: user.goal_time,
@@ -18,8 +19,17 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
     const submit = (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('email', data.email);
+        formData.append('text', data.text);
+        formData.append('goal_text', data.goal_text);
+        formData.append('goal_time', data.goal_time);
 
-        patch(route('profile.update'));
+        if (data.image) {
+            formData.append('image', data.image);
+        }
+        patch(route('profile.update'), formData);
     };
 
     return (
@@ -62,6 +72,11 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     />
 
                     <InputError className="mt-2" message={errors.email} />
+                </div>
+                
+                <div class="image">
+                    <label>画像：</label>
+                    <input type="file" id="image" name="image" onChange={(e) => setData('image', e.target.files[0])} />
                 </div>
 
                 <div>

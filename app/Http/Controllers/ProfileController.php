@@ -30,15 +30,16 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        dd($request);
+        // $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
 
-        $request->user()->save();
+        // $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        // return Redirect::route('profile.edit');
         //画像アップロード検討中
         
         // $validatedData = $request->except('image');
