@@ -8,18 +8,38 @@ import { Transition } from '@headlessui/react';
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,
+        image: "",
         text: user.text,
         goal_text: user.goal_text,
         goal_time: user.goal_time,
     });
 
+    const imagePreview = (e) => {
+        if (e.target.files.length > 0) {
+            let src = URL.createObjectURL(e.target.files[0]);
+            document.getElementById('preview').src = src;
+            setData('image', e.target.files[0]);
+        }
+    }
+    
     const submit = (e) => {
         e.preventDefault();
-
-        patch(route('profile.update'));
+        
+        post(
+            route('profile.update'),
+            {
+                _method: 'PATCH',
+                ...data,
+            },
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
+        );
     };
 
     return (
@@ -32,7 +52,35 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
+            <form onSubmit={submit} className="mt-6 space-y-6">
+                <div>
+                    <InputLabel>プロフィール画像</InputLabel>
+                    <div className="flex items-center">
+                        <div className="relative w-16 h-16 overflow-hidden rounded-full bg-gray-200 mr-3">
+                            <img
+                                id="preview"
+                                class="absolute inset-0 w-full h-full object-cover rounded-full"
+                                src={user.image_url ? user.image_url : '/images/user_icon.png'}
+                                alt=""
+                            />
+                        </div>
+                        <InputLabel
+                            htmlFor="image"
+                            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                        >
+                            画像を選択
+                        </InputLabel>
+                        <input
+                            type="file"
+                            name="image"
+                            id="image"
+                            accept="image/*"
+                            onChange={imagePreview}
+                            className="hidden"
+                        />
+                    </div>
+                    <InputError className="mt-2" message={errors.image} />
+                </div>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -63,6 +111,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                     <InputError className="mt-2" message={errors.email} />
                 </div>
+                
 
                 <div>
                     <InputLabel htmlFor="text" value="自己紹介文" />
