@@ -30,34 +30,21 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        dd($request);
-        // $request->user()->fill($request->validated());
-
-        // if ($request->user()->isDirty('email')) {
-        //     $request->user()->email_verified_at = null;
-        // }
-
-        // $request->user()->save();
-
-        // return Redirect::route('profile.edit');
-        //画像アップロード検討中
+        $validatedData = $request->except('image');
+        $request->user()->fill($validatedData);
         
-        // $validatedData = $request->except('image');
-        // $request->user()->fill($validatedData);
+        if ($request->hasFile('image')) {
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $request->user()->image_url = $image_url;
+        }
         
-        // if ($request->hasFile('image')) {
-        //     $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-        //     dd($image_url);
-        //     $request->user()->image_url = $image_url;
-        // }
-        
-        // if ($request->user()->isDirty('email')) {
-        //     $request->user()->email_verified_at = null;
-        // }
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
 
-        // $request->user()->save();
+        $request->user()->save();
 
-        // return Redirect::route('profile.edit');
+        return Redirect::route('profile.edit');
     }
 
     /**

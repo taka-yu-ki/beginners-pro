@@ -60,7 +60,13 @@ export default function Index(props) {
                         <Link key={study_record.id} href={route("study_record.show", study_record.id)}>
                             <div className="bg-red-500 p-7 m-5 sm:rounded-lg relative">
                                 <div className="absolute top-0 left-0 flex text-white text-sm font-bold p-3">
-                                    <div className="mr-1">{study_record.user.name}</div>
+                                    <div class="relative w-8 h-8 overflow-hidden rounded-full bg-gray-200">
+                                      <img
+                                        class="absolute inset-0 w-full h-full object-cover rounded-full"
+                                        src={study_record.user.image_url ? study_record.user.image_url : '/images/user_icon.png'}
+                                        alt=""
+                                      />
+                                    </div>
                                     <div>{study_record.date}</div>
                                     <div className="flex">{study_record.categories.map((category) => <div className="bg-lime-300 text-black rounded-lg mx-1">{category.name}</div>)}</div>
                                 </div>

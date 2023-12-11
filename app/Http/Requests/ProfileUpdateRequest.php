@@ -18,9 +18,10 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'text' => ['string', 'max:500'],
-            'goal_text' => ['string', 'max:100'],
-            'goal_time' => ['integer'],
+            'text' => ['nullable','string', 'max:500'],
+            'image' => ['nullable', 'file'],
+            'goal_text' => ['nullable', 'string', 'max:100'],
+            'goal_time' => ['nullable', 'integer'],
         ];
     }
 }
