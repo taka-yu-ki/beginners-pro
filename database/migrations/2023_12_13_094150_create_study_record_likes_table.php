@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('study_record_favorites', function (Blueprint $table) {
+        Schema::create('study_record_likes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('study_record_id')->constrained();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('study_record_favorites');
+        Schema::dropIfExists('study_record_likes');
     }
 };

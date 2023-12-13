@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudyRecordController;
+use App\Http\Controllers\StudyRecordLikeController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,21 +38,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::resource('/study_records', StudyRecordController::class)
-        ->names(['index' => 'study_record.index',
-                'create' => 'study_record.create',
-                'store' => 'study_record.store',
-                'destroy' => 'study_record.destroy',
-                'edit' => 'study_record.edit',
-                'update' => 'study_record.update',
-                'show' => 'study_record.show'
-                ]);
+        ->names([
+            'index' => 'study_record.index',
+            'create' => 'study_record.create',
+            'store' => 'study_record.store',
+            'destroy' => 'study_record.destroy',
+            'edit' => 'study_record.edit',
+            'update' => 'study_record.update',
+            'show' => 'study_record.show',
+        ]);
+        
+    Route::post('/study_records/{study_record}/likes', [StudyRecordLikeController::class, 'store'])->name('study_record.likes.store');
+    Route::delete('/study_records/{study_record}/likes', [StudyRecordLikeController::class, 'destroy'])->name('study_record.likes.destroy');
     
     Route::resource('/category', CategoryController::class)
-        ->names(['index' => 'category.index',
-                'create' => 'category.create',
-                'store' => 'category.store',
-                'destroy' => 'category.destroy',
-                ]);
+        ->names([
+            'index' => 'category.index',
+            'create' => 'category.create',
+            'store' => 'category.store',
+            'destroy' => 'category.destroy',
+        ]);
+
 });
 
 require __DIR__.'/auth.php';
