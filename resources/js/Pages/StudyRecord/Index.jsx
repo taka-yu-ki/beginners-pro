@@ -60,11 +60,13 @@ export default function Index(props) {
                         <Link key={study_record.id} href={route("study_record.show", study_record.id)}>
                             <div className="bg-red-500 m-5 sm:rounded-lg">
                                 <div className="flex place-items-center text-white text-sm font-bold pt-3 px-3">
-                                    <img
-                                        className="relative w-8 h-8 rounded-full ring-2 ring-white"
-                                        src={study_record.user.image_url ? study_record.user.image_url : '/images/user_icon.png'}
-                                        alt=""
-                                    />
+                                    <Link href={route("user.show", study_record.user.id)}>
+                                        <img
+                                            className="relative w-8 h-8 rounded-full ring-2 ring-white"
+                                            src={study_record.user.image_url ? study_record.user.image_url : '/images/user_icon.png'}
+                                            alt=""
+                                        />
+                                    </Link>
                                     <div className="mx-2">{study_record.user.name}</div>
                                     <div className="mx-2">{study_record.date}</div>
                                     <div className="flex">{study_record.categories.map((category) => <div className="bg-lime-300 text-black rounded-full px-2 py-1 mx-2">{category.name}</div>)}</div>
