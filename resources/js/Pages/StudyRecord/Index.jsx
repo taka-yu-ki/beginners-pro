@@ -58,19 +58,18 @@ export default function Index(props) {
                 <div className="p-6 bg-white border-t border-gray-200 overflow-y-auto" style={{ maxHeight: '500px' }}>
                     {props.study_records.sort((a, b) => new Date(b.date) - new Date(a.date)).map((study_record) => { return (
                         <Link key={study_record.id} href={route("study_record.show", study_record.id)}>
-                            <div className="bg-red-500 p-7 m-5 sm:rounded-lg relative">
-                                <div className="absolute top-0 left-0 flex text-white text-sm font-bold p-3">
-                                    <div class="relative w-8 h-8 overflow-hidden rounded-full bg-gray-200">
-                                      <img
-                                        class="absolute inset-0 w-full h-full object-cover rounded-full"
+                            <div className="bg-red-500 m-5 sm:rounded-lg">
+                                <div className="flex place-items-center text-white text-sm font-bold pt-3 px-3">
+                                    <img
+                                        className="relative w-8 h-8 rounded-full ring-2 ring-white"
                                         src={study_record.user.image_url ? study_record.user.image_url : '/images/user_icon.png'}
                                         alt=""
-                                      />
-                                    </div>
-                                    <div>{study_record.date}</div>
-                                    <div className="flex">{study_record.categories.map((category) => <div className="bg-lime-300 text-black rounded-lg mx-1">{category.name}</div>)}</div>
+                                    />
+                                    <div className="mx-2">{study_record.user.name}</div>
+                                    <div className="mx-2">{study_record.date}</div>
+                                    <div className="flex">{study_record.categories.map((category) => <div className="bg-lime-300 text-black rounded-full px-2 py-1 mx-2">{category.name}</div>)}</div>
                                 </div>
-                                <div className="flex justify-evenly">
+                                <div className="pt-1 pb-5 flex justify-evenly">
                                     <div className="text-white text-lg font-bold text-center">時間：{study_record.time}分</div>
                                     <div className="text-white text-lg font-bold text-center">{study_record.title}</div>
                                 </div>

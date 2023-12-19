@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('note_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->string('title', 50);
             $table->string('body', 500);

@@ -1,11 +1,25 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Show(props) {
-    const { delete: destroy, post } = useForm();
+    const { data, setData, delete: destroy, post, processing, errors } = useForm({
+        comment: ''
+    });
     
     const handleDelete = (id) => {
         destroy(route("study_record.destroy", id));
+    };
+
+    const submit = async (e) => {
+        e.preventDefault();
+        await post(route('study_record.comment.store',{ study_record: props.study_record.id }));
+    };
+    
+    const handleCommentDelete = async (study_record, comment) => {
+        await destroy(route("study_record.comment.destroy", { study_record: study_record, comment: comment }));
     };
     
     const handleLike = async (id) => {
@@ -67,6 +81,57 @@ export default function Show(props) {
                     >
                         削除
                     </button>
+                </div>
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
+                    <form onSubmit={submit}>
+                        <div className="mt-4">
+                            <InputLabel htmlFor="comment" value="コメント" />
+                                
+                            <textarea
+                                id="comment"
+                                name="comment"
+                                value={data.comment}
+                                className="mt-1 block w-full"
+                                onChange={(e) => setData(e.target.name, e.target.value)}
+                            />
+                                
+                            <InputError message={errors.comment} className="mt-2" />
+                        </div>
+                        <div className="flex justify-end mt-4">
+                            <PrimaryButton type="submit" className="ml-4" processing={processing}>
+                                コメントする
+                            </PrimaryButton>
+                        </div>
+                    </form>
+                </div>
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    { props.study_record.study_record_comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((study_record_comment) => { return (
+                        <div className="border-t border-slate-300 p-3 flex">
+                            <img
+                                className="flex-none inline-block w-8 h-8 rounded-full ring-2 ring-white"
+                                src={ study_record_comment.user.image_url ? study_record_comment.user.image_url : '/images/user_icon.png'}
+                                alt=""
+                            />
+                            <div className="flex-auto px-3 py-1">
+                                <div className="flex justify-between">
+                                    <div className="flex">
+                                        <div className="mr-5">{study_record_comment.user.name}</div>
+                                        <div>{study_record_comment.created_at}</div>
+                                    </div>
+                                    { study_record_comment.user.id === props.auth.user.id && (
+                                        <div>
+                                          <Link className="underline" onClick={() => handleCommentDelete(props.study_record.id, study_record_comment.id)}>
+                                            削除する
+                                          </Link>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="py-5">
+                                    <p>{study_record_comment.comment}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ); })}
                 </div>
             </div>
         </AuthenticatedLayout>

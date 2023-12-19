@@ -9,7 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\StudyRecord;
 use App\Models\NoteRecord;
-use App\Models\StudyRecordUserLike;
+use App\Models\StudyRecordLike;
+use App\Models\StudyRecordComment;
 
 class User extends Authenticatable
 {
@@ -34,13 +35,18 @@ class User extends Authenticatable
         return $this->hasMany(StudyRecord::class);  
     }
     
+    public function study_record_user_likes() {
+        return $this->hasMany(StudyRecordLike::class);
+    }
+    
+    public function study_record_comments() {
+        return $this->hasMany(StudyRecordComment::class);
+    }
+    
     public function note_records() {    
         return $this->hasMany(NoteRecord::class);  
     }
     
-    public function study_record_user_likes() {
-        return $this->hasMany(StudyRecordUserLike::class);
-    }
     /**
      * The attributes that should be hidden for serialization.
      *
