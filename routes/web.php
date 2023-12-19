@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudyRecordController;
 use App\Http\Controllers\StudyRecordLikeController;
 use App\Http\Controllers\StudyRecordCommentController;
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::match(['patch', 'post'], '/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
     
     Route::resource('/study_records', StudyRecordController::class)
         ->names([
