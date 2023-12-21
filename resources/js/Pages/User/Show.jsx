@@ -1,7 +1,20 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Show(props) {
+    const { delete: destroy, post, processing, errors } = useForm();
+    
+    const handleFollow = async (id) => {
+        await post(route("user.follow", id));
+    };
+
+    const handleUnfollow = async (id) => {
+        await destroy(route("user.unfollow", id));
+    }
+    
+    const isfollowed = () => props.user.followers.some(follower => follower.id === props.auth.user.id);
+
     return (
         <AuthenticatedLayout
             auth={props.auth}
@@ -23,6 +36,15 @@ export default function Show(props) {
                                 alt=""
                             />
                             <div className="flex-auto ml-5 text-2xl">{props.user.name}</div>
+                            {isfollowed() ? ( 
+                                <PrimaryButton onClick={() => handleUnfollow(props.user.id)}>フォローを外す</PrimaryButton>
+                            ) : (
+                                <PrimaryButton onClick={() => handleFollow(props.user.id)}>フォローする</PrimaryButton>
+                            )}
+                        </div>
+                        <div className="flex justify-evenly">
+                            <Link href={route("user.followings.index", props.user.id)}>{props.following_count} Followings</Link>
+                            <Link href={route("user.followers.index", props.user.id)}>{props.follower_count} Followers</Link>
                         </div>
                     </div>
                 </div>

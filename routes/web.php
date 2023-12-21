@@ -6,6 +6,7 @@ use App\Http\Controllers\StudyRecordController;
 use App\Http\Controllers\StudyRecordLikeController;
 use App\Http\Controllers\StudyRecordCommentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FollowController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -39,7 +40,12 @@ Route::middleware('auth')->group(function () {
     Route::match(['patch', 'post'], '/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('user.show');
+    
+    Route::get('/users/{user}/followings', [FollowController::class, 'indexFollowings'])->name('user.followings.index');
+    Route::get('/users/{user}/followers', [FollowController::class, 'indexFollowers'])->name('user.followers.index');
+    Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('user.follow');
+    Route::delete('/users/{user}/unfollow', [FollowController::class, 'destroy'])->name('user.unfollow');
     
     Route::resource('/study_records', StudyRecordController::class)
         ->names([
