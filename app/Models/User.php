@@ -30,7 +30,15 @@ class User extends Authenticatable
         'goal_text',
         'goal_time',
     ];
-     
+
+    public function followings() {
+        return $this->belongsToMany(User::class, 'follows', 'follower_user_id', 'following_user_id')->withTimestamps();
+    }
+
+    public function followers() {
+        return $this->belongsToMany(User::class, 'follows', 'following_user_id', 'follower_user_id')->withTimestamps();
+    }
+    
     public function study_records() {    
         return $this->hasMany(StudyRecord::class);  
     }
