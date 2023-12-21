@@ -17,8 +17,9 @@ class StudyRecordController extends Controller
     
     public function show($id) {
         $study_record = StudyRecord::with('user', 'categories', 'study_record_likes', 'study_record_comments.user')->where('id', $id)->first();
+        $like_count = $study_record->study_record_likes()->count();
         
-        return Inertia::render('StudyRecord/Show', ['study_record' => $study_record]);
+        return Inertia::render('StudyRecord/Show', ['study_record' => $study_record, 'like_count' => $like_count]);
     }
     
     public function create() {

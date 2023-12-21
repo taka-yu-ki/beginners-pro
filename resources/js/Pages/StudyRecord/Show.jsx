@@ -23,14 +23,14 @@ export default function Show(props) {
     };
     
     const handleLike = async (id) => {
-        await post(route("study_record.likes.store", id));
+        await post(route("study_record.like", id));
     };
 
     const handleUnlike = async (id) => {
-        await destroy(route("study_record.likes.destroy", id));
+        await destroy(route("study_record.unlike", id));
     }
     
-    const isliked = () => props.study_record.study_record_likes.some(like => like.user_id === props.auth.user.id);
+    const isLiked = () => props.study_record.study_record_likes.some(like => like.id === props.auth.user.id);
     
     return (
         <AuthenticatedLayout
@@ -62,32 +62,36 @@ export default function Show(props) {
                             <div>{props.study_record.body}</div>
                         </div>          
                     </div>
-                    {isliked() ? (
-                        <button 
-                            className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
-                            onClick={() => handleUnlike(props.study_record.id)}
-                        >
-                            {props.study_record.study_record_likes.length} いいね済み
-                        </button>
-                        ) : (
-                        <button 
-                            className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
-                            onClick={() => handleLike(props.study_record.id)}
-                        >
-                            {props.study_record.study_record_likes.length} いいねする
-                        </button>
-                    )}
-                    <Link href={route('study_record.edit', props.study_record.id)}>
-                        <button className="px-4 py-2 bg-green-500 text-white rounded-lg text-xs font-semibold">
-                            更新
-                        </button>
-                    </Link>
-                    <button 
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
-                        onClick={() => handleDelete(props.study_record.id)}
-                    >
-                        削除
-                    </button>
+                    <div className="flex space-between">
+                        {isLiked() ? (
+                            <button 
+                                className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
+                                onClick={() => handleUnlike(props.study_record.id)}
+                            >
+                                {props.like_count} いいね済み
+                            </button>
+                            ) : (
+                            <button 
+                                className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
+                                onClick={() => handleLike(props.study_record.id)}
+                            >
+                                {props.like_count} いいねする
+                            </button>
+                        )}
+                        {props.auth.user.id === props.study_record.user.id && (
+                            <div>
+                                <button onClick={() => route('study_record.edit', props.study_record.id)}className="px-4 py-2 bg-green-500 text-white rounded-lg text-xs font-semibold">
+                                    更新
+                                </button>
+                                <button 
+                                    className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
+                                    onClick={() => handleDelete(props.study_record.id)}
+                                >
+                                    削除
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-5">
                     <form onSubmit={submit}>

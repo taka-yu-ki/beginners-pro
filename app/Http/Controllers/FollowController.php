@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\User;
-use App\Models\Follow;
 
 class FollowController extends Controller
 {
@@ -24,7 +22,7 @@ class FollowController extends Controller
         return Inertia::render('User/IndexFollowers', ['followers' => $followers, 'my_following_ids' => $my_following_ids]);
     }
     
-    public function store(Request $request, User $user) {
+    public function store(User $user) {
         $user->followers()->attach(auth()->id());
         
         return redirect()->back();
