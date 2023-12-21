@@ -58,8 +58,8 @@ Route::middleware('auth')->group(function () {
             'show' => 'study_record.show',
         ]);
         
-    Route::post('/study_records/{study_record}/likes', [StudyRecordLikeController::class, 'store'])->name('study_record.likes.store');
-    Route::delete('/study_records/{study_record}/likes', [StudyRecordLikeController::class, 'destroy'])->name('study_record.likes.destroy');
+    Route::post('/study_records/{study_record}/like', [StudyRecordLikeController::class, 'store'])->name('study_record.like');
+    Route::delete('/study_records/{study_record}/unlike', [StudyRecordLikeController::class, 'destroy'])->name('study_record.unlike');
     
     Route::post('/study_records/{study_record}/comments', [StudyRecordCommentController::class, 'store'])->name('study_record.comment.store');
     Route::delete('/study_records/{study_record}/comments/{comment}', [StudyRecordCommentController::class, 'destroy'])->name('study_record.comment.destroy');

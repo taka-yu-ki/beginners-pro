@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\StudyRecord;
 use App\Models\NoteRecord;
-use App\Models\StudyRecordLike;
 use App\Models\StudyRecordComment;
 
 class User extends Authenticatable
@@ -43,8 +42,8 @@ class User extends Authenticatable
         return $this->hasMany(StudyRecord::class);  
     }
     
-    public function study_record_user_likes() {
-        return $this->hasMany(StudyRecordLike::class);
+    public function study_record_likes() {
+        return $this->belongsToMany(StudyRecord::class, 'study_record_likes')->withTimestamps();
     }
     
     public function study_record_comments() {

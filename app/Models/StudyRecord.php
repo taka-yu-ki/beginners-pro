@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Category;
-use App\Models\StudyRecordLike;
 use App\Models\StudyRecordComment;
 
 class StudyRecord extends Model
@@ -31,7 +30,7 @@ class StudyRecord extends Model
     }
     
     public function study_record_likes() {
-        return $this->hasMany(StudyRecordLike::class);
+        return $this->belongsToMany(User::class, 'study_record_likes')->withTimestamps();
     }
     
     public function study_record_comments() {
