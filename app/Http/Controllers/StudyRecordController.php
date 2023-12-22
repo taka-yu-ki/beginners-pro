@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StudyRecordRequest;
 use Inertia\Inertia;
 use App\Models\StudyRecord;
 use App\Models\Category;
@@ -19,60 +19,60 @@ class StudyRecordController extends Controller
         
         return Inertia::render('StudyRecord/Index', ['study_records' => $study_records, 'today_time' => $today_time, 'month_time' => $month_time, 'total_time' => $total_time]);
     }
-    
-    public function show($id) {
-        $study_record = StudyRecord::with('user', 'categories', 'study_record_likes', 'study_record_comments.user')->where('id', $id)->first();
-        $like_count = $study_record->study_record_likes()->count();
-        
-        return Inertia::render('StudyRecord/Show', ['study_record' => $study_record, 'like_count' => $like_count]);
-    }
-    
+
     public function create() {
         $categories = Category::all();
         
         return Inertia::render('StudyRecord/Create', ['categories' => $categories]);
     }
     
-    public function store(Request $request) {
-        $request->validate([
-            'date' => ['required'],
-            'time' => ['required'],
-            'title' => ['required'],
-            'body' => ['required'],
-            'category_ids' => ['required', 'array'],
+    public function store(StudyRecordRequest $request) {
+        $data = $request->validated();
+
+        $study_record = StudyRecord::create([
+            'user_id' => auth()->id(),
+            'date' => $data['date'],
+            'time' => $data['time'],
+            'title' => $data['title'],
+            'body' => $data['body'],
         ]);
-    
-        $study_record = StudyRecord::create($request->except('category_ids'));
-    
-        $study_record->categories()->attach($request->category_ids);
-    
-        return redirect()->route('study_record.index');
-    }
-    
-    public function destroy(StudyRecord $study_record) {
-        $study_record->delete();
         
+        $study_record->categories()->attach($data['category_ids']);
+    
         return redirect()->route('study_record.index');
     }
+
+    public function show(StudyRecord $study_record) {
+        $study_record->load('user', 'categories', 'study_record_likes', 'study_record_comments.user');
+        $like_count = $study_record->study_record_likes()->count();
+        
+        return Inertia::render('StudyRecord/Show', ['study_record' => $study_record, 'like_count' => $like_count]);
+    }
     
-    public function edit($id) {
-        $study_record = StudyRecord::with('user', 'categories')->where('id', $id)->first();
+    public function edit(StudyRecord $study_record) {
+        $study_record->load('user', 'categories');
         $categories = Category::all();
         
         return Inertia::render('StudyRecord/Edit', ['study_record' => $study_record, 'categories' => $categories]);
     }
     
-    public function update(Request $request, StudyRecord $study_record) {
-        $request->validate([
-            'date' => ['required'],
-            'time' => ['required'],
-            'title' => ['required'],
-            'body' => ['required'],
-            'category_ids' => ['required', 'array'],
+    public function update(StudyRecordRequest $request, StudyRecord $study_record) {
+        $data = $request->validated();
+        
+        $study_record->update([
+            'date' => $data['date'],
+            'time' => $data['time'],
+            'title' => $data['title'],
+            'body' => $data['body'],
         ]);
         
-        $study_record->update($request->except('category_ids'));
-        $study_record->categories()->sync($request->category_ids);
+        $study_record->categories()->sync($data['category_ids']);
+        
+        return redirect()->route('study_record.index');
+    }
+    
+    public function destroy(StudyRecord $study_record) {
+        $study_record->delete();
         
         return redirect()->route('study_record.index');
     }

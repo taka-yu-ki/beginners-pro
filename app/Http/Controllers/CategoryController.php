@@ -19,11 +19,13 @@ class CategoryController extends Controller
     }
     
     public function store(Request $request) {
-        $request->validate([
+        $data = $request->validate([
             'name' => ['required'],
         ]);
     
-        $category = Category::create($request->all());
+        $category = Category::create([
+            'name' => $data['name'],
+        ]);
     
         return redirect()->route('category.index');
     }

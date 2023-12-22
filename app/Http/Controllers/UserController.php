@@ -8,8 +8,8 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function show($study_record) {
-        $user = User::with('study_records.categories', 'followers', 'followings')->where('id', $study_record)->first();
+    public function show(User $user) {
+        $user->load('study_records.categories', 'followers', 'followings');
         $following_count = $user->followings()->count();
         $follower_count = $user->followers()->count();
         
