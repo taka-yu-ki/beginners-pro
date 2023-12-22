@@ -52,18 +52,21 @@ Route::middleware('auth')->group(function () {
             'index' => 'study_record.index',
             'create' => 'study_record.create',
             'store' => 'study_record.store',
-            'destroy' => 'study_record.destroy',
+            'show' => 'study_record.show',
             'edit' => 'study_record.edit',
             'update' => 'study_record.update',
-            'show' => 'study_record.show',
+            'destroy' => 'study_record.destroy',
         ]);
-        
+
     Route::post('/study_records/{study_record}/like', [StudyRecordLikeController::class, 'store'])->name('study_record.like');
     Route::delete('/study_records/{study_record}/unlike', [StudyRecordLikeController::class, 'destroy'])->name('study_record.unlike');
     
-    Route::post('/study_records/{study_record}/comments', [StudyRecordCommentController::class, 'store'])->name('study_record.comment.store');
-    Route::delete('/study_records/{study_record}/comments/{comment}', [StudyRecordCommentController::class, 'destroy'])->name('study_record.comment.destroy');
-    
+    Route::resource('/study_records/{study_record}/comments', StudyRecordCommentController::class)->only(['store', 'destroy'])
+        ->names([
+            'store' => 'study_record.comment.store',
+            'destroy' => 'study_record.comment.destroy',
+        ]);
+
     Route::resource('/category', CategoryController::class)
         ->names([
             'index' => 'category.index',

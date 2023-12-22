@@ -62,7 +62,7 @@ export default function Show(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
-                            <Link href={route("user.show", props.study_record.user.id)} className="item-center">
+                            <Link href={route("user.show", props.study_record.user_id)} className="item-center">
                                 <img
                                     className="inline w-8 h-8 rounded-full ring-2 ring-slate-100"
                                     src={props.study_record.user.image_url ? props.study_record.user.image_url : '/images/user_icon.png'}
