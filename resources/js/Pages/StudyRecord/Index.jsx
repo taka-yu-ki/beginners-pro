@@ -3,6 +3,22 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index(props) {
+    
+    const format_time = (time) => {
+        const hours = Math.floor(time / 60);
+        const minutes = time % 60;
+        
+        if (hours === 0) {
+            return `${minutes} 分`;
+        } 
+        
+        if (minutes === 0) {
+            return `${hours} 時間`;
+        }
+        
+        return `${hours} 時間 ${minutes} 分`;
+    }
+    
     return (
         <AuthenticatedLayout
           auth={props.auth}
@@ -34,7 +50,7 @@ export default function Index(props) {
                             今日
                         </div>
                         <div className="bg-white px-10 py-5 rounded-b-lg">
-                            10時間
+                            {format_time(props.today_time)}
                         </div>                    
                     </div>
                     <div className="w-1/4">
@@ -42,7 +58,7 @@ export default function Index(props) {
                             今月
                         </div>
                         <div className="bg-white px-10 py-5 rounded-b-lg">
-                            100時間
+                            {format_time(props.month_time)}
                         </div>                    
                     </div>
                     <div className="w-1/4">
@@ -50,13 +66,13 @@ export default function Index(props) {
                             累計
                         </div>
                         <div className="bg-white px-10 py-5 rounded-b-lg">
-                            1000時間
+                            {format_time(props.total_time)}
                         </div>                    
                     </div>
                 </div>
                 <div className="text-center">タイムライン</div>
                 <div className="p-6 bg-white border-t border-gray-200 overflow-y-auto" style={{ maxHeight: '500px' }}>
-                    {props.study_records.sort((a, b) => new Date(b.date) - new Date(a.date)).map((study_record) => { return (
+                    {[...props.study_records].sort((a, b) => new Date(b.date) - new Date(a.date)).sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)).map((study_record) => { return (
                         <Link key={study_record.id} href={route("study_record.show", study_record.id)}>
                             <div className="bg-red-500 m-5 sm:rounded-lg">
                                 <div className="flex place-items-center text-white text-sm font-bold pt-3 px-3">
@@ -72,7 +88,7 @@ export default function Index(props) {
                                     <div className="flex">{study_record.categories.map((category) => <div className="bg-lime-300 text-black rounded-full px-2 py-1 mx-2">{category.name}</div>)}</div>
                                 </div>
                                 <div className="pt-1 pb-5 flex justify-evenly">
-                                    <div className="text-white text-lg font-bold text-center">時間：{study_record.time}分</div>
+                                    <div className="text-white text-lg font-bold text-center">時間：{format_time(study_record.time)}</div>
                                     <div className="text-white text-lg font-bold text-center">{study_record.title}</div>
                                 </div>
                             </div>

@@ -9,6 +9,21 @@ export default function Show(props) {
         comment: ''
     });
     
+    const format_time = (time) => {
+        const hours = Math.floor(time / 60);
+        const minutes = time % 60;
+        
+        if (hours === 0) {
+            return `${minutes} 分`;
+        } 
+        
+        if (minutes === 0) {
+            return `${hours} 時間`;
+        }
+        
+        return `${hours} 時間 ${minutes} 分`;
+    }
+    
     const handleDelete = (id) => {
         destroy(route("study_record.destroy", id));
     };
@@ -57,7 +72,7 @@ export default function Show(props) {
                             </Link>
                             <div>{props.study_record.categories.map((category) => category.name)}</div>
                             <div>{props.study_record.date}</div>
-                            <div>{props.study_record.time}</div>
+                            <div>{format_time(props.study_record.time)}</div>
                             <div>{props.study_record.title}</div>
                             <div>{props.study_record.body}</div>
                         </div>          
@@ -80,9 +95,11 @@ export default function Show(props) {
                         )}
                         {props.auth.user.id === props.study_record.user.id && (
                             <div>
-                                <button onClick={() => route('study_record.edit', props.study_record.id)}className="px-4 py-2 bg-green-500 text-white rounded-lg text-xs font-semibold">
-                                    更新
-                                </button>
+                                <Link href={route('study_record.edit', props.study_record.id)}>
+                                    <button className="px-4 py-2 bg-green-500 text-white rounded-lg text-xs font-semibold">
+                                        更新
+                                    </button>
+                                </Link>
                                 <button 
                                     className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
                                     onClick={() => handleDelete(props.study_record.id)}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\StudyRecord;
 use App\Models\Category;
@@ -10,9 +11,13 @@ use App\Models\Category;
 class StudyRecordController extends Controller
 {
     public function index() {
-        $study_records = StudyRecord::with('user', 'categories')->get();    
+        $study_records = StudyRecord::with('user', 'categories')->where('user_id', auth()->id())->get(); 
         
-        return Inertia::render('StudyRecord/Index', ['study_records' => $study_records]);
+        $today_time = StudyRecord::where('user_id', auth()->id())->whereDate('created_at', today())->sum('time');
+        $month_time = StudyRecord::where('user_id', auth()->id())->whereMonth('created_at', now()->month)->sum('time');
+        $total_time = StudyRecord::where('user_id', auth()->id())->sum('time');
+        
+        return Inertia::render('StudyRecord/Index', ['study_records' => $study_records, 'today_time' => $today_time, 'month_time' => $month_time, 'total_time' => $total_time]);
     }
     
     public function show($id) {
