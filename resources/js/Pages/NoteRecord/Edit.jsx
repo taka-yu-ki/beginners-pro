@@ -7,10 +7,10 @@ import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Create(props) {
     const { data, setData, patch, processing, errors } = useForm({
-        date: props.study_record.date,
-        title: props.study_record.title,
-        body: props.study_record.body,
-        category_ids: props.study_record.categories.map((category) => category.id),
+        date: props.note_record.date,
+        title: props.note_record.title,
+        body: props.note_record.body,
+        category_ids: props.note_record.categories.map((category) => category.id),
     });
     
     const handleOnChange = (event) => {
@@ -24,7 +24,7 @@ export default function Create(props) {
     
     const submit = (e) => {
         e.preventDefault();
-        patch(route('study_record.update', props.study_record.id));
+        patch(route('note_record.update', props.note_record.id));
     };
     
     return (
@@ -33,11 +33,11 @@ export default function Create(props) {
             errors={props.errors}
             header={
             <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                StudyRecords
+                NoteRecords
             </h2>
             }
         >
-            <Head title="Study_records Edit" />
+            <Head title="Note_records Edit" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -59,20 +59,7 @@ export default function Create(props) {
                                     
                                     <InputError message={errors.date} className="mt-2" />
                                 </div>
-                                <div className="mt-4">
-                                    <InputLabel htmlFor="time" value="Time" />
-                                    
-                                    <TextInput
-                                        id="time"
-                                        type="number"
-                                        name="time"
-                                        value={data.time}
-                                        className="mt-1 block w-full"
-                                        onChange={handleOnChange}
-                                    />
-
-                                    <InputError message={errors.time} className="mt-2" />
-                                </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="title" value="title" />
                                     
