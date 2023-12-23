@@ -5,6 +5,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudyRecordController;
 use App\Http\Controllers\StudyRecordLikeController;
 use App\Http\Controllers\StudyRecordCommentController;
+use App\Http\Controllers\NoteRecordController;
+use App\Http\Controllers\NoteRecordLikeController;
+use App\Http\Controllers\NoteRecordCommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FollowController;
 use Illuminate\Foundation\Application;
@@ -65,6 +68,26 @@ Route::middleware('auth')->group(function () {
         ->names([
             'store' => 'study_record.comment.store',
             'destroy' => 'study_record.comment.destroy',
+        ]);
+
+    Route::resource('/note_records', NoteRecordController::class)
+        ->names([
+            'index' => 'note_record.index',
+            'create' => 'note_record.create',
+            'store' => 'note_record.store',
+            'show' => 'note_record.show',
+            'edit' => 'note_record.edit',
+            'update' => 'note_record.update',
+            'destroy' => 'note_record.destroy',
+        ]);
+
+    Route::post('/note_records/{note_record}/like', [NoteRecordLikeController::class, 'store'])->name('note_record.like');
+    Route::delete('/note_records/{note_record}/unlike', [NoteRecordLikeController::class, 'destroy'])->name('note_record.unlike');
+    
+    Route::resource('/note_records/{note_record}/comments', NoteRecordCommentController::class)->only(['store', 'destroy'])
+        ->names([
+            'store' => 'note_record.comment.store',
+            'destroy' => 'note_record.comment.destroy',
         ]);
 
     Route::resource('/category', CategoryController::class)

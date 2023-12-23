@@ -54,6 +54,13 @@ class User extends Authenticatable
         return $this->hasMany(NoteRecord::class);  
     }
     
+    public function note_record_likes() {
+        return $this->belongsToMany(NoteRecord::class, 'note_record_likes')->withTimestamps();
+    }
+    
+    public function note_record_comments() {
+        return $this->hasMany(NoteRecordComment::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
