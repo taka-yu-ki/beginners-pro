@@ -3,11 +3,17 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index(props) {
+    
     const { delete: destroy } = useForm();
+    
     const handleDelete = (id) => {
-        destroy(route("category.destroy", id), {
-            preserveScroll: true,
-        });
+        const alart = window.confirm("カテゴリーの投稿は全て削除されます。本当によろしいですか。");
+        
+        if (alart) {
+            destroy(route("category.destroy", id), {
+                preserveScroll: true,
+            });
+        } 
     };
     
     return (

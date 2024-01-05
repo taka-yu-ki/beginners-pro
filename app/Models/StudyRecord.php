@@ -18,15 +18,15 @@ class StudyRecord extends Model
         'time',
         'title',
         'body',
-        'category_ids',
+        'category_id',
     ];
     
     public function user() {    
         return $this->belongsTo(User::class);  
     }
     
-    public function categories() {    
-        return $this->belongsToMany(Category::class);  
+    public function category() {    
+        return $this->belongsTo(Category::class);  
     }
     
     public function study_record_likes() {
