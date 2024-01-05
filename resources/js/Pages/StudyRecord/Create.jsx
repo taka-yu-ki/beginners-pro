@@ -120,7 +120,7 @@ export default function Create(props) {
                                     ))}
                                 </select>
                             
-                                <InputError message={errors.category} className="mt-2" />
+                                <InputError message={errors.category_ids} className="mt-2" />
                             </div>                     
                             
                             <div className="flex items-center justify-end mt-4">

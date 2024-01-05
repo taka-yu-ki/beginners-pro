@@ -9,7 +9,7 @@ use App\Models\Category;
 class CategoryController extends Controller
 {
     public function index() {
-        $categories = Category::all();
+        $categories = Category::where('user_id', auth()->id())->get();
         
         return Inertia::render('Category/Index', ['categories' => $categories]);
     }
@@ -21,10 +21,13 @@ class CategoryController extends Controller
     public function store(Request $request) {
         $data = $request->validate([
             'name' => ['required'],
+            'color' => ['required'],
         ]);
     
         $category = Category::create([
+            'user_id' => auth()->id(),
             'name' => $data['name'],
+            'color' => $data['color'],
         ]);
     
         return redirect()->route('category.index');

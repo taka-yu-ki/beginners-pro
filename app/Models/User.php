@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Category;
 use App\Models\StudyRecord;
 use App\Models\NoteRecord;
 use App\Models\StudyRecordComment;
+use App\Models\NoteRecordComment;
 
 class User extends Authenticatable
 {
@@ -36,6 +38,10 @@ class User extends Authenticatable
 
     public function followers() {
         return $this->belongsToMany(User::class, 'follows', 'following_user_id', 'follower_user_id')->withTimestamps();
+    }
+    
+    public function categories() {
+        return $this->hasMany(Category::class);
     }
     
     public function study_records() {    
