@@ -5,7 +5,6 @@ import BarChartComponent from "@/Components/BarChartComponent";
 import PieChartComponent from "@/Components/PieChartComponent";
 import GoalTimeBarChart from "@/Components/GoalTimeBarChart";
 import Pagination from "@/Components/Pagination";
-import { startOfWeek, add, format } from 'date-fns';
 
 export default function Index(props) {
     
@@ -140,7 +139,7 @@ export default function Index(props) {
                                         </Link>
                                         <div className="mx-2">{study_record.user.name}</div>
                                         <div className="mx-2">{study_record.date}</div>
-                                        <div className="flex">{study_record.categories.map((category) => <div className="bg-lime-300 text-black rounded-full px-2 py-1 mx-2">{category.name}</div>)}</div>
+                                        <div className="bg-lime-300 text-black rounded-full px-2 py-1 mx-2">{study_record.category.name}</div>
                                     </div>
                                     <div className="pt-1 pb-5 flex justify-evenly">
                                         <div className="text-white text-lg font-bold text-center">時間：{format_time(study_record.time)}</div>

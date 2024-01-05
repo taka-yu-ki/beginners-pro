@@ -28,7 +28,7 @@ class StudyRecordRequest extends FormRequest
             'time' => ['required'],
             'title' => ['required'],
             'body' => ['required'],
-            'category_ids' => ['required', 'array'],
+            'category_id' => ['required'],
         ];
     }
 }

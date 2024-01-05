@@ -17,7 +17,7 @@ class StudyRecordController extends Controller
     public function index() {
         
         // ログインユーザー投稿
-        $study_records = StudyRecord::with('user', 'categories')->where('user_id', auth()->id())->orderBy('date', 'desc')->orderBy('updated_at', 'desc')->get();
+        $study_records = StudyRecord::with('user', 'category')->where('user_id', auth()->id())->orderBy('date', 'desc')->orderBy('updated_at', 'desc')->get();
         
         // 学習時間
         $start_of_this_week = Carbon::now()->startOfWeek();
@@ -28,7 +28,7 @@ class StudyRecordController extends Controller
         $total_time = StudyRecord::where('user_id', auth()->id())->sum('time');
         
         // 棒グラフ用データ
-        $bar_chart_data = StudyRecord::with('categories')->where('user_id', auth()->id())->select(['id', 'date', 'time'])->get();
+        $bar_chart_data = StudyRecord::with('category')->where('user_id', auth()->id())->select(['id', 'category_id', 'date', 'time'])->get();
         $oldest_data = StudyRecord::where('user_id', auth()->id())->orderBy('date', 'asc')->first();
         
         $data_objects = [];
@@ -44,14 +44,12 @@ class StudyRecordController extends Controller
                 
                 if ($match_datas) {
                     foreach ($match_datas as $match_data) {
-                        $categories = $match_data->categories;
+                        $category = $match_data->category;
                         
-                        foreach ($categories as $category) {
-                            if (isset($data_object[$category->name])) {
-                                $data_object[$category->name] += $match_data->time;
-                            } else {
-                                $data_object[$category->name] = $match_data->time;
-                            }
+                        if (isset($data_object[$category->name])) {
+                            $data_object[$category->name] += $match_data->time;
+                        } else {
+                            $data_object[$category->name] = $match_data->time;
                         }
                     }
                 }
@@ -84,8 +82,7 @@ class StudyRecordController extends Controller
         $pie_chart_data = DB::table('users')
             ->where('users.id', auth()->id())
             ->join('study_records', 'users.id', '=', 'study_records.user_id')
-            ->join('category_study_record', 'study_records.id', '=', 'category_study_record.study_record_id')
-            ->join('categories', 'category_study_record.category_id', '=', 'categories.id')
+            ->join('categories', 'study_records.category_id', '=', 'categories.id')
             ->select('categories.id', 'categories.name', 'categories.color', DB::raw('CAST(SUM(study_records.time) AS UNSIGNED) as time'))
             ->groupBy('categories.id', 'categories.name', 'categories.color')
             ->orderBy('time', 'desc')
@@ -109,23 +106,22 @@ class StudyRecordController extends Controller
             'time' => $data['time'],
             'title' => $data['title'],
             'body' => $data['body'],
+            'category_id' => $data['category_id'],
         ]);
-
-        $study_record->categories()->attach($data['category_ids']);
 
         return redirect()->route('study_record.index');
     }
 
     public function show(StudyRecord $study_record) {
-        $study_record->load('user', 'categories', 'study_record_likes', 'study_record_comments.user');
+        $study_record->load('user', 'category', 'study_record_likes', 'study_record_comments.user');
         $like_count = $study_record->study_record_likes()->count();
 
         return Inertia::render('StudyRecord/Show', ['study_record' => $study_record, 'like_count' => $like_count]);
     }
 
     public function edit(StudyRecord $study_record) {
-        $study_record->load('user', 'categories');
-        $categories = Category::all();
+        $study_record->load('user', 'category');
+        $categories = Category::where('user_id', auth()->id())->get();
 
         return Inertia::render('StudyRecord/Edit', ['study_record' => $study_record, 'categories' => $categories]);
     }
@@ -138,9 +134,8 @@ class StudyRecordController extends Controller
             'time' => $data['time'],
             'title' => $data['title'],
             'body' => $data['body'],
+            'category_id' => $data['category_id'],
         ]);
-
-        $study_record->categories()->sync($data['category_ids']);
 
         return redirect()->route('study_record.index');
     }

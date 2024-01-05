@@ -11,16 +11,11 @@ export default function Create(props) {
         time: '',
         title: '',
         body: '',
-        category_ids: [],
+        category_id: '',
     });
     
-    const handleOnChange = (event) => {
-        if (event.target.name === 'category_ids') {
-            const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
-            setData('category_ids', selectedOptions);
-        } else {
-            setData(event.target.name, event.target.value);
-        }
+    const handleChange = (event) => {
+        setData(event.target.name, event.target.value);
     };
     
     const submit = (e) => {
@@ -55,7 +50,7 @@ export default function Create(props) {
                                     value={data.date}
                                     className="mt-1 block w-full"
                                     isFocused={true}
-                                    onChange={handleOnChange}
+                                    onChange={handleChange}
                                 />
                                 
                                 <InputError message={errors.date} className="mt-2" />
@@ -69,7 +64,7 @@ export default function Create(props) {
                                     name="time"
                                     value={data.time}
                                     className="mt-1 block w-full"
-                                    onChange={handleOnChange}
+                                    onChange={handleChange}
                                 />
                                 
                                 <InputError message={errors.time} className="mt-2" />
@@ -83,7 +78,7 @@ export default function Create(props) {
                                     name="title"
                                     value={data.title}
                                     className="mt-1 block w-full"
-                                    onChange={handleOnChange}
+                                    onChange={handleChange}
                                 />
                                 
                                 <InputError message={errors.title} className="mt-2" />
@@ -97,7 +92,7 @@ export default function Create(props) {
                                     name="body"
                                     value={data.body}
                                     className="mt-1 block w-full"
-                                    onChange={handleOnChange}
+                                    onChange={handleChange}
                                 />
                                 
                                 <InputError message={errors.body} className="mt-2" />
@@ -107,12 +102,12 @@ export default function Create(props) {
                                 <InputLabel htmlFor="category" value="Category" />
                                 <select
                                     id="category"
-                                    name="category_ids"
-                                    value={data.category_ids}
+                                    name="category_id"
+                                    value={data.category_id}
                                     className="mt-1 block w-full"
-                                    onChange={handleOnChange}
-                                    multiple
+                                    onChange={handleChange}
                                 >
+                                    <option value="">--カテゴリーを選んでください--</option>
                                     {props.categories.map(category => (
                                         <option key={category.id} value={category.id}>
                                             {category.name}
@@ -120,7 +115,7 @@ export default function Create(props) {
                                     ))}
                                 </select>
                             
-                                <InputError message={errors.category_ids} className="mt-2" />
+                                <InputError message={errors.category_id} className="mt-2" />
                             </div>                     
                             
                             <div className="flex items-center justify-end mt-4">

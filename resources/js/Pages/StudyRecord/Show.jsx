@@ -70,7 +70,7 @@ export default function Show(props) {
                                 />
                                 <div className="inline px-3">{props.study_record.user.name}</div>
                             </Link>
-                            <div>{props.study_record.categories.map((category) => category.name)}</div>
+                            <div>{props.study_record.category.name}</div>
                             <div>{props.study_record.date}</div>
                             <div>{format_time(props.study_record.time)}</div>
                             <div>{props.study_record.title}</div>

@@ -2,11 +2,6 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 export default function PieChartComponent({data}) {
     
-    const default_data = {
-        name: "default",
-        time: 0,
-    };
-    
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -24,7 +19,7 @@ export default function PieChartComponent({data}) {
         <ResponsiveContainer width="100%" height="50%">
             <PieChart>
                 <Pie
-                    data={data || default_data}
+                    data={data}
                     cx="50%"
                     cy="50%"
                     labelLine={false}

@@ -17,7 +17,7 @@ class Category extends Model
     }
     
     public function study_records() {    
-        return $this->belongsToMany(StudyRecord::class);  
+        return $this->hasMany(StudyRecord::class);  
     }
     
     public function note_records() {    
