@@ -7,7 +7,8 @@ import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Create(props) {
     const { data, setData, post, processing, errors } = useForm({
-        name: '',
+        name: "",
+        color: "#000000",
     });
     
     const handleOnChange = (event) => {
@@ -38,7 +39,7 @@ export default function Create(props) {
                         <form onSubmit={submit}>
                         
                             <div>
-                                <InputLabel htmlFor="date" value="Name" />
+                                <InputLabel htmlFor="name" value="カテゴリー名" />
                                 
                                 <TextInput
                                     id="name"
@@ -46,6 +47,22 @@ export default function Create(props) {
                                     name="name"
                                     value={data.name}
                                     className="mt-1 block w-full"
+                                    isFocused={true}
+                                    onChange={handleOnChange}
+                                />
+                                
+                                <InputError message={errors.date} className="mt-2" />
+                            </div>
+                            
+                            <div>
+                                <InputLabel htmlFor="color" value="カラー" />
+                                
+                                <TextInput
+                                    id="color"
+                                    type="color"
+                                    name="color"
+                                    value={data.color}
+                                    className="mt-1 block w-1/5"
                                     isFocused={true}
                                     onChange={handleOnChange}
                                 />

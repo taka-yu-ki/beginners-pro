@@ -8,6 +8,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 export default function Create(props) {
     const { data, setData, patch, processing, errors } = useForm({
         date: props.study_record.date,
+        time: props.study_record.time,
         title: props.study_record.title,
         body: props.study_record.body,
         category_ids: props.study_record.categories.map((category) => category.id),
