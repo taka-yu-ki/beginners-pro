@@ -6,7 +6,7 @@ import PieChartComponent from "@/Components/PieChartComponent";
 import GoalTimeBarChart from "@/Components/GoalTimeBarChart";
 import Pagination from "@/Components/Pagination";
 
-export default function Index(props) {
+export default function Community(props) {
     
     const format_time = (time) => {
         const hours = Math.floor(time / 60);
@@ -98,14 +98,14 @@ export default function Index(props) {
             </div>
             <div className="py-20">
                 <div className="flex justify-center mb-5">
-                    <div className="px-4 py-2 bg-blue-300 text-white rounded-l-md cursor-pointer">
-                        フォロー中
-                    </div>
-                    <Link href={route('study_record.community')} preserveScroll>
-                        <div className="px-4 py-2 bg-blue-500 text-white rounded-r-md cursor-pointer">
-                            全ユーザー
+                    <Link href={route('study_record.index')} preserveScroll>
+                        <div className="px-4 py-2 bg-blue-500 text-white rounded-l-md cursor-pointer">
+                            フォロー中
                         </div>
                     </Link>
+                    <div className="px-4 py-2 bg-blue-300 text-white rounded-r-md cursor-pointer">
+                        全ユーザー
+                    </div>
                 </div>
                 <div className="w-5/6 m-auto p-10 bg-slate-50 rounded-lg">
                     <div className="flex justify-between mb-10 text-center">

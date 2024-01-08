@@ -49,7 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/{user}/followers', [FollowController::class, 'indexFollowers'])->name('user.followers.index');
     Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('user.follow');
     Route::delete('/users/{user}/unfollow', [FollowController::class, 'destroy'])->name('user.unfollow');
-    
+
+    Route::get('/study_records/community', [StudyRecordController::class, 'community'])->name('study_record.community');
     Route::resource('/study_records', StudyRecordController::class)
         ->names([
             'index' => 'study_record.index',
@@ -70,6 +71,7 @@ Route::middleware('auth')->group(function () {
             'destroy' => 'study_record.comment.destroy',
         ]);
 
+    Route::get('/note_records/community', [NoteRecordController::class, 'community'])->name('note_record.community');
     Route::resource('/note_records', NoteRecordController::class)
         ->names([
             'index' => 'note_record.index',

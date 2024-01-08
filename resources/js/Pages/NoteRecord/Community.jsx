@@ -60,14 +60,14 @@ export default function Index(props) {
             </div>
             <div className="py-20">
                 <div className="flex justify-center mb-5">
-                    <div className="px-4 py-2 bg-blue-300 text-white rounded-l-md cursor-pointer">
-                        フォロー中
-                    </div>
-                    <Link href={route('note_record.community')} preserveScroll>
-                        <div className="px-4 py-2 bg-blue-500 text-white rounded-r-md cursor-pointer">
-                            全ユーザー
+                    <Link href={route('note_record.index')} preserveScroll>
+                        <div className="px-4 py-2 bg-blue-500 text-white rounded-l-md cursor-pointer">
+                            フォロー中
                         </div>
                     </Link>
+                    <div className="px-4 py-2 bg-blue-300 text-white rounded-r-md cursor-pointer">
+                        全ユーザー
+                    </div>
                 </div>
             <div className="w-5/6 m-auto p-10 bg-slate-50 rounded-lg">
                 <div className="text-center">タイムライン</div>
