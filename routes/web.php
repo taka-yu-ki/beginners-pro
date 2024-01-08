@@ -97,6 +97,8 @@ Route::middleware('auth')->group(function () {
             'index' => 'category.index',
             'create' => 'category.create',
             'store' => 'category.store',
+            'edit' => 'category.edit',
+            'update' => 'category.update',
             'destroy' => 'category.destroy',
         ]);
 

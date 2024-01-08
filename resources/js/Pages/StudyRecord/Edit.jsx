@@ -5,7 +5,7 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function Create(props) {
+export default function Edit(props) {
     const { data, setData, patch, processing, errors } = useForm({
         date: props.study_record.date,
         time: props.study_record.time,
