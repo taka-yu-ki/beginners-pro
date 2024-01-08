@@ -6,13 +6,11 @@ export default function Index(props) {
     
     const { delete: destroy } = useForm();
     
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         const alart = window.confirm("カテゴリーの投稿は全て削除されます。本当によろしいですか。");
         
         if (alart) {
-            destroy(route("category.destroy", id), {
-                preserveScroll: true,
-            });
+            await destroy(route("category.destroy", id));
         } 
     };
     
@@ -30,19 +28,27 @@ export default function Index(props) {
         >
             <Head title="Category Index" />
             <div className="py-20">
-            <div className="w-5/6 m-auto p-10 bg-slate-50 rounded-lg">
+                <div className="w-5/6 m-auto p-10 bg-slate-50 rounded-lg">
+                    <div className="text-center">カテゴリー一覧</div>
                     {props.categories.map((category) => { return (
-                        <div className="bg-lime-500 p-7 m-5 sm:rounded-lg items-center flex justify-between">
+                        <div className="bg-lime-500 p-7 m-5 rounded-lg items-center flex justify-between">
                             <div>{category.name}</div>
-                            <button 
-                                className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
-                                onClick={() => handleDelete(category.id)}
-                            >
-                                削除
-                            </button>
+                            <div>
+                                <Link href={route('category.edit', category.id)}>
+                                    <button className="px-4 py-2 bg-green-500 text-white rounded-lg text-xs font-semibold mr-3">
+                                        編集
+                                    </button>
+                                </Link>
+                                <button 
+                                    className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold"
+                                    onClick={() => handleDelete(category.id)}
+                                >
+                                    削除
+                                </button>
+                            </div>
                         </div>
                     ); })}
-            </div>
+                </div>
             </div>
         </AuthenticatedLayout>
     );

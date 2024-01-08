@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 use Inertia\Inertia;
 use App\Models\Category;
 
@@ -18,11 +19,8 @@ class CategoryController extends Controller
         return Inertia::render('Category/Create');
     }
     
-    public function store(Request $request) {
-        $data = $request->validate([
-            'name' => ['required'],
-            'color' => ['required'],
-        ]);
+    public function store(CategoryRequest $request) {
+        $data = $request->validated();
     
         $category = Category::create([
             'user_id' => auth()->id(),
@@ -30,6 +28,21 @@ class CategoryController extends Controller
             'color' => $data['color'],
         ]);
     
+        return redirect()->route('category.index');
+    }
+    
+    public function edit(Category $category) {
+        return Inertia::render('Category/Edit', ['category' => $category]);
+    }
+    
+    public function update(CategoryRequest $request, Category $category) {
+        $data = $request->validated();
+        
+        $category->update([
+            'name' => $data['name'],
+            'color' => $data['color'],
+        ]);
+        
         return redirect()->route('category.index');
     }
     
