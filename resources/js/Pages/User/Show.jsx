@@ -53,7 +53,7 @@ export default function Show(props) {
                 <div className="w-5/6 m-auto p-10 bg-slate-50 rounded-lg">
                     <div className="text-center">タイムライン</div>
                     <div className="p-6 bg-white border-t border-gray-200 overflow-y-auto" style={{ maxHeight: '500px' }}>
-                        {props.user.study_records.sort((a, b) => new Date(b.date) - new Date(a.date)).map((study_record) => { return (
+                        {props.user.study_records.map((study_record) => { return (
                             <Link key={study_record.id} href={route("study_record.show", study_record.id)}>
                                 <div className="bg-red-500 m-5 sm:rounded-lg">
                                     <div className="flex place-items-center text-white text-sm font-bold pt-3 px-3">
@@ -66,7 +66,7 @@ export default function Show(props) {
                                         </Link>
                                         <div className="mx-2">{props.user.name}</div>
                                         <div className="mx-2">{study_record.date}</div>
-                                        <div className="flex">{study_record.categories.map((category) => <div className="bg-lime-300 text-black rounded-full px-2 py-1 mx-2">{category.name}</div>)}</div>
+                                        <div className="bg-lime-300 text-black rounded-full px-2 py-1 mx-2">{study_record.category.name}</div>
                                     </div>
                                     <div className="pt-1 pb-5 flex justify-evenly">
                                         <div className="text-white text-lg font-bold text-center">時間：{study_record.time}分</div>
