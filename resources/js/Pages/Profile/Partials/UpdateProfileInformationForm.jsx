@@ -12,6 +12,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         name: user.name,
         email: user.email,
         image: "",
+        delete_image: false,
         text: user.text,
         goal_text: user.goal_text,
         goal_time: user.goal_time,
@@ -20,10 +21,28 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const imagePreview = (e) => {
         if (e.target.files.length > 0) {
             let src = URL.createObjectURL(e.target.files[0]);
-            document.getElementById('preview').src = src;
-            setData('image', e.target.files[0]);
+            document.getElementById("preview").src = src;
+            setData("image", e.target.files[0]);
         }
-    }
+    };
+    
+    const deleteImage = async () => {
+        const shouldDelete = window.confirm("プロフィール画像を削除しますか？");
+        
+        if (shouldDelete) {
+            await setData("delete_image", true);
+
+            post(
+                route('profile.update'),
+                {
+                    _method: 'PATCH',
+                    ...data.delete_image,
+                },
+            );
+            
+            document.getElementById('preview').src = '/images/user_icon.png';
+        }
+    };
     
     const submit = (e) => {
         e.preventDefault();
@@ -38,25 +57,20 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-            }
+            },
         );
     };
 
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
-
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
-                </p>
+                <h2 className="text-lg font-medium text-gray-900">プロフィール情報</h2>
             </header>
-
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
                     <InputLabel>プロフィール画像</InputLabel>
-                    <div className="flex items-center">
-                        <div className="relative w-16 h-16 overflow-hidden rounded-full bg-gray-200 mr-3">
+                    <div className="mt-1 flex items-center">
+                        <div className="relative w-16 h-16 mr-3 overflow-hidden rounded-full bg-gray-200">
                             <img
                                 id="preview"
                                 class="absolute inset-0 w-full h-full object-cover rounded-full"
@@ -66,7 +80,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         </div>
                         <InputLabel
                             htmlFor="image"
-                            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                            className="px-4 py-2 rounded-md border border-gray-300 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                         >
                             画像を選択
                         </InputLabel>
@@ -78,11 +92,20 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                             onChange={imagePreview}
                             className="hidden"
                         />
+                        {user.image_url && (
+                            <button
+                                type="submit"
+                                className="px-4 py-2 ml-3 rounded-md border border-gray-300 text-sm font-medium text-red-700 shadow-sm hover:bg-gray-50 hover:text-red-800 "
+                                onClick={deleteImage}
+                            >
+                                画像を削除する
+                            </button>
+                        )}
                     </div>
                     <InputError className="mt-2" message={errors.image} />
                 </div>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="名前" />
 
                     <TextInput
                         id="name"
@@ -98,7 +121,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="メールアドレス" />
 
                     <TextInput
                         id="email"
