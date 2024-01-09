@@ -20,6 +20,7 @@ class ProfileUpdateRequest extends FormRequest
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'text' => ['nullable','string', 'max:500'],
             'image' => ['nullable', 'file'],
+            'delete_image' => ['nullable', 'boolean'],
             'goal_text' => ['nullable', 'string', 'max:100'],
             'goal_time' => ['nullable', 'integer'],
         ];

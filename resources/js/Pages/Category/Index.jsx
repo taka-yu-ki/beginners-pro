@@ -7,9 +7,9 @@ export default function Index(props) {
     const { delete: destroy } = useForm();
     
     const handleDelete = async (id) => {
-        const alart = window.confirm("カテゴリーの投稿は全て削除されます。本当によろしいですか。");
+        const shouldDelete = window.confirm("カテゴリーの投稿は全て削除されます。本当によろしいですか。");
         
-        if (alart) {
+        if (shouldDelete) {
             await destroy(route("category.destroy", id));
         } 
     };

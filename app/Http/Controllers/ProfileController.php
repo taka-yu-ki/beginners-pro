@@ -30,19 +30,29 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $data = $request->except('image');
-        $request->user()->fill($data);
-        
-        if ($request->hasFile('image')) {
+        $user = $request->user();
+        $data = $request->except('image', 'delete_image');
+        $user->fill($data);
+
+        if ($request->has('delete_image') && $request->delete_image) {
+            if ($user->image_url) {
+                Cloudinary::destroy($user->image_url);
+                $user->image_url = null;
+            }
+        } elseif ($request->hasFile('image')) {
+            if ($user->image_url) {
+                Cloudinary::destroy($user->image_url);
+            }
+            
             $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-            $request->user()->image_url = $image_url;
+            $user->image_url = $image_url;
         }
         
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('profile.edit');
     }
