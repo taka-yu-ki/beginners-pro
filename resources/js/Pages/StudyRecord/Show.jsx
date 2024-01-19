@@ -3,6 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
+import LexicalEditor from '@/Components/LexicalEditor';
 
 export default function Show(props) {
     const { data, setData, delete: destroy, post, processing, errors } = useForm({
@@ -22,7 +23,7 @@ export default function Show(props) {
         }
         
         return `${hours} 時間 ${minutes} 分`;
-    }
+    };
     
     const handleDelete = (id) => {
         destroy(route("study_record.destroy", id));
@@ -74,7 +75,8 @@ export default function Show(props) {
                             <div>{props.study_record.date}</div>
                             <div>{format_time(props.study_record.time)}</div>
                             <div>{props.study_record.title}</div>
-                            <div>{props.study_record.body}</div>
+                            <LexicalEditor data={props.study_record.body} isEditable={false}/>
+                            
                         </div>          
                     </div>
                     <div className="flex space-between">

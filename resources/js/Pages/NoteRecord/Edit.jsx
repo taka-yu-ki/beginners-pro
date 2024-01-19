@@ -4,22 +4,27 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
+import LexicalEditor from '@/Components/LexicalEditor';
 
 export default function Create(props) {
     const { data, setData, patch, processing, errors } = useForm({
         date: props.note_record.date,
         title: props.note_record.title,
-        body: props.note_record.body,
+        body: "",
         category_ids: props.note_record.categories.map((category) => category.id),
     });
     
-    const handleOnChange = (event) => {
+    const handleChange = (event) => {
         if (event.target.name === 'category_ids') {
             const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
             setData('category_ids', selectedOptions);
         } else {
             setData(event.target.name, event.target.value);
         }
+    };
+    
+    const handleBodyChange = (contentAsJSON) => {
+        setData("body", contentAsJSON);
     };
     
     const submit = (e) => {
@@ -54,7 +59,7 @@ export default function Create(props) {
                                         value={data.date}
                                         className="mt-1 block w-full"
                                         isFocused={true}
-                                        onChange={handleOnChange}
+                                        onChange={handleChange}
                                     />
                                     
                                     <InputError message={errors.date} className="mt-2" />
@@ -69,24 +74,10 @@ export default function Create(props) {
                                         name="title"
                                         value={data.title}
                                         className="mt-1 block w-full"
-                                        onChange={handleOnChange}
+                                        onChange={handleChange}
                                     />
                                     
                                     <InputError message={errors.title} className="mt-2" />
-                                </div>
-                                <div className="mt-4">
-                                    <InputLabel htmlFor="body" value="Body" />
-                                    
-                                    <TextInput
-                                        id="body"
-                                        type="text"
-                                        name="body"
-                                        value={data.body}
-                                        className="mt-1 block w-full"
-                                        onChange={handleOnChange}
-                                    />
-                                    
-                                    <InputError message={errors.body} className="mt-2" />
                                 </div>
                                 <div className="mt-4">
                                     <InputLabel htmlFor="category" value="Category" />
@@ -95,7 +86,7 @@ export default function Create(props) {
                                         name="category_ids"
                                         value={data.category_ids}
                                         className="mt-1 block w-full"
-                                        onChange={handleOnChange}
+                                        onChange={handleChange}
                                         multiple
                                     >
                                         {props.categories.map(category => (
@@ -106,6 +97,12 @@ export default function Create(props) {
                                     </select>
                                 
                                     <InputError message={errors.category} className="mt-2" />
+                                </div>
+                                <div className="mt-4">
+                                    <InputLabel htmlFor="body" value="Body" />
+                                    <LexicalEditor data={props.note_record.body} onChange={handleBodyChange} isEditable={true}/>
+                                    
+                                    <InputError message={errors.body} className="mt-2" />
                                 </div>
                                 
                                 <div className="flex items-center justify-end mt-4">
