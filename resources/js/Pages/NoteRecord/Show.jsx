@@ -3,6 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
+import LexicalEditor from '@/Components/LexicalEditor';
 
 export default function Show(props) {
     const { data, setData, delete: destroy, post, processing, errors } = useForm({
@@ -58,7 +59,7 @@ export default function Show(props) {
                             <div>{props.note_record.categories.map((category) => category.name)}</div>
                             <div>{props.note_record.date}</div>
                             <div>{props.note_record.title}</div>
-                            <div>{props.note_record.body}</div>
+                            <LexicalEditor data={props.note_record.body} isEditable={false}/>
                         </div>          
                     </div>
                     <div className="flex space-between">

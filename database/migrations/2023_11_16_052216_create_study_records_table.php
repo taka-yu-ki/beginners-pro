@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('date');
             $table->integer('time');
             $table->string('title', 50);
-            $table->string('body', 500);
+            $table->json('body');
             $table->timestamps();
         });
     }

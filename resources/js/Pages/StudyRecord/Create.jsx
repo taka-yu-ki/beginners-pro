@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
+import LexicalEditor from '@/Components/LexicalEditor';
 
 export default function Create(props) {
     const { data, setData, post, processing, errors } = useForm({
@@ -16,6 +17,10 @@ export default function Create(props) {
     
     const handleChange = (event) => {
         setData(event.target.name, event.target.value);
+    };
+    
+    const handleBodyChange = (contentAsJSON) => {
+        setData("body", contentAsJSON);
     };
     
     const submit = (e) => {
@@ -84,27 +89,12 @@ export default function Create(props) {
                                 <InputError message={errors.title} className="mt-2" />
                             </div>
                             <div className="mt-4">
-                                <InputLabel htmlFor="body" value="Body" />
-                                
-                                <TextInput
-                                    id="body"
-                                    type="text"
-                                    name="body"
-                                    value={data.body}
-                                    className="mt-1 block w-full"
-                                    onChange={handleChange}
-                                />
-                                
-                                <InputError message={errors.body} className="mt-2" />
-                            </div>
-                            
-                            <div className="mt-4">
                                 <InputLabel htmlFor="category" value="Category" />
                                 <select
                                     id="category"
                                     name="category_id"
                                     value={data.category_id}
-                                    className="mt-1 block w-full"
+                                    className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                     onChange={handleChange}
                                 >
                                     <option value="">--カテゴリーを選んでください--</option>
@@ -117,6 +107,12 @@ export default function Create(props) {
                             
                                 <InputError message={errors.category_id} className="mt-2" />
                             </div>                     
+                            <div className="mt-4">
+                                <InputLabel htmlFor="body" value="Body" />
+                                <LexicalEditor onChange={handleBodyChange} isEditable={true}/>
+                                
+                                <InputError message={errors.body} className="mt-2" />
+                            </div>
                             
                             <div className="flex items-center justify-end mt-4">
                                 <PrimaryButton className="ml-4" processing={processing}>

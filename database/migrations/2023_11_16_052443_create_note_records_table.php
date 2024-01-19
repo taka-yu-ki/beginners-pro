@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->string('title', 50);
-            $table->string('body', 500);
+            $table->json('body');
             $table->timestamps();
         });
     }

@@ -4,18 +4,23 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
+import LexicalEditor from '@/Components/LexicalEditor';
 
 export default function Edit(props) {
     const { data, setData, patch, processing, errors } = useForm({
         date: props.study_record.date,
         time: props.study_record.time,
         title: props.study_record.title,
-        body: props.study_record.body,
+        body: "",
         category_id: props.study_record.category.id,
     });
     
     const handleChange = (event) => {
         setData(event.target.name, event.target.value);
+    };
+    
+    const handleBodyChange = (contentAsJSON) => {
+        setData("body", contentAsJSON);
     };
     
     const submit = (e) => {
@@ -84,20 +89,6 @@ export default function Edit(props) {
                                     <InputError message={errors.title} className="mt-2" />
                                 </div>
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="body" value="Body" />
-                                    
-                                    <TextInput
-                                        id="body"
-                                        type="text"
-                                        name="body"
-                                        value={data.body}
-                                        className="mt-1 block w-full"
-                                        onChange={handleChange}
-                                    />
-                                    
-                                    <InputError message={errors.body} className="mt-2" />
-                                </div>
-                                <div className="mt-4">
                                     <InputLabel htmlFor="category_id" value="Category" />
                                     <select
                                         id="category_id"
@@ -114,6 +105,12 @@ export default function Edit(props) {
                                     </select>
                                 
                                     <InputError message={errors.category_id} className="mt-2" />
+                                </div>
+                                <div className="mt-4">
+                                    <InputLabel htmlFor="body" value="Body" />
+                                    <LexicalEditor data={props.study_record.body} onChange={handleBodyChange} isEditable={true}/>
+                                    
+                                    <InputError message={errors.body} className="mt-2" />
                                 </div>
                                 
                                 <div className="flex items-center justify-end mt-4">
