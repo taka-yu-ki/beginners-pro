@@ -45,18 +45,7 @@ export default function Index(props) {
                         <div className="p-5">目標を設定してください</div>
                     </div>
                 )}
-                {props.auth.user.goal_time ? (
-                    <div className="w-5/6 h-52 m-auto bg-white rounded-md overflow-hidden text-center">
-                        <div className="p-2 bg-gray-300">目標時間</div>
-                        <div className="p-2">{format_time(props.week_time)} / {format_time(props.auth.user.goal_time)}</div>
-                        <GoalTimeBarChart week_time={props.week_time} goal_time={props.auth.user.goal_time}/>
-                    </div>
-                ) : (
-                    <div className="w-5/6 m-auto bg-white rounded-md overflow-hidden text-center">
-                        <div className="p-2 bg-gray-300">目標時間</div>
-                        <div className="p-5">目標時間を設定してください</div>
-                    </div>
-                )}
+                <GoalTimeBarChart week_time={props.week_time} goal_time={props.auth.user.goal_time}/>
             </div>
             <div className="py-20">
                 <div className="flex justify-center mb-5">
