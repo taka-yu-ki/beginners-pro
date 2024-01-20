@@ -94,7 +94,16 @@ class StudyRecordController extends Controller
             ->orderBy('time', 'desc')
             ->get();
        
-        return Inertia::render('StudyRecord/Index', ['study_records' => $study_records, 'today_time' => $today_time, 'week_time' => $week_time, 'month_time' => $month_time, 'total_time' => $total_time, 'bar_chart_week' => $bar_chart_week, 'categories' => $categories, 'pie_chart_data' => $pie_chart_data]);
+        return Inertia::render('StudyRecord/Index', [
+            'study_records' => $study_records, 
+            'today_time' => $today_time, 
+            'week_time' => $week_time, 
+            'month_time' => $month_time, 
+            'total_time' => $total_time, 
+            'bar_chart_week' => $bar_chart_week, 
+            'categories' => $categories, 
+            'pie_chart_data' => $pie_chart_data
+        ]);
     }
 
     public function create() {
@@ -230,6 +239,15 @@ class StudyRecordController extends Controller
             ->orderBy('time', 'desc')
             ->get();
        
-        return Inertia::render('StudyRecord/Community', ['study_records' => $study_records, 'today_time' => $today_time, 'week_time' => $week_time, 'month_time' => $month_time, 'total_time' => $total_time, 'bar_chart_week' => $bar_chart_week, 'categories' => $categories, 'pie_chart_data' => $pie_chart_data]);
+        return Inertia::render('StudyRecord/Community', [
+            'study_records' => $study_records, 
+            'today_time' => $today_time, 
+            'week_time' => $week_time, 
+            'month_time' => $month_time, 
+            'total_time' => $total_time, 
+            'bar_chart_week' => $bar_chart_week, 
+            'categories' => $categories, 
+            'pie_chart_data' => $pie_chart_data
+        ]);
     }
 }

@@ -2,7 +2,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { startOfWeek, add, format } from 'date-fns';
 
 
-export default function BarChartComponent({data, categories}) {
+export default function BarChartComponent({data = {}, categories = []}) {
 
   const format_this_week = () => {
     const default_data = [];
