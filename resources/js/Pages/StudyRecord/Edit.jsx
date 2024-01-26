@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm} from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -33,9 +33,17 @@ export default function Edit(props) {
             auth={props.auth}
             errors={props.errors}
             header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                StudyRecords
-            </h2>
+                <div className="flex justify-between">
+                    <div className="font-semibold text-xl text-gray-800">
+                        学習記録 編集
+                    </div>
+                    <Link
+                        href={route("study_record.show", props.study_record.id)}
+                        className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                        戻る
+                    </Link>
+                </div>
             }
         >
             <Head title="Study_records Edit" />

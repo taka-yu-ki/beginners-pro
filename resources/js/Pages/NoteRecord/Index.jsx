@@ -4,33 +4,20 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import GoalTimeBarChart from "@/Components/GoalTimeBarChart";
 
 export default function Index(props) {
-    
-    const format_time = (time) => {
-        const hours = Math.floor(time / 60);
-        const minutes = time % 60;
-      
-        if (hours === 0) {
-            return `${minutes} 分`;
-        } 
-        
-        if (minutes === 0) {
-            return `${hours} 時間`;
-        }
-        
-        return `${hours} 時間 ${minutes} 分`;
-    };
-    
     return (
         <AuthenticatedLayout
-          auth={props.auth}
-          errors={props.errors}
-          header={
-            <div>
-                <Link href={route("note_record.create")}>
-                    <PrimaryButton type="button">新規作成</PrimaryButton>
-                </Link>
-            </div>
-          }
+            auth={props.auth}
+            errors={props.errors}
+            header={
+                <div className="flex justify-between">
+                    <div className="font-semibold text-xl text-gray-800">
+                        ノート 一覧
+                    </div>
+                    <Link href={route("note_record.create")}>
+                        <PrimaryButton type="button">新規作成</PrimaryButton>
+                    </Link>
+                </div>
+            }
         >
             <Head title="Note_records Index" />
             <div className="py-10">

@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm  } from '@inertiajs/react';
+import { Head, Link, useForm  } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function IndexFollowings(props) {
@@ -20,9 +20,17 @@ export default function IndexFollowings(props) {
             auth={props.auth}
             errors={props.errors}
             header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Follower
-            </h2>
+                <div className="flex justify-between">
+                    <div className="font-semibold text-xl text-gray-800">
+                        フォロー
+                    </div>
+                    <Link
+                        href={route("user.show", props.user_id)}
+                        className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                        戻る
+                    </Link>
+                </div>
             }
         >
             <Head title="User Follower" />

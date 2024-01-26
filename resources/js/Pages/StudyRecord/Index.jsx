@@ -28,7 +28,10 @@ export default function Index(props) {
             auth={props.auth}
             errors={props.errors}
             header={
-                <div>
+                <div className="flex justify-between">
+                    <div className="font-semibold text-xl text-gray-800">
+                        学習記録 一覧
+                    </div>
                     <Link href={route("study_record.create")}>
                         <PrimaryButton type="button">新規作成</PrimaryButton>
                     </Link>

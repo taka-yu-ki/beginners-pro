@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm} from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -37,9 +37,17 @@ export default function Create(props) {
             auth={props.auth}
             errors={props.errors}
             header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                NoteRecords
-            </h2>
+            <div className="flex justify-between">
+                <div className="font-semibold text-xl text-gray-800">
+                    ノート 編集
+                </div>
+                <Link
+                    href={route("note_record.show", props.note_record.id)}
+                    className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
+                    戻る
+                </Link>
+            </div>
             }
         >
             <Head title="Note_records Edit" />

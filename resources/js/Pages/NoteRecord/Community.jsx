@@ -22,15 +22,18 @@ export default function Index(props) {
     
     return (
         <AuthenticatedLayout
-          auth={props.auth}
-          errors={props.errors}
-          header={
-            <div>
-                <Link href={route("note_record.create")}>
-                    <PrimaryButton type="button">新規作成</PrimaryButton>
-                </Link>
-            </div>
-          }
+            auth={props.auth}
+            errors={props.errors}
+            header={
+                <div className="flex justify-between">
+                    <div className="font-semibold text-xl text-gray-800">
+                        ノート 一覧
+                    </div>
+                    <Link href={route("note_record.create")}>
+                        <PrimaryButton type="button">新規作成</PrimaryButton>
+                    </Link>
+                </div>
+            }
         >
             <Head title="Note_records Index" />
             <div className="py-10">
