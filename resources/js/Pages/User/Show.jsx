@@ -8,7 +8,11 @@ export default function Show(props) {
     
     const handleTabChange = (tab) => {
         setSelectedTab(tab);
-    }
+    };
+    
+    const handleBack = () => {
+        window.history.back();
+    };
     
     const handleFollow = async (id) => {
         await post(route("user.follow", id));
@@ -25,9 +29,17 @@ export default function Show(props) {
             auth={props.auth}
             errors={props.errors}
             header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                User
-            </h2>
+                <div className="flex justify-between">
+                    <div className="font-semibold text-xl text-gray-800">
+                        ユーザー
+                    </div>
+                    <Link
+                        onClick={handleBack}
+                        className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                        戻る
+                    </Link>
+                </div>
             }
         >
             <Head title="User Show" />

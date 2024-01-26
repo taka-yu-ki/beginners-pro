@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm} from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -22,13 +22,21 @@ export default function Create(props) {
     
   return (
     <AuthenticatedLayout
-      auth={props.auth}
-      errors={props.errors}
-      header={
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-            Category Create
-        </h2>
-      }
+        auth={props.auth}
+        errors={props.errors}
+        header={
+            <div className="flex justify-between">
+                <div className="font-semibold text-xl text-gray-800">
+                    カテゴリー 作成
+                </div>
+                <Link
+                    href={route("category.index")}
+                    className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
+                    一覧に戻る
+                </Link>
+            </div>
+        }
     >
         <Head title="Category Create" />
         <div className="py-12">
