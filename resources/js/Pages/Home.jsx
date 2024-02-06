@@ -1,4 +1,4 @@
-import { Link, Head } from '@inertiajs/react';
+import { Link, Head } from "@inertiajs/react";
 
 export default function Welcome(props) {
     return (
@@ -14,7 +14,7 @@ export default function Welcome(props) {
                             <div>
                                 {props.auth.user ? (
                                     <Link
-                                        href={route('study_record.index')}
+                                        href={route("study_record.index")}
                                         className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                                     >
                                         記録をする
@@ -22,14 +22,14 @@ export default function Welcome(props) {
                                 ) : (
                                     <div>
                                         <Link
-                                            href={route('login')}
+                                            href={route("login")}
                                             className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                                         >
                                             ログイン
                                         </Link>
                 
                                         <Link
-                                            href={route('register')}
+                                            href={route("register")}
                                             className="ml-4 font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                                         >
                                             新規登録

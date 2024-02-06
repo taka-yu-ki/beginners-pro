@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link } from "@inertiajs/react";
 
 export default function Guest({ children }) {
     return (
@@ -12,7 +12,7 @@ export default function Guest({ children }) {
                             </div>
                             <div>
                                     <Link
-                                        href='/'
+                                        href="/"
                                         className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                                     >
                                         Topに戻る

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
+use Inertia\Inertia;
 use App\Models\StudyRecord;
 use App\Models\StudyRecordComment;
 

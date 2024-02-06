@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 export default function PieChartComponent({data = []}) {
     
@@ -9,7 +9,7 @@ export default function PieChartComponent({data = []}) {
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
     
         return (
-            <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
                 {`${(percent * 100).toFixed(0)}%`}
             </text>
         );

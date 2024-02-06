@@ -29,7 +29,7 @@ class StudyRecordComment extends Model
     
     protected function createdAt(): Attribute {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('Y-m-d H:i:s'),
+            get: fn ($value) => Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d H:i:s'),
         );
     }
 }

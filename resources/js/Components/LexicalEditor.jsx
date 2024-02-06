@@ -64,7 +64,7 @@ const theme = {
     },
 };
 
-export default function LexicalEditor({onChange, data, isEditable}) {
+export default function LexicalEditor({onChange = "", data, isEditable}) {
     const initialConfig = {
         namespace: "MyEditor",
         onError: (error) => console.error(error),
@@ -81,28 +81,31 @@ export default function LexicalEditor({onChange, data, isEditable}) {
     };
     
     return (
-        <div className="mt-1 border border-gray-300 rounded-md shadow-sm">
+        <div>
             {isEditable ? (
-                <LexicalComposer initialConfig={initialConfig}>
-                    <ToolbarPlugin />
-                    <div className="relative p-6 border-t border-gray-300">
-                        <RichTextPlugin
-                            contentEditable={<ContentEditable className="outline-none" />}
-                            placeholder={<div className="absolute text-gray-500 top-6 left-6 pointer-events-none user-select-none">学習を記録しよう</div>}
-                            ErrorBoundary={LexicalErrorBoundary}
-                        />
-                        <AutoFocusPlugin />
-                    </div>
-                    <HistoryPlugin />
-                    <TabIndentationPlugin />
-                    <ListPlugin />
-                    <CodeHighlightPlugin />
-                    <ExportPlugin onChange={onChange} />
-                    <ImportPlugin defaultContentAsJSON={data}/>
-                </LexicalComposer>
+                <div className="mt-1 border border-gray-300 rounded-md shadow-sm">
+                    <LexicalComposer initialConfig={initialConfig}>
+                        <ToolbarPlugin />
+                        <div className="relative p-6 border-t border-gray-300" style={{ minHeight: "300px" }}>
+                            <RichTextPlugin
+                                contentEditable={<ContentEditable className="outline-none" />}
+                                placeholder={<div className="absolute text-gray-500 top-6 left-6 pointer-events-none user-select-none">学習を記録しよう</div>}
+                                ErrorBoundary={LexicalErrorBoundary}
+                            />
+                            <AutoFocusPlugin />
+                        </div>
+                        <HistoryPlugin />
+                        <TabIndentationPlugin />
+                        <ListPlugin />
+                        <CodeHighlightPlugin />
+                        <ExportPlugin onChange={onChange} />
+                        <ImportPlugin defaultContentAsJSON={data}/>
+                    </LexicalComposer>
+                </div>
             ) : (
+            <div className="border border-gray-300 rounded-md">
                 <LexicalComposer initialConfig={initialConfig}>
-                    <div className="relative p-6 border-t border-gray-300">
+                    <div className="relative p-6">
                         <RichTextPlugin
                             contentEditable={<ContentEditable className="outline-none" />}
                         />
@@ -110,6 +113,7 @@ export default function LexicalEditor({onChange, data, isEditable}) {
                     <CodeHighlightPlugin />
                     <ImportPlugin defaultContentAsJSON={data}/>
                 </LexicalComposer>
+            </div>
             )}
         </div>
     );

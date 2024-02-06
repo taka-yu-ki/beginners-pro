@@ -1,16 +1,16 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { startOfWeek, add, format } from 'date-fns';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { startOfWeek, add, format } from "date-fns";
+import TimeFormatter from "@/Components/TimeFormatter";
 
 
 export default function BarChartComponent({data = {}, categories = []}) {
-
   const format_this_week = () => {
     const default_data = [];
     
     const start_of_this_week = startOfWeek(new Date(), { weekStartsOn: 1 });
     for (let i = 0; i < 7; i++) {
-      const date = format(add(start_of_this_week, { days: i}), 'yyyy-MM-dd');
-      default_data.push({"date": date});
+        const date = format(add(start_of_this_week, { days: i}), "yyyy-MM-dd");
+        default_data.push({"date": date});
     }
     
     return default_data;
@@ -18,22 +18,7 @@ export default function BarChartComponent({data = {}, categories = []}) {
   
   const data_array = Object.values(data);
 
-  const format_time = (time) => {
-    const hours = Math.floor(time / 60);
-    const minutes = time % 60;
-      
-    if (hours === 0) {
-      return `${minutes} 分`;
-    } 
-    
-    if (minutes === 0) {
-      return `${hours} 時間`;
-    }
-    
-    return `${hours} 時間 ${minutes} 分`;
-  };
-  
-    return (
+  return (
       <ResponsiveContainer width="100%" height="90%">
         <BarChart
           data={data_array[0] || format_this_week()}
@@ -70,7 +55,7 @@ export default function BarChartComponent({data = {}, categories = []}) {
               fontSize={12}
               fill="#666"
             >
-              {format_time(payload.value)}
+              <TimeFormatter time={payload.value} />
             </text>
           )}                
         />
