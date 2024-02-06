@@ -35,4 +35,10 @@ class NoteRecord extends Model
     public function note_record_comments() {
         return $this->hasMany(NoteRecordComment::class);
     }
+    
+    protected function createdAt(): Attribute {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->timezone('Asia/Tokyo')->format('Y-m-d H:i:s'),
+        );
+    }
 }

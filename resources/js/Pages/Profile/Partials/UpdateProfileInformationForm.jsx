@@ -1,9 +1,9 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
-import { Transition } from '@headlessui/react';
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { Link, useForm, usePage } from "@inertiajs/react";
+import { Transition } from "@headlessui/react";
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
     const user = usePage().props.auth.user;
@@ -33,14 +33,14 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             await setData("delete_image", true);
 
             post(
-                route('profile.update'),
+                route("profile.update"),
                 {
-                    _method: 'PATCH',
+                    _method: "PATCH",
                     ...data.delete_image,
                 },
             );
             
-            document.getElementById('preview').src = '/images/user_icon.png';
+            document.getElementById("preview").src = "/images/user_icon.png";
         }
     };
     
@@ -48,14 +48,14 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         e.preventDefault();
         
         post(
-            route('profile.update'),
+            route("profile.update"),
             {
-                _method: 'PATCH',
+                _method: "PATCH",
                 ...data,
             },
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    "Content-Type": "multipart/form-data",
                 },
             },
         );
@@ -74,7 +74,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                             <img
                                 id="preview"
                                 class="absolute inset-0 w-full h-full object-cover rounded-full"
-                                src={user.image_url ? user.image_url : '/images/user_icon.png'}
+                                src={user.image_url ? user.image_url : "/images/user_icon.png"}
                                 alt=""
                             />
                         </div>
@@ -104,6 +104,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     </div>
                     <InputError className="mt-2" message={errors.image} />
                 </div>
+                
                 <div>
                     <InputLabel htmlFor="name" value="名前" />
 
@@ -111,7 +112,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         id="name"
                         className="mt-1 block w-full"
                         value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e) => setData("name", e.target.value)}
                         required
                         isFocused
                         autoComplete="name"
@@ -119,7 +120,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                     <InputError className="mt-2" message={errors.name} />
                 </div>
-
+                
                 <div>
                     <InputLabel htmlFor="email" value="メールアドレス" />
 
@@ -128,14 +129,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         type="email"
                         className="mt-1 block w-full"
                         value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData("email", e.target.value)}
                         required
                     />
 
                     <InputError className="mt-2" message={errors.email} />
                 </div>
                 
-
                 <div>
                     <InputLabel htmlFor="text" value="自己紹介文" />
 
@@ -143,12 +143,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         id="text"
                         className="mt-1 block w-full"
                         value={data.text}
-                        onChange={(e) => setData('text', e.target.value)}
+                        onChange={(e) => setData("text", e.target.value)}
                         isFocused
                     />
 
                     <InputError className="mt-2" message={errors.text} />
                 </div>
+                
                 <div>
                     <InputLabel htmlFor="goal_text" value="目標" />
 
@@ -156,13 +157,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         id="goal_text"
                         className="mt-1 block w-full"
                         value={data.goal_text}
-                        onChange={(e) => setData('goal_text', e.target.value)}
+                        onChange={(e) => setData("goal_text", e.target.value)}
                         isFocused
                     />
 
                     <InputError className="mt-2" message={errors.goal_text} />
                 </div>
-
+                
                 <div>
                     <InputLabel htmlFor="goal_time" value="目標時間" />
 
@@ -171,7 +172,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         type="number"
                         className="mt-1 block w-full"
                         value={data.goal_time}
-                        onChange={(e) => setData('goal_time', e.target.value)}
+                        onChange={(e) => setData("goal_time", e.target.value)}
                         isFocused
                     />
 
@@ -183,7 +184,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         <p className="text-sm mt-2 text-gray-800">
                             Your email address is unverified.
                             <Link
-                                href={route('verification.send')}
+                                href={route("verification.send")}
                                 method="post"
                                 as="button"
                                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -192,7 +193,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                             </Link>
                         </p>
 
-                        {status === 'verification-link-sent' && (
+                        {status === "verification-link-sent" && (
                             <div className="mt-2 font-medium text-sm text-green-600">
                                 A new verification link has been sent to your email address.
                             </div>
@@ -201,7 +202,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton disabled={processing}>保存</PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -209,7 +210,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         leaveTo="opacity-0"
                         className="transition ease-in-out"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600">保存しました</p>
                     </Transition>
                 </div>
             </form>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 export default function ImportPlugin({defaultContentAsJSON}) {
     const [editor] = useLexicalComposerContext();

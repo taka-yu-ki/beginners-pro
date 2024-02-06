@@ -1,9 +1,9 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import PrimaryButton from '@/Components/PrimaryButton';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Edit(props) {
     const { data, setData, patch, processing, errors } = useForm({
@@ -17,7 +17,7 @@ export default function Edit(props) {
     
     const submit = (e) => {
         e.preventDefault();
-        patch(route('category.update', props.category.id));
+        patch(route("category.update", props.category.id));
     };
     
   return (

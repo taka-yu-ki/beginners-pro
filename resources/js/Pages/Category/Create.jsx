@@ -1,9 +1,9 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import PrimaryButton from '@/Components/PrimaryButton';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Create(props) {
     const { data, setData, post, processing, errors } = useForm({
@@ -17,7 +17,7 @@ export default function Create(props) {
     
     const submit = (e) => {
         e.preventDefault();
-        post(route('category.store'));
+        post(route("category.store"));
     };
     
   return (
@@ -59,7 +59,7 @@ export default function Create(props) {
                                     onChange={handleOnChange}
                                 />
                                 
-                                <InputError message={errors.date} className="mt-2" />
+                                <InputError message={errors.name} className="mt-2" />
                             </div>
                             
                             <div>
@@ -75,11 +75,11 @@ export default function Create(props) {
                                     onChange={handleOnChange}
                                 />
                                 
-                                <InputError message={errors.date} className="mt-2" />
+                                <InputError message={errors.color} className="mt-2" />
                             </div>
                             
-                            <div className="flex items-center justify-end mt-4">
-                                <PrimaryButton className="ml-4" processing={processing}>
+                            <div className="flex items-center justify-end mt-5">
+                                <PrimaryButton processing={processing}>
                                     作成
                                 </PrimaryButton>
                             </div>

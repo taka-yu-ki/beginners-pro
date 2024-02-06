@@ -1,9 +1,10 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm  } from '@inertiajs/react';
-import PrimaryButton from '@/Components/PrimaryButton';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, useForm  } from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton";
+import UserIcon from "@/Components/UserIcon";
 
 export default function IndexFollowings(props) {
-    const { delete: destroy, post, processing, errors } = useForm();
+    const { delete: destroy, post, processing } = useForm();
 
     const handleFollow = async (id) => {
         await post(route("user.follow", id));
@@ -11,7 +12,7 @@ export default function IndexFollowings(props) {
 
     const handleUnfollow = async (id) => {
         await destroy(route("user.unfollow", id));
-    }
+    };
     
     const isfollowed = (id) => props.my_following_ids.includes(id);
     
@@ -34,28 +35,41 @@ export default function IndexFollowings(props) {
             }
         >
             <Head title="User Follower" />
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="">
+            <div className="py-20">
+                <div className="w-5/6 px-2 py-10 m-auto bg-gray-200 rounded-lg">
+                    <div className="text-center">一覧</div>
+                    <div className="border-y border-gray-500 overflow-y-auto max-h-[500px]">
                         {props.followings.map((user) => (
-                            <div key={user.id} className="flex p-5 items-center bg-slate-100 border">
-                                <div className="mr-3">
-                                    <img
-                                        className="w-12 h-12 rounded-full ring-2 ring-white"
-                                        src={ user.image_url ? user.image_url : '/images/user_icon.png'}
-                                        alt=""
-                                    />
-                                </div>
+                            <div className="flex relative p-5 items-center bg-white hover:bg-slate-50">
+                                <Link 
+                                    href={route("user.show", user.id)}
+                                    key={user.id} 
+                                    className="absolute inset-0"
+                                >
+                                </Link>
+                                <UserIcon user={user} linkClassName="mr-3" imgClassName="w-12 h-12" />
                                 <div className="flex-auto">
                                     <div className="flex justify-between items-center">
                                         <div className="text-center">{user.name}</div>
                                         {isfollowed(user.id) ? ( 
-                                            <PrimaryButton onClick={() => handleUnfollow(user.id)} processing={processing}>フォローを外す</PrimaryButton>
+                                            <PrimaryButton 
+                                                onClick={() => handleUnfollow(user.id)} 
+                                                processing={processing} 
+                                                className="z-10"
+                                            >
+                                                フォローを外す
+                                            </PrimaryButton>
                                         ) : (
-                                            <PrimaryButton onClick={() => handleFollow(user.id)} processing={processing}>フォローする</PrimaryButton>
+                                            <PrimaryButton 
+                                                onClick={() => handleFollow(user.id)} 
+                                                processing={processing} 
+                                                className="z-10"
+                                            >
+                                                フォローする
+                                            </PrimaryButton>
                                         )}
                                     </div>
-                                    <div className="pt-1">{user.text}</div>
+                                    {user.text && <div className="pt-1">{user.text}</div>}
                                 </div>
                             </div>
                         ))}

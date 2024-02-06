@@ -1,12 +1,26 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import PrimaryButton from '@/Components/PrimaryButton';
-import LexicalEditor from '@/Components/LexicalEditor';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import PrimaryButton from "@/Components/PrimaryButton";
+import LexicalEditor from "@/Components/LexicalEditor";
 
 export default function Edit(props) {
+    const convertMinutesToTime = (time) => {
+        const hours = String(Math.floor(time / 60)).padStart(2, "0");
+        const minutes = String(time % 60).padStart(2, "0");
+        const formatted_time = hours + ":" + minutes;
+        
+        return formatted_time;
+    };
+    
+    const convertTimeToMinutes = (time) => {
+        const [hours, minutes] = time.split(":").map(Number);
+        const formatted_time = (hours * 60) + minutes;
+        setData("time", formatted_time);
+    };
+    
     const { data, setData, patch, processing, errors } = useForm({
         date: props.study_record.date,
         time: props.study_record.time,
@@ -14,18 +28,22 @@ export default function Edit(props) {
         body: "",
         category_id: props.study_record.category.id,
     });
-    
+
     const handleChange = (event) => {
         setData(event.target.name, event.target.value);
+    };
+    
+    const handleTimeChange = (event) => {
+        convertTimeToMinutes(event.target.value);
     };
     
     const handleBodyChange = (contentAsJSON) => {
         setData("body", contentAsJSON);
     };
     
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
-        patch(route('study_record.update', props.study_record.id));
+        patch(route("study_record.update", props.study_record.id));
     };
     
     return (
@@ -54,7 +72,7 @@ export default function Edit(props) {
                             <InputError errors={errors} />
                             <form onSubmit={submit}>
                                 <div>
-                                    <InputLabel htmlFor="date" value="Date" />
+                                    <InputLabel htmlFor="date" value="日付" />
 
                                     <TextInput
                                         id="date"
@@ -69,21 +87,21 @@ export default function Edit(props) {
                                     <InputError message={errors.date} className="mt-2" />
                                 </div>
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="time" value="Time" />
+                                    <InputLabel htmlFor="time" value="時間" />
                                     
                                     <TextInput
                                         id="time"
-                                        type="number"
+                                        type="time"
                                         name="time"
-                                        value={data.time}
+                                        value={convertMinutesToTime(data.time)}
                                         className="mt-1 block w-full"
-                                        onChange={handleChange}
+                                        onChange={handleTimeChange}
                                     />
 
                                     <InputError message={errors.time} className="mt-2" />
                                 </div>
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="title" value="title" />
+                                    <InputLabel htmlFor="title" value="タイトル" />
                                     
                                     <TextInput
                                         id="title"
@@ -97,12 +115,12 @@ export default function Edit(props) {
                                     <InputError message={errors.title} className="mt-2" />
                                 </div>
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="category_id" value="Category" />
+                                    <InputLabel htmlFor="category_id" value="カテゴリー" />
                                     <select
                                         id="category_id"
                                         name="category_id"
                                         value={data.category_id}
-                                        className="mt-1 block w-full"
+                                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                         onChange={handleChange}
                                     >
                                         {props.categories.map(category => (
@@ -115,14 +133,19 @@ export default function Edit(props) {
                                     <InputError message={errors.category_id} className="mt-2" />
                                 </div>
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="body" value="Body" />
-                                    <LexicalEditor data={props.study_record.body} onChange={handleBodyChange} isEditable={true}/>
-                                    
+                                    <div>内容</div>
+                                    <LexicalEditor
+                                        id="body"
+                                        data={props.study_record.body} 
+                                        onChange={handleBodyChange} 
+                                        isEditable={true}
+                                    />
+
                                     <InputError message={errors.body} className="mt-2" />
                                 </div>
                                 
                                 <div className="flex items-center justify-end mt-4">
-                                    <PrimaryButton className="ml-4" processing={processing}>
+                                    <PrimaryButton processing={processing}>
                                         更新
                                     </PrimaryButton>
                                 </div>
