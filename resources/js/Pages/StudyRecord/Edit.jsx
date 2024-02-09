@@ -41,7 +41,7 @@ export default function Edit(props) {
         setData("body", contentAsJSON);
     };
     
-    const submit = async (e) => {
+    const submit = (e) => {
         e.preventDefault();
         patch(route("study_record.update", props.study_record.id));
     };
@@ -65,9 +65,9 @@ export default function Edit(props) {
             }
         >
             <Head title="Study_records Edit" />
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div className="py-20">
+                <div className="w-5/6 m-auto">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
                             <InputError errors={errors} />
                             <form onSubmit={submit}>
@@ -86,6 +86,7 @@ export default function Edit(props) {
                                     
                                     <InputError message={errors.date} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="time" value="時間" />
                                     
@@ -100,6 +101,7 @@ export default function Edit(props) {
 
                                     <InputError message={errors.time} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="title" value="タイトル" />
                                     
@@ -114,6 +116,7 @@ export default function Edit(props) {
                                     
                                     <InputError message={errors.title} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="category_id" value="カテゴリー" />
                                     <select
@@ -132,6 +135,7 @@ export default function Edit(props) {
                                 
                                     <InputError message={errors.category_id} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <div>内容</div>
                                     <LexicalEditor

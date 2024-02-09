@@ -26,11 +26,11 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         }
     };
     
-    const deleteImage = async () => {
+    const deleteImage = () => {
         const shouldDelete = window.confirm("プロフィール画像を削除しますか？");
         
         if (shouldDelete) {
-            await setData("delete_image", true);
+            setData("delete_image", true);
 
             post(
                 route("profile.update"),
