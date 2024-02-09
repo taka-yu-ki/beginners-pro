@@ -1,14 +1,15 @@
 import { useState } from "react";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import UserIcon from "@/Components/UserIcon";
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const { flash } = usePage().props;
 
     return (
         <div className="min-h-screen bg-gray-100 relative">
-            <div className="fixed top-0 left-0 right-0 z-10">
+            <div className="fixed top-0 left-0 right-0 z-40">
                 <div className="mx-auto px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-100">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center">
@@ -79,8 +80,20 @@ export default function Authenticated({ auth, header, children }) {
                         <div className="mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                     </header>
                 )}
-            
-                <div className={(showingNavigationDropdown ? "sm:block" : "hidden") + " hidden w-full h-full"}>
+                
+                {flash.success && (
+                    <div className="py-3 text-center bg-green-300 text-green-700 border-y border-green-500">
+                        {flash.success}
+                    </div>
+                )}
+                
+                {flash.error && (
+                    <div className="py-3 text-center bg-red-300 text-red-700 border-y border-red-500">
+                        {flash.error}
+                    </div>
+                )}
+
+                <div className={(showingNavigationDropdown ? "sm:block" : "hidden") + " hidden w-full h-full z-50"}>
                     <div className="bg-white border-t border-gray-200 fixed inset-y-0 right-0 z-20 w-1/4 border-l border-gray-100">
                         <div className="flex justify-end h-16 px-4 sm:px-6 lg:px-8">
                             <div className="-mr-2 flex items-center">

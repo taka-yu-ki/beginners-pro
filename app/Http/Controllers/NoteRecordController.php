@@ -52,7 +52,7 @@ class NoteRecordController extends Controller
         
         $note_record->categories()->attach($data['category_ids']);
     
-        return redirect()->route('note_record.index');
+        return redirect()->route('note_record.index')->with(['success' => 'ノートを作成しました。']);
     }
 
     public function show(NoteRecord $note_record) {
@@ -80,13 +80,13 @@ class NoteRecordController extends Controller
         
         $note_record->categories()->sync($data['category_ids']);
         
-        return redirect()->route('note_record.index');
+        return redirect()->route('note_record.index')->with(['success' => 'ノートを更新しました。']);
     }
     
     public function destroy(NoteRecord $note_record) {
         $note_record->delete();
         
-        return redirect()->route('note_record.index');
+        return redirect()->route('note_record.index')->with(['success' => 'ノートを削除しました。']);
     }
     
     public function community() {

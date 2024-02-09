@@ -5,11 +5,11 @@ import PrimaryButton from "@/Components/PrimaryButton";
 export default function Index(props) {
     const { delete: destroy } = useForm();
     
-    const handleDelete = async (id) => {
+    const handleDelete = (id) => {
         const shouldDelete = window.confirm("カテゴリーの投稿は全て削除されます。本当によろしいですか。");
         
         if (shouldDelete) {
-            await destroy(route("category.destroy", id));
+            destroy(route("category.destroy", id));
         } 
     };
     

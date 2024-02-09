@@ -24,10 +24,11 @@ class NoteRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => ['required'],
-            'title' => ['required'],
-            'body' => ['required'],
+            'date' => ['required', 'date'],
+            'title' => ['required', 'string', 'max:50'],
+            'body' => ['required', 'json'],
             'category_ids' => ['required', 'array'],
+            'category_ids.*' => ['exists:categories,id'],
         ];
     }
 }

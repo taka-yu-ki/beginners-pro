@@ -70,14 +70,12 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 <div>
                     <InputLabel>プロフィール画像</InputLabel>
                     <div className="mt-1 flex items-center">
-                        <div className="relative w-16 h-16 mr-3 overflow-hidden rounded-full bg-gray-200">
-                            <img
-                                id="preview"
-                                class="absolute inset-0 w-full h-full object-cover rounded-full"
-                                src={user.image_url ? user.image_url : "/images/user_icon.png"}
-                                alt=""
-                            />
-                        </div>
+                        <img
+                            id="preview"
+                            className="w-16 h-16 mr-3 rounded-full ring-2 ring-gray-50"
+                            src={user.image_url ? user.image_url : "/images/user_icon.png"}
+                            alt=""
+                        />
                         <InputLabel
                             htmlFor="image"
                             className="px-4 py-2 rounded-md border border-gray-300 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
@@ -103,6 +101,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         )}
                     </div>
                     <InputError className="mt-2" message={errors.image} />
+                    <InputError className="mt-2" message={errors.delete_image} />
                 </div>
                 
                 <div>

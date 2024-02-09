@@ -124,7 +124,7 @@ class StudyRecordController extends Controller
             'category_id' => $data['category_id'],
         ]);
 
-        return redirect()->route('study_record.index');
+        return redirect()->route('study_record.index')->with(['success' => '学習記録を作成しました。']);
     }
 
     public function show(StudyRecord $study_record) {
@@ -152,13 +152,13 @@ class StudyRecordController extends Controller
             'category_id' => $data['category_id'],
         ]);
 
-        return redirect()->route('study_record.index');
+        return redirect()->route('study_record.index')->with(['success' => '学習記録を更新しました。']);
     }
 
     public function destroy(StudyRecord $study_record) {
         $study_record->delete();
 
-        return redirect()->route('study_record.index');
+        return redirect()->route('study_record.index')->with(['success' => '学習記録を削除しました。']);
     }
     
     public function community() {

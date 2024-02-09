@@ -8,7 +8,7 @@ import UserIcon from "@/Components/UserIcon";
 import TimeFormatter from "@/Components/TimeFormatter";
 
 export default function Show(props) {
-    const { data, setData, delete: destroy, post, processing, errors } = useForm({
+    const { data, setData, delete: destroy, post, processing, errors, reset } = useForm({
         comment: "",
     });
     
@@ -22,7 +22,7 @@ export default function Show(props) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("study_record.comment.store",{ study_record: props.study_record.id }));
+        post(route("study_record.comment.store",{ study_record: props.study_record.id }), { onSuccess: () => reset() });
     };
     
     const handleCommentDelete = (study_record, comment) => {
@@ -81,6 +81,7 @@ export default function Show(props) {
                                     <button 
                                         className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold hover:bg-red-600"
                                         onClick={() => handleUnlike(props.study_record.id)}
+                                        process={processing}
                                     >
                                         {props.like_count} いいね済み
                                     </button>
@@ -88,6 +89,7 @@ export default function Show(props) {
                                     <button 
                                         className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-xs font-semibold hover:bg-gray-200 hover:text-black"
                                         onClick={() => handleLike(props.study_record.id)}
+                                        process={processing}
                                     >
                                         {props.like_count} いいねする
                                     </button>
@@ -148,15 +150,22 @@ export default function Show(props) {
                             <div className="flex-auto px-3 py-1">
                                 <div className="flex justify-between">
                                     <div className="flex">
-                                        <div className="mr-5">{study_record_comment.user.name}</div>
+                                        <Link 
+                                            href={route("user.show", study_record_comment.user.id)}
+                                            className="mr-5"
+                                        >
+                                            {study_record_comment.user.name}
+                                        </Link>
                                         <div>{study_record_comment.created_at}</div>
                                     </div>
                                     { study_record_comment.user.id === props.auth.user.id && (
-                                        <div>
-                                          <Link className="underline" onClick={() => handleCommentDelete(props.study_record.id, study_record_comment.id)}>
+                                        <button 
+                                            className="underline" 
+                                            onClick={() => handleCommentDelete(props.study_record.id, study_record_comment.id)}
+                                            process={processing} 
+                                        >
                                             削除する
-                                          </Link>
-                                        </div>
+                                        </button>
                                     )}
                                 </div>
                                 <div className="py-5">

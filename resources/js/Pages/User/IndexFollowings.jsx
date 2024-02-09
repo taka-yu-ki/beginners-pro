@@ -6,12 +6,12 @@ import UserIcon from "@/Components/UserIcon";
 export default function IndexFollowings(props) {
     const { delete: destroy, post, processing } = useForm();
 
-    const handleFollow = async (id) => {
-        await post(route("user.follow", id));
+    const handleFollow = (id) => {
+        post(route("user.follow", id));
     };
 
-    const handleUnfollow = async (id) => {
-        await destroy(route("user.unfollow", id));
+    const handleUnfollow = (id) => {
+        destroy(route("user.unfollow", id));
     };
     
     const isfollowed = (id) => props.my_following_ids.includes(id);
