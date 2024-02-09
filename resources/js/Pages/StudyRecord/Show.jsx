@@ -29,12 +29,12 @@ export default function Show(props) {
         destroy(route("study_record.comment.destroy", { study_record: study_record, comment: comment }));
     };
     
-    const handleLike = async (id) => {
-        await post(route("study_record.like", id));
+    const handleLike = (id) => {
+        post(route("study_record.like", id));
     };
 
-    const handleUnlike = async (id) => {
-        await destroy(route("study_record.unlike", id));
+    const handleUnlike = (id) => {
+        destroy(route("study_record.unlike", id));
     };
     
     const isLiked = () => props.study_record.study_record_likes.some(like => like.id === props.auth.user.id);

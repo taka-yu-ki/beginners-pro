@@ -75,7 +75,7 @@ export default function Show(props) {
                             <div className="flex">
                                 {isLiked() ? (
                                     <button 
-                                        className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold hover:bg-red-600"
+                                        className="px-4 py-2 ml-5 bg-red-500 text-white rounded-lg text-xs font-semibold hover:bg-red-600"
                                         onClick={() => handleUnlike(props.note_record.id)}
                                         process={processing}
                                     >
@@ -83,7 +83,7 @@ export default function Show(props) {
                                     </button>
                                     ) : (
                                     <button 
-                                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-xs font-semibold hover:bg-gray-200 hover:text-black"
+                                        className="px-4 py-2 ml-5 bg-gray-100 text-gray-700 rounded-lg text-xs font-semibold hover:bg-gray-200 hover:text-black"
                                         onClick={() => handleLike(props.note_record.id)}
                                         process={processing}
                                     >

@@ -86,6 +86,7 @@ export default function Create(props) {
                                     
                                     <InputError message={errors.date} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="time" value="時間" />
                                     
@@ -100,6 +101,7 @@ export default function Create(props) {
                                     
                                     <InputError message={errors.time} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="title" value="タイトル" />
                                     
@@ -114,6 +116,7 @@ export default function Create(props) {
                                     
                                     <InputError message={errors.title} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="category" value="カテゴリー" />
                                     <select
@@ -132,7 +135,8 @@ export default function Create(props) {
                                     </select>
                                 
                                     <InputError message={errors.category_id} className="mt-2" />
-                                </div>                     
+                                </div>  
+                                
                                 <div className="mt-4">
                                     <div>内容</div>
                                     <LexicalEditor 

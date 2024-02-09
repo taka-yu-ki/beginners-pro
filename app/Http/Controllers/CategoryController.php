@@ -20,7 +20,6 @@ class CategoryController extends Controller
     }
     
     public function store(CategoryRequest $request) {
-        abort(500);
         $data = $request->validated();
         
         $category = Category::create([

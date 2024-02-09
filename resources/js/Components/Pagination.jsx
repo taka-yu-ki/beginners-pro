@@ -27,7 +27,7 @@ export default function Pagination({ paginator = {} }) {
     } = paginator;
 
     return (
-        <div className="grid grid-flow-col justify-center gap-4 items-center p-4 text-gray-500">
+        <div className="grid grid-flow-col justify-center gap-2 items-center p-4 text-gray-500">
             <Link
                 href={first_page_url}
                 preserveScroll

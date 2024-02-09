@@ -37,17 +37,17 @@ export default function Create(props) {
             auth={props.auth}
             errors={props.errors}
             header={
-            <div className="flex justify-between">
-                <div className="font-semibold text-xl text-gray-800">
-                    ノート 編集
+                <div className="flex justify-between">
+                    <div className="font-semibold text-xl text-gray-800">
+                        ノート 編集
+                    </div>
+                    <Link
+                        href={route("note_record.show", props.note_record.id)}
+                        className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                        戻る
+                    </Link>
                 </div>
-                <Link
-                    href={route("note_record.show", props.note_record.id)}
-                    className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                >
-                    戻る
-                </Link>
-            </div>
             }
         >
             <Head title="Note_records Edit" />
@@ -87,6 +87,7 @@ export default function Create(props) {
                                     
                                     <InputError message={errors.title} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <InputLabel htmlFor="category" value="カテゴリー" />
                                     <select
@@ -106,6 +107,7 @@ export default function Create(props) {
                                 
                                     <InputError message={errors.category} className="mt-2" />
                                 </div>
+                                
                                 <div className="mt-4">
                                     <div>内容</div>
                                     <LexicalEditor
