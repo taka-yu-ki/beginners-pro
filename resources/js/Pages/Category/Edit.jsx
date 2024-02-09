@@ -62,7 +62,7 @@ export default function Edit(props) {
                                 <InputError message={errors.date} className="mt-2" />
                             </div>
                             
-                            <div>
+                            <div className="mt-4">
                                 <InputLabel htmlFor="color" value="カラー" />
                                 
                                 <TextInput

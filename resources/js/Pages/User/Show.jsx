@@ -16,12 +16,12 @@ export default function Show(props) {
         window.history.back();
     };
     
-    const handleFollow = async (id) => {
-        await post(route("user.follow", id));
+    const handleFollow = (id) => {
+        post(route("user.follow", id));
     };
 
-    const handleUnfollow = async (id) => {
-        await destroy(route("user.unfollow", id));
+    const handleUnfollow = (id) => {
+        destroy(route("user.unfollow", id));
     };
     
     const isfollowed = () => props.user.followers.some(follower => follower.id === props.auth.user.id);

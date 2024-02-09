@@ -24,11 +24,11 @@ class StudyRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => ['required'],
-            'time' => ['required'],
-            'title' => ['required'],
-            'body' => ['required'],
-            'category_id' => ['required'],
+            'date' => ['required', 'date'],
+            'time' => ['required', 'integer', 'min:1', 'max:1440'],
+            'title' => ['required', 'string', 'max:50'],
+            'body' => ['required', 'json'],
+            'category_id' => ['required', 'exists:categories,id'],
         ];
     }
 }

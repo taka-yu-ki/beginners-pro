@@ -24,8 +24,15 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'color' => ['required'],
+            'name' => ['required', 'string', 'max:20'],
+            'color' => ['required','string', 'regex:/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/'],
+        ];
+    }
+    
+    public function attributes()
+    {
+        return [
+            'name' => 'カテゴリー名',        
         ];
     }
 }

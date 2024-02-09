@@ -27,12 +27,12 @@ class FollowController extends Controller
     public function store(User $user) {
         $user->followers()->attach(auth()->id());
         
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'フォローしました。']);
     }
     
     public function destroy(User $user) {
         $user->followers()->detach(auth()->id());
         
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'フォロー解除しました。']);
     }
 }

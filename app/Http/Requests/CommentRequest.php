@@ -24,13 +24,7 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'comment' => 'required',
-        ];
-    }
-    
-    public function messages() {
-        return [
-            'comment.required' => '内容は必須です',
+            'comment' => ['required', 'string', 'max:100'],
         ];
     }
 }

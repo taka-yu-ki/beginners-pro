@@ -7,7 +7,7 @@ import LexicalEditor from "@/Components/LexicalEditor";
 import UserIcon from "@/Components/UserIcon";
 
 export default function Show(props) {
-    const { data, setData, delete: destroy, post, processing, errors } = useForm({
+    const { data, setData, delete: destroy, post, processing, errors, reset } = useForm({
         comment: "",
     });
     
@@ -19,21 +19,21 @@ export default function Show(props) {
         destroy(route("note_record.destroy", id));
     };
 
-    const submit = async (e) => {
+    const submit = (e) => {
         e.preventDefault();
-        await post(route("note_record.comment.store",{ note_record: props.note_record.id }));
+        post(route("note_record.comment.store",{ note_record: props.note_record.id }), { onSuccess: () => reset() });
     };
     
-    const handleCommentDelete = async (note_record, comment) => {
-        await destroy(route("note_record.comment.destroy", { note_record: note_record, comment: comment }));
+    const handleCommentDelete = (note_record, comment) => {
+        destroy(route("note_record.comment.destroy", { note_record: note_record, comment: comment }));
     };
     
-    const handleLike = async (id) => {
-        await post(route("note_record.like", id));
+    const handleLike = (id) => {
+        post(route("note_record.like", id));
     };
 
-    const handleUnlike = async (id) => {
-        await destroy(route("note_record.unlike", id));
+    const handleUnlike = (id) => {
+        destroy(route("note_record.unlike", id));
     };
     
     const isLiked = () => props.note_record.note_record_likes.some(like => like.id === props.auth.user.id);
@@ -77,6 +77,7 @@ export default function Show(props) {
                                     <button 
                                         className="px-4 py-2 bg-red-500 text-white rounded-lg text-xs font-semibold hover:bg-red-600"
                                         onClick={() => handleUnlike(props.note_record.id)}
+                                        process={processing}
                                     >
                                         {props.like_count} いいね済み
                                     </button>
@@ -84,6 +85,7 @@ export default function Show(props) {
                                     <button 
                                         className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-xs font-semibold hover:bg-gray-200 hover:text-black"
                                         onClick={() => handleLike(props.note_record.id)}
+                                        process={processing}
                                     >
                                         {props.like_count} いいねする
                                     </button>
@@ -136,7 +138,7 @@ export default function Show(props) {
                     </form>
                 </div>
                 <div className="w-5/6 m-auto">
-                    { props.note_record.note_record_comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((note_record_comment) => { return (
+                    {props.note_record.note_record_comments.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((note_record_comment) => { return (
                         <div className="border-t border-slate-300 p-3 flex">
                             <div className="flex-none inline-block">
                                 <UserIcon user={note_record_comment.user} imgClassName="w-8 h-8"/>
@@ -144,15 +146,22 @@ export default function Show(props) {
                             <div className="flex-auto px-3 py-1">
                                 <div className="flex justify-between">
                                     <div className="flex">
-                                        <div className="mr-5">{note_record_comment.user.name}</div>
+                                        <Link 
+                                            href={route("user.show", note_record_comment.user.id)}
+                                            className="mr-5"
+                                        >
+                                            {note_record_comment.user.name}
+                                        </Link>
                                         <div>{note_record_comment.created_at}</div>
                                     </div>
-                                    { note_record_comment.user.id === props.auth.user.id && (
-                                        <div>
-                                          <Link className="underline" onClick={() => handleCommentDelete(props.note_record.id, note_record_comment.id)}>
+                                    {note_record_comment.user.id === props.auth.user.id && (
+                                        <button 
+                                            className="underline" 
+                                            onClick={() => handleCommentDelete(props.note_record.id, note_record_comment.id)}
+                                            process={processing} 
+                                        >
                                             削除する
-                                          </Link>
-                                        </div>
+                                        </button>
                                     )}
                                 </div>
                                 <div className="py-5">

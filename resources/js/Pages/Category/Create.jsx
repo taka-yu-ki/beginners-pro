@@ -12,7 +12,7 @@ export default function Create(props) {
     });
     
     const handleOnChange = (event) => {
-            setData(event.target.name, event.target.value);
+        setData(event.target.name, event.target.value);
     };
     
     const submit = (e) => {
@@ -62,7 +62,7 @@ export default function Create(props) {
                                 <InputError message={errors.name} className="mt-2" />
                             </div>
                             
-                            <div>
+                            <div className="mt-4">
                                 <InputLabel htmlFor="color" value="カラー" />
                                 
                                 <TextInput
@@ -78,7 +78,7 @@ export default function Create(props) {
                                 <InputError message={errors.color} className="mt-2" />
                             </div>
                             
-                            <div className="flex items-center justify-end mt-5">
+                            <div className="flex items-center justify-end mt-4">
                                 <PrimaryButton processing={processing}>
                                     作成
                                 </PrimaryButton>

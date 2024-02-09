@@ -20,15 +20,16 @@ class CategoryController extends Controller
     }
     
     public function store(CategoryRequest $request) {
+        abort(500);
         $data = $request->validated();
-    
+        
         $category = Category::create([
             'user_id' => auth()->id(),
             'name' => $data['name'],
             'color' => $data['color'],
         ]);
-    
-        return redirect()->route('category.index');
+            
+        return redirect()->route('category.index')->with(['success' => 'カテゴリーを作成しました。']);
     }
     
     public function edit(Category $category) {
@@ -43,12 +44,12 @@ class CategoryController extends Controller
             'color' => $data['color'],
         ]);
         
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with(['success' => 'カテゴリーを更新しました。']);
     }
     
     public function destroy(Category $category) {
         $category->delete();
         
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with(['success' => 'カテゴリーを削除しました。']);
     }
 }
