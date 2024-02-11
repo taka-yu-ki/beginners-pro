@@ -90,16 +90,13 @@ class NoteRecordController extends Controller
     }
     
     public function community() {
-        
-        // ログインユーザーとフォローユーザーの投稿
+        // 全ユーザーの投稿
         $note_records = NoteRecord::query()
             ->with('user', 'categories')
-            ->whereIn('user_id', auth()->user()->followings()->pluck('following_user_id'))
-            ->orWhere('user_id', auth()->id())
             ->orderBy('date', 'desc')
             ->orderBy('updated_at', 'desc')
             ->get();
-            
+
         // 学習時間
         $start_of_this_week = Carbon::now()->startOfWeek();
         
