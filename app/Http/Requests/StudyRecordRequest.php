@@ -31,4 +31,12 @@ class StudyRecordRequest extends FormRequest
             'category_id' => ['required', 'exists:categories,id'],
         ];
     }
+    
+    public function messages()
+    {
+        return [
+            'time.min' => '1分以上で設定してください。'
+            'time.max' => '24時間以内で設定してください。',
+        ];
+    }
 }
