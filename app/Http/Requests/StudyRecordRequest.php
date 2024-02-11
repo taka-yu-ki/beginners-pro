@@ -24,7 +24,7 @@ class StudyRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => ['required', 'date'],
+            'date' => ['required', 'date', 'before_or_equal:today'],
             'time' => ['required', 'integer', 'min:1', 'max:1440'],
             'title' => ['required', 'string', 'max:50'],
             'body' => ['required', 'json'],

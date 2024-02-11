@@ -24,7 +24,7 @@ class NoteRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => ['required', 'date'],
+            'date' => ['required', 'date', 'before_or_equal:today'],
             'title' => ['required', 'string', 'max:50'],
             'body' => ['required', 'json'],
             'category_ids' => ['required', 'array'],

@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import { Head, Link, useForm, useRemember } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -10,6 +11,13 @@ export default function Create(props) {
         name: "",
         color: "#000000",
     });
+    
+    const [nameLength, setNameLength] = useRemember(0);
+    const maxNameLength = 20;
+    
+    useEffect(() => {
+        setNameLength(data.name.length);
+    }, [data.name]);
     
     const handleOnChange = (event) => {
         setData(event.target.name, event.target.value);
@@ -46,8 +54,10 @@ export default function Create(props) {
                             <InputError errors={errors} />
                             <form onSubmit={submit}>
                                 <div>
-                                    <InputLabel htmlFor="name" value="カテゴリー名" />
-                                    
+                                    <div className="flex justify-between">
+                                        <InputLabel htmlFor="name" value="カテゴリー名" />
+                                        <div>{nameLength} / {maxNameLength}</div>
+                                    </div>
                                     <TextInput
                                         id="name"
                                         type="text"
@@ -56,6 +66,8 @@ export default function Create(props) {
                                         className="mt-1 block w-full"
                                         isFocused={true}
                                         onChange={handleOnChange}
+                                        required
+                                        maxlength={maxNameLength}
                                     />
                                     
                                     <InputError message={errors.name} className="mt-2" />
@@ -63,7 +75,6 @@ export default function Create(props) {
                                 
                                 <div className="mt-4">
                                     <InputLabel htmlFor="color" value="カラー" />
-                                    
                                     <TextInput
                                         id="color"
                                         type="color"
@@ -72,6 +83,8 @@ export default function Create(props) {
                                         className="mt-1 block w-1/5"
                                         isFocused={true}
                                         onChange={handleOnChange}
+                                        required
+                                        pattern="^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
                                     />
                                     
                                     <InputError message={errors.color} className="mt-2" />

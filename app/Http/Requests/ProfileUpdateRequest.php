@@ -22,7 +22,7 @@ class ProfileUpdateRequest extends FormRequest
             'image' => ['nullable', 'file'],
             'delete_image' => ['nullable', 'boolean'],
             'goal_text' => ['nullable', 'string', 'max:100'],
-            'goal_time' => ['nullable', 'integer'],
+            'goal_time' => ['nullable', 'integer', 'max:10080'],
         ];
     }
 }

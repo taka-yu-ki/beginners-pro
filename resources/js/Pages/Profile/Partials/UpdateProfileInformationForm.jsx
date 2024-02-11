@@ -2,10 +2,22 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
+import { Link, useForm, usePage, useRemember } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
+    const convertMinutesToHours = (time) => {
+        const hours = String(Math.floor(time / 60));
+
+        return hours;
+    };
+    
+    const convertHoursToMinutes = (time) => {
+        const minutes = parseFloat(time) * 60;
+        setData("goal_time", minutes);
+    };
+    
     const user = usePage().props.auth.user;
 
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
@@ -17,7 +29,17 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         goal_text: user.goal_text,
         goal_time: user.goal_time,
     });
-
+    
+    const [textLength, setTextLength] = useRemember(0);
+    const [goalTextLength, setGoalTextLength] = useRemember(0);
+    const maxTextLength = 500;
+    const maxGoalTextLength = 100;
+    
+    useEffect(() => {
+        setTextLength(data.text.length);
+        setGoalTextLength(data.goal_text.length);
+    }, [data.text, data.goal_text]);
+    
     const imagePreview = (e) => {
         if (e.target.files.length > 0) {
             let src = URL.createObjectURL(e.target.files[0]);
@@ -42,6 +64,10 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             
             document.getElementById("preview").src = "/images/user_icon.png";
         }
+    };
+    
+    const handleTimeChange = (event) => {
+        convertHoursToMinutes(event.target.value);
     };
     
     const submit = (e) => {
@@ -100,13 +126,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                             </button>
                         )}
                     </div>
+                    
                     <InputError className="mt-2" message={errors.image} />
                     <InputError className="mt-2" message={errors.delete_image} />
                 </div>
                 
                 <div>
                     <InputLabel htmlFor="name" value="名前" />
-
                     <TextInput
                         id="name"
                         className="mt-1 block w-full"
@@ -122,7 +148,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 
                 <div>
                     <InputLabel htmlFor="email" value="メールアドレス" />
-
                     <TextInput
                         id="email"
                         type="email"
@@ -130,49 +155,57 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         value={data.email}
                         onChange={(e) => setData("email", e.target.value)}
                         required
+                        maxlength="255"
                     />
 
                     <InputError className="mt-2" message={errors.email} />
                 </div>
                 
                 <div>
-                    <InputLabel htmlFor="text" value="自己紹介文" />
-
-                    <TextInput
+                    <div className="flex justify-between">
+                        <InputLabel htmlFor="text" value="自己紹介文" />
+                        <div>{textLength} / {maxTextLength}</div>
+                    </div>
+                    <textarea
                         id="text"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                         value={data.text}
                         onChange={(e) => setData("text", e.target.value)}
                         isFocused
+                        rows={5}
+                        maxlength={maxTextLength}
                     />
 
                     <InputError className="mt-2" message={errors.text} />
                 </div>
                 
                 <div>
-                    <InputLabel htmlFor="goal_text" value="目標" />
-
+                    <div className="flex justify-between">
+                        <InputLabel htmlFor="goal_text" value="目標" />
+                        <div>{goalTextLength} / {maxGoalTextLength}</div>
+                    </div>
                     <TextInput
                         id="goal_text"
                         className="mt-1 block w-full"
                         value={data.goal_text}
                         onChange={(e) => setData("goal_text", e.target.value)}
                         isFocused
+                        maxlength={maxGoalTextLength}
                     />
 
                     <InputError className="mt-2" message={errors.goal_text} />
                 </div>
                 
                 <div>
-                    <InputLabel htmlFor="goal_time" value="目標時間" />
-
+                    <InputLabel htmlFor="goal_time" value="週の目標時間（時間）" />
                     <TextInput
                         id="goal_time"
                         type="number"
                         className="mt-1 block w-full"
-                        value={data.goal_time}
-                        onChange={(e) => setData("goal_time", e.target.value)}
+                        value={convertMinutesToHours(data.goal_time)}
+                        onChange={handleTimeChange}
                         isFocused
+                        max="168"
                     />
 
                     <InputError className="mt-2" message={errors.goal_time} />
@@ -181,20 +214,20 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800">
-                            Your email address is unverified.
+                            メールアドレスが未確認です。
                             <Link
                                 href={route("verification.send")}
                                 method="post"
                                 as="button"
                                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                Click here to re-send the verification email.
+                                こちらをクリックして確認メールを再送信してください。
                             </Link>
                         </p>
-
+                
                         {status === "verification-link-sent" && (
                             <div className="mt-2 font-medium text-sm text-green-600">
-                                A new verification link has been sent to your email address.
+                                新しい確認リンクがメールアドレスに送信されました。
                             </div>
                         )}
                     </div>

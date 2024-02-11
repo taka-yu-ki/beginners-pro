@@ -1,10 +1,12 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import { Head, Link, useForm, useRemember } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import LexicalEditor from "@/Components/LexicalEditor";
+import { format } from "date-fns";
 
 export default function Edit(props) {
     const convertMinutesToTime = (time) => {
@@ -28,6 +30,16 @@ export default function Edit(props) {
         body: "",
         category_id: props.study_record.category.id,
     });
+    
+    const [titleLength, setTitleLength] = useRemember(0);
+    const maxTitleLength = 50;
+    
+    useEffect(() => {
+        setTitleLength(data.title.length);
+    }, [data.title]);
+
+    const today = new Date();
+    const todayString = format(today, "yyyy-MM-dd");
 
     const handleChange = (event) => {
         setData(event.target.name, event.target.value);
@@ -73,7 +85,6 @@ export default function Edit(props) {
                             <form onSubmit={submit}>
                                 <div>
                                     <InputLabel htmlFor="date" value="日付" />
-
                                     <TextInput
                                         id="date"
                                         type="date"
@@ -82,6 +93,8 @@ export default function Edit(props) {
                                         className="mt-1 block w-full"
                                         isFocused={true}
                                         onChange={handleChange}
+                                        required
+                                        max={todayString}
                                     />
                                     
                                     <InputError message={errors.date} className="mt-2" />
@@ -89,7 +102,6 @@ export default function Edit(props) {
                                 
                                 <div className="mt-4">
                                     <InputLabel htmlFor="time" value="時間" />
-                                    
                                     <TextInput
                                         id="time"
                                         type="time"
@@ -97,14 +109,19 @@ export default function Edit(props) {
                                         value={convertMinutesToTime(data.time)}
                                         className="mt-1 block w-full"
                                         onChange={handleTimeChange}
+                                        required
+                                        min="00:00"
+                                        max="23:59"
                                     />
 
                                     <InputError message={errors.time} className="mt-2" />
                                 </div>
                                 
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="title" value="タイトル" />
-                                    
+                                    <div className="flex justify-between">
+                                        <InputLabel htmlFor="title" value="タイトル" />
+                                        <div>{titleLength} / {maxTitleLength}</div>
+                                    </div>
                                     <TextInput
                                         id="title"
                                         type="text"
@@ -112,6 +129,8 @@ export default function Edit(props) {
                                         value={data.title}
                                         className="mt-1 block w-full"
                                         onChange={handleChange}
+                                        required
+                                        maxlength={maxTitleLength}
                                     />
                                     
                                     <InputError message={errors.title} className="mt-2" />
@@ -125,6 +144,8 @@ export default function Edit(props) {
                                         value={data.category_id}
                                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                         onChange={handleChange}
+                                        required
+                                        maxlength="20"
                                     >
                                         {props.categories.map(category => (
                                             <option key={category.id} value={category.id}>

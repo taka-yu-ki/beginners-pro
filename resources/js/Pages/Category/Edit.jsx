@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import { Head, Link, useForm, useRemember } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -11,8 +12,15 @@ export default function Edit(props) {
         color: props.category.color,
     });
     
+    const [nameLength, setNameLength] = useRemember(0);
+    const maxNameLength = 20;
+    
+    useEffect(() => {
+        setNameLength(data.name.length);
+    }, [data.name]);
+    
     const handleOnChange = (event) => {
-            setData(event.target.name, event.target.value);
+        setData(event.target.name, event.target.value);
     };
     
     const submit = (e) => {
@@ -46,8 +54,10 @@ export default function Edit(props) {
                             <InputError errors={errors} />
                             <form onSubmit={submit}>
                                 <div>
-                                    <InputLabel htmlFor="name" value="カテゴリー名" />
-                                    
+                                    <div className="flex justify-between">
+                                        <InputLabel htmlFor="name" value="カテゴリー名" />
+                                        <div>{nameLength} / {maxNameLength}</div>
+                                    </div>
                                     <TextInput
                                         id="name"
                                         type="text"
@@ -56,6 +66,8 @@ export default function Edit(props) {
                                         className="mt-1 block w-full"
                                         isFocused={true}
                                         onChange={handleOnChange}
+                                        required
+                                        maxlength={maxNameLength}
                                     />
                                     
                                     <InputError message={errors.date} className="mt-2" />
@@ -63,7 +75,6 @@ export default function Edit(props) {
                                 
                                 <div className="mt-4">
                                     <InputLabel htmlFor="color" value="カラー" />
-                                    
                                     <TextInput
                                         id="color"
                                         type="color"
@@ -72,13 +83,15 @@ export default function Edit(props) {
                                         className="mt-1 block w-1/5"
                                         isFocused={true}
                                         onChange={handleOnChange}
+                                        required
+                                        pattern="^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
                                     />
                                     
                                     <InputError message={errors.date} className="mt-2" />
                                 </div>
                                 
                                 <div className="flex items-center justify-end mt-4">
-                                    <PrimaryButton className="ml-4" processing={processing}>
+                                    <PrimaryButton processing={processing}>
                                         更新
                                     </PrimaryButton>
                                 </div>

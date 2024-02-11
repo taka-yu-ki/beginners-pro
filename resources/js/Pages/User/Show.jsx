@@ -54,12 +54,19 @@ export default function Show(props) {
                             alt=""
                         />
                         <div className="flex-auto ml-5 text-2xl">{props.user.name}</div>
-                        {isfollowed() ? ( 
-                            <PrimaryButton onClick={() => handleUnfollow(props.user.id)} processing={processing}>フォローを外す</PrimaryButton>
-                        ) : (
-                            <PrimaryButton onClick={() => handleFollow(props.user.id)} processing={processing}>フォローする</PrimaryButton>
+                        {props.user.id !== props.auth.user.id && (
+                            (isfollowed() ? ( 
+                                <PrimaryButton onClick={() => handleUnfollow(props.user.id)} processing={processing}>フォローを外す</PrimaryButton>
+                            ) : (
+                                <PrimaryButton onClick={() => handleFollow(props.user.id)} processing={processing}>フォローする</PrimaryButton>
+                            ))
                         )}
                     </div>
+                    {props.user.text && (
+                        <div className="px-10 border-b overflow-y-auto max-h-48 whitespace-pre-wrap">
+                            {props.user.text}
+                        </div>
+                    )}
                     <div className="flex justify-evenly">
                         <Link 
                             href={route("user.followings.index", props.user.id)}

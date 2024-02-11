@@ -17,7 +17,7 @@ export default function GoalTimeBarChart({week_time, goal_time}) {
         <div className="w-5/6 m-auto bg-white rounded-md overflow-hidden text-center">
             {goal_time ? (
                 <div className="h-52">
-                    <div className="p-2 bg-gray-200">目標時間</div>
+                    <div className="p-2 bg-gray-200">今週の目標時間</div>
                     {completed >= 100 ? (
                         <div className="p-2 font-medium bg-yellow-200">
                             <TimeFormatter time={goal_time} /> 達成しました！
