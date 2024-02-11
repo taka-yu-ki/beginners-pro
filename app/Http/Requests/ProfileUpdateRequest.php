@@ -25,4 +25,11 @@ class ProfileUpdateRequest extends FormRequest
             'goal_time' => ['nullable', 'integer', 'max:10080'],
         ];
     }
+    
+    public function messages()
+    {
+        return [
+            'goal_time.max' => '168時間以内で設定してください。'
+        ];
+    }
 }
