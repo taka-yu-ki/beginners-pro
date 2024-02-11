@@ -35,7 +35,7 @@ class StudyRecordRequest extends FormRequest
     public function messages()
     {
         return [
-            'time.min' => '1分以上で設定してください。'
+            'time.min' => '1分以上で設定してください。',
             'time.max' => '24時間以内で設定してください。',
         ];
     }

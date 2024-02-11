@@ -29,7 +29,7 @@ class ProfileUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'goal_time.max' => '168時間以内で設定してください。'
+            'goal_time.max' => '168時間以内で設定してください。',
         ];
     }
 }
