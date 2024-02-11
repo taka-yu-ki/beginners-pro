@@ -25,8 +25,14 @@ class FollowController extends Controller
     }
     
     public function store(User $user) {
-        $user->followers()->attach(auth()->id());
+        $auth_user = auth()->user();
         
+        if ($auth_user->id === $user->id) {
+            return redirect()->back()->with(['error' => '自分自身をフォローすることはできません。']);
+        }
+        
+        $user->followers()->attach(auth()->id());
+            
         return redirect()->back()->with(['success' => 'フォローしました。']);
     }
     

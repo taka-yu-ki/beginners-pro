@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import { Head, Link, useForm, useRemember } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -11,23 +12,35 @@ export default function Show(props) {
         comment: "",
     });
     
-    const handleBack = () => {
-        window.history.back();
-    };
+    const [textLength, setTextLength] = useRemember(0);
+    const maxTextLength = 50;
     
-    const handleDelete = (id) => {
-        destroy(route("note_record.destroy", id));
+    useEffect(() => {
+        setTextLength(data.comment.length);
+    }, [data.comment]);
+    
+    const handleChange = (event) => {
+        setData(event.target.name, event.target.value);
     };
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("note_record.comment.store",{ note_record: props.note_record.id }), { onSuccess: () => reset() });
+        post(route("note_record.comment.store",{ note_record: props.note_record.id }), {
+            onSuccess: () => reset(),
+            preserveScroll: true,
+        });
     };
     
     const handleCommentDelete = (note_record, comment) => {
-        destroy(route("note_record.comment.destroy", { note_record: note_record, comment: comment }));
+        const shouldDelete = window.confirm("コメントを削除します。本当によろしいですか。");
+        
+        if (shouldDelete) {
+            destroy(route("note_record.comment.destroy", { note_record: note_record, comment: comment }), {
+                preserveScroll: true,
+            });
+        }
     };
-    
+
     const handleLike = (id) => {
         post(route("note_record.like", id));
     };
@@ -37,6 +50,18 @@ export default function Show(props) {
     };
     
     const isLiked = () => props.note_record.note_record_likes.some(like => like.id === props.auth.user.id);
+
+    const handleDelete = (id) => {
+        const shouldDelete = window.confirm("ノートを削除します。本当によろしいですか。");
+        
+        if (shouldDelete) {
+            destroy(route("note_record.destroy", id));
+        } 
+    };
+
+    const handleBack = () => {
+        window.history.back();
+    };
     
     return (
         <AuthenticatedLayout
@@ -118,14 +143,18 @@ export default function Show(props) {
                 <div className="w-5/6 mb-5 m-auto">
                     <form onSubmit={submit}>
                         <div className="mt-4">
-                            <InputLabel htmlFor="comment" value="コメント" />
-                                
+                            <div className="flex justify-between">
+                                <InputLabel htmlFor="comment" value="コメント" />
+                                <div>{textLength} / {maxTextLength}</div>
+                            </div>
                             <textarea
                                 id="comment"
                                 name="comment"
                                 value={data.comment}
                                 className="mt-1 block w-full"
-                                onChange={(e) => setData(e.target.name, e.target.value)}
+                                onChange={handleChange}
+                                required
+                                maxlength={maxTextLength}
                             />
                                 
                             <InputError message={errors.comment} className="mt-2" />
@@ -164,8 +193,8 @@ export default function Show(props) {
                                         </button>
                                     )}
                                 </div>
-                                <div className="py-5">
-                                    <p>{note_record_comment.comment}</p>
+                                <div className="py-5 whitespace-pre-wrap">
+                                    {note_record_comment.comment}
                                 </div>
                             </div>
                         </div>

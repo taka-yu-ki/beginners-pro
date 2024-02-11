@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect } from "react";
+import { Head, Link, useForm, useRemember } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -12,21 +13,33 @@ export default function Show(props) {
         comment: "",
     });
     
-    const handleBack = () => {
-        window.history.back();
+    const [textLength, setTextLength] = useRemember(0);
+    const maxTextLength = 50;
+    
+    useEffect(() => {
+        setTextLength(data.comment.length);
+    }, [data.comment]);
+    
+    const handleChange = (event) => {
+        setData(event.target.name, event.target.value);
     };
     
-    const handleDelete = (id) => {
-        destroy(route("study_record.destroy", id));
-    };
-
     const submit = (e) => {
         e.preventDefault();
-        post(route("study_record.comment.store",{ study_record: props.study_record.id }), { onSuccess: () => reset() });
+        post(route("study_record.comment.store",{ study_record: props.study_record.id }), {
+            onSuccess: () => reset(),
+            preserveScroll: true,
+        });
     };
     
     const handleCommentDelete = (study_record, comment) => {
-        destroy(route("study_record.comment.destroy", { study_record: study_record, comment: comment }));
+        const shouldDelete = window.confirm("コメントを削除します。本当によろしいですか。");
+        
+        if (shouldDelete) {
+            destroy(route("study_record.comment.destroy", { study_record: study_record, comment: comment }), {
+                preserveScroll: true,
+            });
+        }
     };
     
     const handleLike = (id) => {
@@ -39,6 +52,18 @@ export default function Show(props) {
     
     const isLiked = () => props.study_record.study_record_likes.some(like => like.id === props.auth.user.id);
     
+    const handleDelete = (id) => {
+        const shouldDelete = window.confirm("学習記録を削除します。本当によろしいですか。");
+        
+        if (shouldDelete) {
+            destroy(route("study_record.destroy", id));
+        } 
+    };
+    
+    const handleBack = () => {
+        window.history.back();
+    };
+
     return (
         <AuthenticatedLayout
             auth={props.auth}
@@ -122,14 +147,18 @@ export default function Show(props) {
                 <div className="w-5/6 mb-5 m-auto">
                     <form onSubmit={submit}>
                         <div className="mt-4">
-                            <InputLabel htmlFor="comment" value="コメント" />
-                                
+                            <div className="flex justify-between">
+                                <InputLabel htmlFor="comment" value="コメント" />
+                                <div>{textLength} / {maxTextLength}</div>
+                            </div>
                             <textarea
                                 id="comment"
                                 name="comment"
                                 value={data.comment}
                                 className="mt-1 block w-full"
-                                onChange={(e) => setData(e.target.name, e.target.value)}
+                                onChange={handleChange}
+                                required
+                                maxlength={maxTextLength}
                             />
                                 
                             <InputError message={errors.comment} className="mt-2" />
@@ -168,8 +197,8 @@ export default function Show(props) {
                                         </button>
                                     )}
                                 </div>
-                                <div className="py-5">
-                                    <p>{study_record_comment.comment}</p>
+                                <div className="py-5 whitespace-pre-wrap">
+                                    {study_record_comment.comment}
                                 </div>
                             </div>
                         </div>

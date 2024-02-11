@@ -48,28 +48,30 @@ export default function IndexFollowings(props) {
                                 >
                                 </Link>
                                 <UserIcon user={user} linkClassName="mr-3" imgClassName="w-12 h-12" />
-                                <div className="flex-auto">
+                                <div className="flex-1">
                                     <div className="flex justify-between items-center">
                                         <div className="text-center">{user.name}</div>
-                                        {isfollowed(user.id) ? ( 
-                                            <PrimaryButton 
-                                                onClick={() => handleUnfollow(user.id)} 
-                                                processing={processing} 
-                                                className="z-10"
-                                            >
-                                                フォローを外す
-                                            </PrimaryButton>
-                                        ) : (
-                                            <PrimaryButton 
-                                                onClick={() => handleFollow(user.id)} 
-                                                processing={processing} 
-                                                className="z-10"
-                                            >
-                                                フォローする
-                                            </PrimaryButton>
+                                        {user.id !== props.auth.user.id && (
+                                            (isfollowed(user.id) ? ( 
+                                                <PrimaryButton 
+                                                    onClick={() => handleUnfollow(user.id)} 
+                                                    processing={processing} 
+                                                    className="z-10"
+                                                >
+                                                    フォローを外す
+                                                </PrimaryButton>
+                                            ) : (
+                                                <PrimaryButton 
+                                                    onClick={() => handleFollow(user.id)} 
+                                                    processing={processing} 
+                                                    className="z-10"
+                                                >
+                                                    フォローする
+                                                </PrimaryButton>
+                                            ))
                                         )}
                                     </div>
-                                    {user.text && <div className="pt-1">{user.text}</div>}
+                                    {user.text && <div className="pt-1 whitespace-pre-wrap max-h-14 truncate">{user.text}</div>}
                                 </div>
                             </div>
                         ))}
