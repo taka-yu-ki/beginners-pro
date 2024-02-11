@@ -36,9 +36,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const maxGoalTextLength = 100;
     
     useEffect(() => {
-        setTextLength(data.text.length);
-        setGoalTextLength(data.goal_text.length);
-    }, [data.text, data.goal_text]);
+        setTextLength(data?.text?.length);
+        setGoalTextLength(data?.goal_text?.length);
+    }, [data?.text, data?.goal_text]);
     
     const imagePreview = (e) => {
         if (e.target.files.length > 0) {

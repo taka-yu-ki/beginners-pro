@@ -79,6 +79,7 @@ export default function Index(props) {
                     </Link>
                 </div>
                 <StudyRecordsTimeLine 
+                    is_display_time={true}
                     today_time={props.today_time}
                     month_time={props.month_time}
                     total_time={props.total_time}

@@ -2,10 +2,10 @@ import { Link } from "@inertiajs/react";
 import UserIcon from "@/Components/UserIcon";
 import TimeFormatter from "@/Components/TimeFormatter";
 
-export default function StudyRecordsTimeLine({today_time, month_time, total_time, study_records, user}) {
+export default function StudyRecordsTimeLine({is_display_time = false, today_time, month_time, total_time, study_records, user}) {
     return (
         <div className="w-5/6 px-2 py-10 m-auto bg-gray-200 rounded-lg">
-            {(today_time || month_time || total_time) && (
+            {is_display_time && (
                 <div className="flex justify-between px-10 pb-10 text-center">
                     <div className="w-1/4">
                         <div className="p-2 border-y border-black">

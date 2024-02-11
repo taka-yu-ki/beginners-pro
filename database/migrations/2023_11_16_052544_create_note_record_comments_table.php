@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('note_record_id')->constrained()->onDelete('cascade');
-            $table->string('comment', 100);
+            $table->string('comment', 50);
             $table->timestamps();
         });
     }
