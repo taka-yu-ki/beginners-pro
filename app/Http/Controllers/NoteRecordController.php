@@ -56,7 +56,10 @@ class NoteRecordController extends Controller
     }
 
     public function show(NoteRecord $note_record) {
-        $note_record->load('user', 'categories', 'note_record_likes', 'note_record_comments.user');
+        $note_record->load(['user', 'categories', 'note_record_likes', 'note_record_comments' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        },'note_record_comments.user']);
+        
         $like_count = $note_record->note_record_likes()->count();
         
         return Inertia::render('NoteRecord/Show', ['note_record' => $note_record, 'like_count' => $like_count]);
@@ -90,6 +93,7 @@ class NoteRecordController extends Controller
     }
     
     public function community() {
+        
         // 全ユーザーの投稿
         $note_records = NoteRecord::query()
             ->with('user', 'categories')

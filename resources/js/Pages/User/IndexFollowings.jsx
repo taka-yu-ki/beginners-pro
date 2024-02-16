@@ -35,8 +35,8 @@ export default function IndexFollowings(props) {
             }
         >
             <Head title="User Follower" />
-            <div className="py-20">
-                <div className="w-5/6 px-2 py-10 m-auto bg-gray-200 rounded-lg">
+            <div>
+                <div className="sm:w-5/6 px-2 py-10 m-auto bg-gray-200 sm:rounded-md">
                     <div className="text-center">一覧</div>
                     <div className="border-y border-gray-500 overflow-y-auto max-h-[500px]">
                         {props.followings.map((user) => (

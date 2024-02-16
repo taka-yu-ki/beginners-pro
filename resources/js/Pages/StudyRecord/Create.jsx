@@ -77,7 +77,7 @@ export default function Create(props) {
             }
         >
             <Head title="Study_records Create" />
-            <div className="py-20">
+            <div>
                 <div className="w-5/6 m-auto">
                     <div className="bg-white overflow-hidden shadow-sm rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">

@@ -4,10 +4,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import BarChartComponent from "@/Components/BarChartComponent";
 import PieChartComponent from "@/Components/PieChartComponent";
 import GoalTimeBarChart from "@/Components/GoalTimeBarChart";
-import Pagination from "@/Components/Pagination";
 import GoalText from "@/Components/GoalText";
 import StudyRecordsTimeLine from "@/Components/StudyRecordsTimeLine";
-import TimeFormatter from "@/Components/TimeFormatter";
 
 export default function Index(props) {
     return (
@@ -26,48 +24,15 @@ export default function Index(props) {
             }
         >
             <Head title="Study_records Index" />
-            <div className="pt-20 pb-10">
+            <div className="space-y-10 sm:space-y-20">
                 <GoalText goal_text={props.auth.user.goal_text} />
                 <GoalTimeBarChart week_time={props.week_time} goal_time={props.auth.user.goal_time} />
             </div>
-            <div className="py-10">
-                <div className="w-5/6 m-auto grid grid-cols-2 gap-4">
-                    <div className="h-96 p-5 bg-white rounded-md">
-                        <BarChartComponent data={props.bar_chart_week.data} categories={props.categories} />
-                        <Pagination paginator={props.bar_chart_week} />
-                    </div>
-                    {props.pie_chart_data.length !== 0 ? (
-                        <div className="h-96 p-5 bg-white rounded-md">
-                            <PieChartComponent data={props.pie_chart_data}/>
-                            <div className="h-1/2 overflow-y-scroll">
-                                <table className="w-full table-fixed">
-                                    <thead className="sticky top-0">
-                                        <tr className="bg-gray-300">
-                                            <th className="py-2 px-4 font-normal">カテゴリー</th>
-                                            <th className="py-2 px-4 font-normal">時間</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {props.pie_chart_data.map((data, index) => (
-                                            <tr key={index} style={{ color: data.color }} className="border text-center">
-                                                <td className="py-2 px-4 font-medium">{data.name}</td>
-                                                <td className="py-2 px-4 font-medium">
-                                                    <TimeFormatter time={data.time} />
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="h-96 p-5 bg-white rounded-md flex items-center justify-center">
-                                データがありません
-                        </div>
-                    )}
-                </div>
+            <div className="sm:w-5/6 m-auto grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-20 lg:gap-4">
+                <BarChartComponent bar_chart_week={props.bar_chart_week} categories={props.categories} />
+                <PieChartComponent pie_chart_data={props.pie_chart_data} />
             </div>
-            <div className="pt-10 pb-20">
+            <div>
                 <div className="flex justify-center pb-5">
                     <div className="px-4 py-2 bg-blue-300 text-white rounded-l-md cursor-pointer">
                         フォロー中

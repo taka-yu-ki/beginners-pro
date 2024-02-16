@@ -3,7 +3,7 @@ import UserIcon from "@/Components/UserIcon";
 
 export default function NoteRecordsTimeLine({note_records, user}) {
     return (
-        <div className="w-5/6 px-2 py-10 m-auto bg-gray-200 rounded-lg">
+        <div className="sm:w-5/6 px-2 py-5 sm:py-10 m-auto bg-gray-200 sm:rounded-md">
             <div className="text-center">タイムライン</div>
             <div className="border-y border-gray-500 overflow-y-auto max-h-[1000px]">
                 {note_records.map((note_record) => { return (
@@ -30,11 +30,18 @@ export default function NoteRecordsTimeLine({note_records, user}) {
                                         }
                                     />
                                 )}
-                                <div className="ml-5">{note_record.date}</div>
-                                <div className="flex">{note_record.categories.map((category) => <div className="px-2 py-1 ml-5 bg-lime-200 text-black text-sm rounded-full">{category.name}</div>)}</div>
+                                <div className="mx-5">{note_record.date}</div>
+                                <div className="hidden sm:flex overflow-x-auto">{note_record.categories.map((category) => <div className="px-2 py-1 mr-2 bg-lime-200 text-black text-sm rounded-full">{category.name}</div>)}</div>
                             </div>
-                            <div className="p-3 mt-3 flex justify-center font-bold text-center border rounded-md">
-                                {note_record.title}
+                            <div className="flex sm:hidden mt-2 overflow-x-auto font-bold">
+                                {note_record.categories.map((category) => 
+                                    <div className="px-2 py-1 mr-2 bg-lime-200 text-black text-sm rounded-full">{category.name}</div>
+                                )}
+                            </div>
+                            <div className="flex justify-center p-3 sm:px-10 md:px-20 lg:px-40 mt-3 font-bold border rounded-md">
+                                <div className="break-all line-clamp-2">
+                                    {note_record.title}
+                                </div>
                             </div>
                         </div>
                     </Link>
