@@ -22,11 +22,11 @@ export default function Index(props) {
             }
         >
             <Head title="Note_records Community" />
-            <div className="pt-20 pb-10">
+            <div>
                 <GoalText goal_text={props.auth.user.goal_text} />
                 <GoalTimeBarChart week_time={props.week_time} goal_time={props.auth.user.goal_time}/>
             </div>
-            <div className="pt-10 pb-20">
+            <div>
                 <div className="flex justify-center mb-5">
                     <Link href={route("note_record.index")} preserveScroll>
                         <div className="px-4 py-2 bg-blue-500 text-white rounded-l-md cursor-pointer">

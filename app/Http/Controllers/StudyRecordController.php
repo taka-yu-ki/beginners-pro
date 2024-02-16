@@ -128,7 +128,10 @@ class StudyRecordController extends Controller
     }
 
     public function show(StudyRecord $study_record) {
-        $study_record->load('user', 'category', 'study_record_likes', 'study_record_comments.user');
+        $study_record->load(['user', 'category', 'study_record_likes', 'study_record_comments' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'study_record_comments.user']);
+        
         $like_count = $study_record->study_record_likes()->count();
 
         return Inertia::render('StudyRecord/Show', ['study_record' => $study_record, 'like_count' => $like_count]);

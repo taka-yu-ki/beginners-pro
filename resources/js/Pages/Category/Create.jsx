@@ -47,9 +47,9 @@ export default function Create(props) {
             }
         >
             <Head title="Category Create" />
-            <div className="py-20">
-                <div className="w-5/6 m-auto">
-                    <div className="bg-white overflow-hidden shadow-sm rounded-lg">
+            <div>
+                <div className="sm:w-5/6 m-auto">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
                             <InputError errors={errors} />
                             <form onSubmit={submit}>
@@ -80,7 +80,7 @@ export default function Create(props) {
                                         type="color"
                                         name="color"
                                         value={data.color}
-                                        className="mt-1 block w-1/5"
+                                        className="mt-1 block w-2/5"
                                         isFocused={true}
                                         onChange={handleOnChange}
                                         required
