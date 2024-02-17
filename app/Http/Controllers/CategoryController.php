@@ -9,17 +9,24 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index() {
-        $categories = Category::where('user_id', auth()->id())->get();
+    public function index() 
+    {
+        $categories = Category::query()
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
         
         return Inertia::render('Category/Index', ['categories' => $categories]);
     }
     
-    public function create() {
+    public function create() 
+    {
         return Inertia::render('Category/Create');
     }
     
-    public function store(CategoryRequest $request) {
+    public function store(CategoryRequest $request) 
+    {
         $data = $request->validated();
         
         $category = Category::create([
@@ -31,11 +38,13 @@ class CategoryController extends Controller
         return redirect()->route('category.index')->with(['success' => 'カテゴリーを作成しました。']);
     }
     
-    public function edit(Category $category) {
+    public function edit(Category $category) 
+    {
         return Inertia::render('Category/Edit', ['category' => $category]);
     }
     
-    public function update(CategoryRequest $request, Category $category) {
+    public function update(CategoryRequest $request, Category $category) 
+    {
         $data = $request->validated();
         
         $category->update([
@@ -46,7 +55,8 @@ class CategoryController extends Controller
         return redirect()->route('category.index')->with(['success' => 'カテゴリーを更新しました。']);
     }
     
-    public function destroy(Category $category) {
+    public function destroy(Category $category) 
+    {
         $category->delete();
         
         return redirect()->route('category.index')->with(['success' => 'カテゴリーを削除しました。']);

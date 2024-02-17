@@ -9,7 +9,8 @@ use App\Models\NoteRecordComment;
 
 class NoteRecordCommentController extends Controller
 {
-    public function store(CommentRequest $request, NoteRecord $note_record) {
+    public function store(CommentRequest $request, NoteRecord $note_record) 
+    {
         $data = $request->validated();
         
         $comment = NoteRecordComment::create([
@@ -21,7 +22,8 @@ class NoteRecordCommentController extends Controller
         return redirect()->route('note_record.show', $note_record);
     }
     
-    public function destroy(NoteRecord $note_record, NoteRecordComment $comment) {
+    public function destroy(NoteRecord $note_record, NoteRecordComment $comment) 
+    {
         $comment->delete();
         
         return redirect()->route('note_record.show', $note_record);

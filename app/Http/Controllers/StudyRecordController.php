@@ -16,7 +16,7 @@ class StudyRecordController extends Controller
 {
     public function index() {
         
-        // ログインユーザーとフォローユーザーの投稿
+        // --- ログインユーザーとフォローユーザーの投稿 ---
         $study_records = StudyRecord::query()
             ->with('user', 'category')
             ->whereIn('user_id', auth()->user()->followings()->pluck('following_user_id'))
@@ -25,17 +25,36 @@ class StudyRecordController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        // 学習時間
+        // --- 学習時間 ---
         $start_of_this_week = Carbon::now()->startOfWeek();
         
-        $today_time = StudyRecord::where('user_id', auth()->id())->whereDate('date', today())->sum('time');
-        $week_time = StudyRecord::where('user_id', auth()->id())->whereBetween('date', [$start_of_this_week, today()])->sum('time');
-        $month_time = StudyRecord::where('user_id', auth()->id())->whereMonth('date', now()->month)->sum('time');
-        $total_time = StudyRecord::where('user_id', auth()->id())->sum('time');
+        $today_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->whereDate('date', today())
+            ->sum('time');
+        $week_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->whereBetween('date', [$start_of_this_week, today()])
+            ->sum('time');
+        $month_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->whereMonth('date', now()->month)
+            ->sum('time');
+        $total_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->sum('time');
         
-        // 棒グラフ用データ
-        $bar_chart_data = StudyRecord::with('category')->where('user_id', auth()->id())->select(['id', 'category_id', 'date', 'time'])->get();
-        $oldest_data = StudyRecord::where('user_id', auth()->id())->orderBy('date', 'asc')->first();
+        // --- 棒グラフ用データ ---
+        $bar_chart_datas = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->with('category')
+            ->select(['id', 'category_id', 'date', 'time'])
+            ->get();
+        
+        $oldest_data = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->orderBy('date', 'asc')
+            ->first();
         
         $data_objects = [];
         
@@ -43,11 +62,13 @@ class StudyRecordController extends Controller
             $target_date = Carbon::parse($oldest_data->date)->startOfWeek();
             $this_weekend = Carbon::now()->endOfWeek();;
             
+            // 最初の投稿から今週末まで投稿を$data_objectsの日付が一致する配列に入れる
             while ($target_date <= $this_weekend) {
                 $data_object = ['date' => $target_date->format('Y-m-d')];
                 
                 $match_datas = $bar_chart_data->where('date', $data_object['date']);
                 
+                // 同じ日付に複数投稿がある場合、カテゴリーごとに学習時間を加算する
                 if ($match_datas) {
                     foreach ($match_datas as $match_data) {
                         $category = $match_data->category;
@@ -84,7 +105,7 @@ class StudyRecordController extends Controller
         
         $categories = Category::where('user_id', auth()->id())->get();
         
-        // 円グラフ用データ
+        // --- 円グラフ用データ ---
         $pie_chart_data = DB::table('users')
             ->where('users.id', auth()->id())
             ->join('study_records', 'users.id', '=', 'study_records.user_id')

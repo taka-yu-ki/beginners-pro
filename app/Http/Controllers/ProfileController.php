@@ -33,7 +33,8 @@ class ProfileController extends Controller
         $user = $request->user();
         $data = $request->except('image', 'delete_image');
         $user->fill($data);
-
+        
+        // Cloudinaryを用いた画像保存、画像削除の処理
         if ($request->has('delete_image') && $request->delete_image) {
             if ($user->image_url) {
                 Cloudinary::destroy($user->image_url);
