@@ -66,7 +66,7 @@ class StudyRecordController extends Controller
             while ($target_date <= $this_weekend) {
                 $data_object = ['date' => $target_date->format('Y-m-d')];
                 
-                $match_datas = $bar_chart_data->where('date', $data_object['date']);
+                $match_datas = $bar_chart_datas->where('date', $data_object['date']);
                 
                 // 同じ日付に複数投稿がある場合、カテゴリーごとに学習時間を加算する
                 if ($match_datas) {
@@ -203,7 +203,7 @@ class StudyRecordController extends Controller
         $total_time = StudyRecord::where('user_id', auth()->id())->sum('time');
         
         // 棒グラフ用データ
-        $bar_chart_data = StudyRecord::with('category')->where('user_id', auth()->id())->select(['id', 'category_id', 'date', 'time'])->get();
+        $bar_chart_datas = StudyRecord::with('category')->where('user_id', auth()->id())->select(['id', 'category_id', 'date', 'time'])->get();
         $oldest_data = StudyRecord::where('user_id', auth()->id())->orderBy('date', 'asc')->first();
         
         $data_objects = [];
@@ -215,7 +215,7 @@ class StudyRecordController extends Controller
             while ($target_date <= $this_weekend) {
                 $data_object = ['date' => $target_date->format('Y-m-d')];
                 
-                $match_datas = $bar_chart_data->where('date', $data_object['date']);
+                $match_datas = $bar_chart_datas->where('date', $data_object['date']);
                 
                 if ($match_datas) {
                     foreach ($match_datas as $match_data) {
