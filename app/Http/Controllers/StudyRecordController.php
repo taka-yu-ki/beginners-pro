@@ -60,7 +60,7 @@ class StudyRecordController extends Controller
             'week_time' => $week_time, 
             'month_time' => $month_time, 
             'total_time' => $total_time, 
-            'pie_chart_data' => $pie_chart_data
+            'pie_chart_data' => $pie_chart_data,
         ]);
     }
 
