@@ -44,75 +44,23 @@ class StudyRecordController extends Controller
             ->where('user_id', auth()->id())
             ->sum('time');
         
-        // --- 棒グラフ用データ ---
-        $bar_chart_datas = StudyRecord::query()
-            ->where('user_id', auth()->id())
-            ->with('category')
-            ->select(['id', 'category_id', 'date', 'time'])
+        // --- 円グラフ用データ ---
+        $pie_chart_data = DB::table('users')
+            ->where('users.id', auth()->id())
+            ->join('study_records', 'users.id', '=', 'study_records.user_id')
+            ->join('categories', 'study_records.category_id', '=', 'categories.id')
+            ->select('categories.id', 'categories.name', 'categories.color', DB::raw('CAST(SUM(study_records.time) AS UNSIGNED) as time'))
+            ->groupBy('categories.id', 'categories.name', 'categories.color')
+            ->orderBy('time', 'desc')
             ->get();
-        
-        $oldest_data = StudyRecord::query()
-            ->where('user_id', auth()->id())
-            ->orderBy('date', 'asc')
-            ->first();
-        
-        $data_objects = [];
-        
-        if ($oldest_data) {
-            $target_date = Carbon::parse($oldest_data->date)->startOfWeek();
-            $this_weekend = Carbon::now()->endOfWeek();;
-            
-            // 最初の投稿から今週末まで投稿を$data_objectsの日付が一致する配列に入れる
-            while ($target_date <= $this_weekend) {
-                $data_object = ['date' => $target_date->format('Y-m-d')];
-                
-                $match_datas = $bar_chart_datas->where('date', $data_object['date']);
-                
-                // 同じ日付に複数投稿がある場合、カテゴリーごとに学習時間を加算する
-                if ($match_datas) {
-                    foreach ($match_datas as $match_data) {
-                        $category = $match_data->category;
-                        
-                        if (isset($data_object[$category->name])) {
-                            $data_object[$category->name] += $match_data->time;
-                        } else {
-                            $data_object[$category->name] = $match_data->time;
-                        }
-                    }
-                }
-                
-                $data_objects[] = $data_object;
-                $target_date->addDay();
-            }
-        }
-        
-        $data_objects = collect($data_objects)->groupBy(function ($item) {
-            return Carbon::parse($item['date'])->startOfWeek()->format('Y-m-d');
-        });
-        
-        $per_page = 1;
-        $current_page = request()->input('page', $data_objects->count());
-        $current_items = $data_objects->skip(($current_page - 1) * $per_page)->take($per_page);
-        $bar_chart_week = new LengthAwarePaginator(
-            $current_items,
-            $data_objects->count(),
-            $per_page,
-            $current_page,
-            [
-                'path' => LengthAwarePaginator::resolveCurrentPath(),
-            ]
-        );
-        
-        $categories = Category::where('user_id', auth()->id())->get();
-        
+       
         return Inertia::render('StudyRecord/Index', [
             'study_records' => $study_records, 
             'today_time' => $today_time, 
             'week_time' => $week_time, 
             'month_time' => $month_time, 
             'total_time' => $total_time, 
-            'bar_chart_week' => $bar_chart_week, 
-            'categories' => $categories, 
+            'pie_chart_data' => $pie_chart_data
         ]);
     }
 
