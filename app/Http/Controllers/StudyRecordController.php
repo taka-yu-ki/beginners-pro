@@ -110,9 +110,9 @@ class StudyRecordController extends Controller
             ->where('users.id', auth()->id())
             ->join('study_records', 'users.id', '=', 'study_records.user_id')
             ->join('categories', 'study_records.category_id', '=', 'categories.id')
-            ->select('categories.id', 'categories.name', 'categories.color', DB::raw('CAST(SUM(study_records.time) AS UNSIGNED) as time'))
+            ->select('categories.id', 'categories.name', 'categories.color', DB::raw('SUM(study_records.time) as time'))
             ->groupBy('categories.id', 'categories.name', 'categories.color')
-            ->orderBy('time', 'desc')
+            ->orderBy('time')
             ->get();
        
         return Inertia::render('StudyRecord/Index', [
