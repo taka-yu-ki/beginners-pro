@@ -18,7 +18,7 @@ export default function PieChartComponent({pie_chart_data}) {
 
     return (
         <div>
-            {pie_chart_data.length !== 0 ? (
+            {pie_chart_data && pie_chart_data.length !== 0 ? (
             <div className="h-[400px] sm:h-96 p-2 sm:px-5 sm:py-2 bg-white sm:rounded-md">
                 <div className="w-full h-1/2 m-auto">
                     <ResponsiveContainer width="100%" height="100%">

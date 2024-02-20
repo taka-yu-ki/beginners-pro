@@ -63,7 +63,7 @@ export default function BarChartComponent({bar_chart_week, categories}) {
                         />
                         <Tooltip />
                         <Legend verticalAlign="top" height={36} wrapperStyle={{ whiteSpace: "nowrap", overflowX: "scroll" }} />
-                        {categories.map((category) => { return (
+                        {categories && categories.map((category) => { return (
                             <Bar dataKey={category.name} stackId="a" fill={category.color} />
                         )})}
                     </BarChart>
