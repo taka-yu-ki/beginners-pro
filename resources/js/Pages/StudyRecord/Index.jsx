@@ -29,6 +29,8 @@ export default function Index(props) {
                 <GoalTimeBarChart week_time={props.week_time} goal_time={props.auth.user.goal_time} />
             </div>
             <div className="sm:w-5/6 m-auto grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-20 lg:gap-4">
+                <BarChartComponent bar_chart_week={props.bar_chart_week} categories={props.categories} />
+                <PieChartComponent pie_chart_data={props.pie_chart_data} />
             </div>
             <div>
                 <div className="flex justify-center pb-5">
@@ -41,6 +43,13 @@ export default function Index(props) {
                         </div>
                     </Link>
                 </div>
+                <StudyRecordsTimeLine 
+                    is_display_time={true}
+                    today_time={props.today_time}
+                    month_time={props.month_time}
+                    total_time={props.total_time}
+                    study_records={props.study_records}
+                />
             </div>
         </AuthenticatedLayout>
     );
