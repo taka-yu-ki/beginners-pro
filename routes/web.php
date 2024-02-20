@@ -34,22 +34,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::match(['patch', 'post'], '/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    Route::get('/users/{user}', [UserController::class, 'show'])->name('user.show');
-    
-    Route::get('/users/{user}/followings', [FollowController::class, 'indexFollowings'])->name('user.followings.index');
-    Route::get('/users/{user}/followers', [FollowController::class, 'indexFollowers'])->name('user.followers.index');
-    Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('user.follow');
-    Route::delete('/users/{user}/unfollow', [FollowController::class, 'destroy'])->name('user.unfollow');
-
+    // study_records
     Route::get('/study_records/community', [StudyRecordController::class, 'community'])->name('study_record.community');
     Route::resource('/study_records', StudyRecordController::class)
         ->names([
@@ -61,16 +47,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'update' => 'study_record.update',
             'destroy' => 'study_record.destroy',
         ]);
-
-    Route::post('/study_records/{study_record}/like', [StudyRecordLikeController::class, 'store'])->name('study_record.like');
-    Route::delete('/study_records/{study_record}/unlike', [StudyRecordLikeController::class, 'destroy'])->name('study_record.unlike');
-    
+        
     Route::resource('/study_records/{study_record}/comments', StudyRecordCommentController::class)->only(['store', 'destroy'])
         ->names([
             'store' => 'study_record.comment.store',
             'destroy' => 'study_record.comment.destroy',
         ]);
-
+        
+    Route::post('/study_records/{study_record}/like', [StudyRecordLikeController::class, 'store'])->name('study_record.like');
+    Route::delete('/study_records/{study_record}/unlike', [StudyRecordLikeController::class, 'destroy'])->name('study_record.unlike');
+    
+    // note_records
     Route::get('/note_records/community', [NoteRecordController::class, 'community'])->name('note_record.community');
     Route::resource('/note_records', NoteRecordController::class)
         ->names([
@@ -82,16 +69,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'update' => 'note_record.update',
             'destroy' => 'note_record.destroy',
         ]);
-
-    Route::post('/note_records/{note_record}/like', [NoteRecordLikeController::class, 'store'])->name('note_record.like');
-    Route::delete('/note_records/{note_record}/unlike', [NoteRecordLikeController::class, 'destroy'])->name('note_record.unlike');
-    
+        
     Route::resource('/note_records/{note_record}/comments', NoteRecordCommentController::class)->only(['store', 'destroy'])
         ->names([
             'store' => 'note_record.comment.store',
             'destroy' => 'note_record.comment.destroy',
         ]);
-
+        
+    Route::post('/note_records/{note_record}/like', [NoteRecordLikeController::class, 'store'])->name('note_record.like');
+    Route::delete('/note_records/{note_record}/unlike', [NoteRecordLikeController::class, 'destroy'])->name('note_record.unlike');
+    
+    // categories
     Route::resource('/category', CategoryController::class)
         ->names([
             'index' => 'category.index',
@@ -101,7 +89,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'update' => 'category.update',
             'destroy' => 'category.destroy',
         ]);
-
+    
+    // profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::match(['patch', 'post'], '/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // users
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('user.show');
+    
+    Route::get('/users/{user}/followings', [FollowController::class, 'indexFollowings'])->name('user.followings.index');
+    Route::get('/users/{user}/followers', [FollowController::class, 'indexFollowers'])->name('user.followers.index');
+    Route::post('/users/{user}/follow', [FollowController::class, 'store'])->name('user.follow');
+    Route::delete('/users/{user}/unfollow', [FollowController::class, 'destroy'])->name('user.unfollow');
 });
 
 require __DIR__.'/auth.php';
