@@ -15,7 +15,42 @@ use Illuminate\Support\Facades\DB;
 class StudyRecordController extends Controller
 {
     public function index() {
-        return Inertia::render('StudyRecord/Index');
+        
+        // --- ログインユーザーとフォローユーザーの投稿 ---
+        $study_records = StudyRecord::query()
+            ->with('user', 'category')
+            ->whereIn('user_id', auth()->user()->followings()->pluck('following_user_id'))
+            ->orWhere('user_id', auth()->id())
+            ->orderBy('date', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        // --- 学習時間 ---
+        $start_of_this_week = Carbon::now()->startOfWeek();
+        
+        $today_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->whereDate('date', today())
+            ->sum('time');
+        $week_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->whereBetween('date', [$start_of_this_week, today()])
+            ->sum('time');
+        $month_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->whereMonth('date', now()->month)
+            ->sum('time');
+        $total_time = StudyRecord::query()
+            ->where('user_id', auth()->id())
+            ->sum('time');
+        
+        return Inertia::render('StudyRecord/Index', [
+            'study_records' => $study_records, 
+            'today_time' => $today_time, 
+            'week_time' => $week_time, 
+            'month_time' => $month_time, 
+            'total_time' => $total_time, 
+        ]);
     }
 
     public function create() {
