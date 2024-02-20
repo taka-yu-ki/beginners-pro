@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 import { BiChevronsLeft, BiChevronLeft, BiChevronRight, BiChevronsRight } from "react-icons/bi";
 import { startOfWeek, add, format } from "date-fns";
   
-export default function Pagination({ paginator = {} }) {
+export default function Pagination({ paginator }) {
     const format_this_week = () => {
         const default_data = [];
         
