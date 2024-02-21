@@ -49,7 +49,7 @@ export default function Show(props) {
             }
         >
             <Head title="Note_records Show" />
-            {console.log(props)}
+            
             <div>
                 <div className="sm:w-5/6 m-auto">
                     <div className="px-2 py-5 sm:p-10 bg-white shadow-sm sm:rounded-md">
