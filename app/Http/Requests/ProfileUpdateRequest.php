@@ -19,7 +19,7 @@ class ProfileUpdateRequest extends FormRequest
             'name' => ['required', 'string', 'max:10'],
             'email' => ['required', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'text' => ['nullable','string', 'max:500'],
-            'image' => ['nullable', 'file'],
+            'image' => ['nullable', 'file', 'max:1024'],
             'delete_image' => ['nullable', 'boolean'],
             'goal_text' => ['nullable', 'string', 'max:100'],
             'goal_time' => ['nullable', 'integer', 'max:10080'],
@@ -30,6 +30,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'goal_time.max' => '168時間以内で設定してください。',
+            'image.max' => '1MB以内で設定してください。'
         ];
     }
 }

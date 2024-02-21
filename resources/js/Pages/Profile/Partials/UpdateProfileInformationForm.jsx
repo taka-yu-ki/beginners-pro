@@ -94,7 +94,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             </header>
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel>プロフィール画像</InputLabel>
+                    <InputLabel>プロフィール画像（1MB以内）</InputLabel>
                     <div className="mt-1 flex items-center">
                         <img
                             id="preview"
