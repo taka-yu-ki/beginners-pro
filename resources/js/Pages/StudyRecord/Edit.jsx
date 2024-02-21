@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useEffect } from "react";
-import { Head, Link, useForm, useRemember } from "@inertiajs/react";
+import { useEffect, useState } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -9,6 +9,17 @@ import LexicalEditor from "@/Components/LexicalEditor";
 import { format } from "date-fns";
 
 export default function Edit(props) {
+    const { data, setData, patch, processing, errors } = useForm({
+        date: props.study_record.date,
+        time: props.study_record.time,
+        title: props.study_record.title,
+        body: "",
+        category_id: props.study_record.category.id,
+    });
+
+    const today = new Date();
+    const todayString = format(today, "yyyy-MM-dd");
+    
     const convertMinutesToTime = (time) => {
         const hours = String(Math.floor(time / 60)).padStart(2, "0");
         const minutes = String(time % 60).padStart(2, "0");
@@ -22,25 +33,14 @@ export default function Edit(props) {
         const formatted_time = (hours * 60) + minutes;
         setData("time", formatted_time);
     };
-    
-    const { data, setData, patch, processing, errors } = useForm({
-        date: props.study_record.date,
-        time: props.study_record.time,
-        title: props.study_record.title,
-        body: "",
-        category_id: props.study_record.category.id,
-    });
-    
-    const [titleLength, setTitleLength] = useRemember(0);
+
+    const [titleLength, setTitleLength] = useState(0);
     const maxTitleLength = 50;
     
     useEffect(() => {
         setTitleLength(data.title.length);
     }, [data.title]);
-
-    const today = new Date();
-    const todayString = format(today, "yyyy-MM-dd");
-
+    
     const handleChange = (event) => {
         setData(event.target.name, event.target.value);
     };
@@ -77,6 +77,7 @@ export default function Edit(props) {
             }
         >
             <Head title="Study_records Edit" />
+            
             <div>
                 <div className="w-5/6 m-auto">
                     <div className="bg-white overflow-hidden shadow-sm rounded-lg">
@@ -137,9 +138,17 @@ export default function Edit(props) {
                                 </div>
                                 
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="category_id" value="カテゴリー" />
+                                    <div className="flex">
+                                        <InputLabel htmlFor="category" value="カテゴリー" />
+                                        <Link 
+                                            href={route("category.create")}
+                                            className="ml-5 text-sm text-gray-700 underline"
+                                        >
+                                            ＋ カテゴリーを追加する
+                                        </Link>
+                                    </div>
                                     <select
-                                        id="category_id"
+                                        id="category"
                                         name="category_id"
                                         value={data.category_id}
                                         className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"

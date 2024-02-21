@@ -14,7 +14,7 @@ class NoteRecordController extends Controller
 {
     public function index() 
     {
-        // ログインユーザーとフォローユーザーの投稿
+        // --- ログインユーザーとフォローユーザーの投稿 ---
         $note_records = NoteRecord::query()
             ->with('user', 'categories')
             ->whereIn('user_id', auth()->user()->followings()->pluck('following_user_id'))
@@ -23,7 +23,7 @@ class NoteRecordController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
             
-        // 学習時間
+        // --- 学習時間 ---
         $start_of_this_week = Carbon::now()->startOfWeek();
         
         $today_time = StudyRecord::query()
@@ -57,7 +57,9 @@ class NoteRecordController extends Controller
             ->where('user_id', auth()->id())
             ->get();
         
-        return Inertia::render('NoteRecord/Create', ['categories' => $categories]);
+        return Inertia::render('NoteRecord/Create', [
+            'categories' => $categories
+        ]);
     }
     
     public function store(NoteRecordRequest $request) 
@@ -84,7 +86,10 @@ class NoteRecordController extends Controller
         
         $like_count = $note_record->note_record_likes()->count();
         
-        return Inertia::render('NoteRecord/Show', ['note_record' => $note_record, 'like_count' => $like_count]);
+        return Inertia::render('NoteRecord/Show', [
+            'note_record' => $note_record, 
+            'like_count' => $like_count
+        ]);
     }
     
     public function edit(NoteRecord $note_record) 
@@ -95,7 +100,10 @@ class NoteRecordController extends Controller
             ->where('user_id', auth()->id())
             ->get();
         
-        return Inertia::render('NoteRecord/Edit', ['note_record' => $note_record, 'categories' => $categories]);
+        return Inertia::render('NoteRecord/Edit', [
+            'note_record' => $note_record, 
+            'categories' => $categories
+        ]);
     }
     
     public function update(NoteRecordRequest $request, NoteRecord $note_record) 
@@ -123,14 +131,14 @@ class NoteRecordController extends Controller
     public function community() 
     {
         
-        // 全ユーザーの投稿
+        // --- 全ユーザーの投稿 ---
         $note_records = NoteRecord::query()
             ->with('user', 'categories')
             ->orderBy('date', 'desc')
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        // 学習時間
+        // --- 学習時間 ---
         $start_of_this_week = Carbon::now()->startOfWeek();
         
         $today_time = StudyRecord::query()

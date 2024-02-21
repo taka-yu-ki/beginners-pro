@@ -16,6 +16,7 @@ export default function NoteRecordsTimeLine({note_records, user}) {
                                 {user ? (
                                     <UserIcon 
                                         user={user} 
+                                        linkClassName="items-center"
                                         imgClassName="w-8 h-8"
                                         name={
                                             <div className="ml-3">{user.name}</div>
@@ -24,6 +25,7 @@ export default function NoteRecordsTimeLine({note_records, user}) {
                                 ) : (
                                     <UserIcon 
                                         user={note_record.user} 
+                                        linkClassName="items-center"
                                         imgClassName="w-8 h-8"
                                         name={
                                             <div className="ml-3">{note_record.user.name}</div>

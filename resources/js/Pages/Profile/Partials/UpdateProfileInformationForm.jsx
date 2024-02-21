@@ -2,22 +2,11 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { useEffect } from "react";
-import { Link, useForm, usePage, useRemember } from "@inertiajs/react";
+import { useEffect, useState } from "react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
-    const convertMinutesToHours = (time) => {
-        const hours = String(Math.floor(time / 60));
-
-        return hours;
-    };
-    
-    const convertHoursToMinutes = (time) => {
-        const minutes = parseFloat(time) * 60;
-        setData("goal_time", minutes);
-    };
-    
     const user = usePage().props.auth.user;
 
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
@@ -29,16 +18,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         goal_text: user.goal_text,
         goal_time: user.goal_time,
     });
-    
-    const [textLength, setTextLength] = useRemember(0);
-    const [goalTextLength, setGoalTextLength] = useRemember(0);
-    const maxTextLength = 500;
-    const maxGoalTextLength = 100;
-    
-    useEffect(() => {
-        setTextLength(data?.text?.length);
-        setGoalTextLength(data?.goal_text?.length);
-    }, [data?.text, data?.goal_text]);
     
     const imagePreview = (e) => {
         if (e.target.files.length > 0) {
@@ -64,6 +43,27 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
             
             document.getElementById("preview").src = "/images/user_icon.png";
         }
+    };
+    
+    const [textLength, setTextLength] = useState(0);
+    const [goalTextLength, setGoalTextLength] = useState(0);
+    const maxTextLength = 500;
+    const maxGoalTextLength = 100;
+    
+    useEffect(() => {
+        setTextLength(data?.text?.length);
+        setGoalTextLength(data?.goal_text?.length);
+    }, [data?.text, data?.goal_text]);
+    
+    const convertMinutesToHours = (time) => {
+        const hours = String(Math.floor(time / 60));
+
+        return hours;
+    };
+    
+    const convertHoursToMinutes = (time) => {
+        const minutes = parseFloat(time) * 60;
+        setData("goal_time", minutes);
     };
     
     const handleTimeChange = (event) => {

@@ -45,6 +45,7 @@ export default function StudyRecordsTimeLine({is_display_time = false, today_tim
                                 {user ? (
                                     <UserIcon 
                                         user={user} 
+                                        linkClassName="items-center"
                                         imgClassName="w-8 h-8"
                                         name={
                                             <div className="ml-3">{user.name}</div>
@@ -53,6 +54,7 @@ export default function StudyRecordsTimeLine({is_display_time = false, today_tim
                                 ) : (
                                     <UserIcon 
                                         user={study_record.user} 
+                                        linkClassName="items-center"
                                         imgClassName="w-8 h-8"
                                         name={
                                             <div className="ml-3">{study_record.user.name}</div>

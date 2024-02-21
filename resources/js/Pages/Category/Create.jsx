@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useEffect } from "react";
-import { Head, Link, useForm, useRemember } from "@inertiajs/react";
+import { useEffect, useState } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -12,14 +12,14 @@ export default function Create(props) {
         color: "#000000",
     });
     
-    const [nameLength, setNameLength] = useRemember(0);
+    const [nameLength, setNameLength] = useState(0);
     const maxNameLength = 20;
     
     useEffect(() => {
         setNameLength(data.name.length);
     }, [data.name]);
     
-    const handleOnChange = (event) => {
+    const handleChange = (event) => {
         setData(event.target.name, event.target.value);
     };
     
@@ -47,6 +47,7 @@ export default function Create(props) {
             }
         >
             <Head title="Category Create" />
+            
             <div>
                 <div className="sm:w-5/6 m-auto">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -65,7 +66,7 @@ export default function Create(props) {
                                         value={data.name}
                                         className="mt-1 block w-full"
                                         isFocused={true}
-                                        onChange={handleOnChange}
+                                        onChange={handleChange}
                                         required
                                         maxlength={maxNameLength}
                                     />
@@ -82,7 +83,7 @@ export default function Create(props) {
                                         value={data.color}
                                         className="mt-1 block w-2/5"
                                         isFocused={true}
-                                        onChange={handleOnChange}
+                                        onChange={handleChange}
                                         required
                                         pattern="^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
                                     />

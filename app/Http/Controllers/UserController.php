@@ -18,6 +18,10 @@ class UserController extends Controller
         $following_count = $user->followings()->count();
         $follower_count = $user->followers()->count();
         
-        return Inertia::render('User/Show', ['user' => $user, 'following_count' => $following_count, 'follower_count' => $follower_count]);
+        return Inertia::render('User/Show', [
+            'user' => $user, 
+            'following_count' => $following_count, 
+            'follower_count' => $follower_count
+        ]);
     }
 }

@@ -4,7 +4,7 @@ export default function UserIcon({ user, linkClassName = "", imgClassName = "", 
   return (
     <Link 
       href={route("user.show", user.id)} 
-      className={"flex items-center " + linkClassName}
+      className={"flex " + linkClassName}
     >
       <img
         className={"rounded-full ring-2 ring-gray-50 " + imgClassName}

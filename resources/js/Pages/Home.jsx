@@ -2,8 +2,9 @@ import { Link, Head } from "@inertiajs/react";
 
 export default function Home(props) {
     return (
-        <>
+        <div>
             <Head title="Home" />
+            
             <div className="min-h-screen max-w-screen-2xl flex flex-col justify-center items-center bg-gray-100">
                 <div className="fixed top-0 left-0 right-0 z-40 max-w-screen-2xl">
                     <div className="px-4 sm:px-6 lg:px-8 bg-white border-b">
@@ -45,6 +46,6 @@ export default function Home(props) {
                     <div className="pt-10 text-sm">プログラミング初学者がプロフェッショナルになるための学習記録アプリケーションです。</div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

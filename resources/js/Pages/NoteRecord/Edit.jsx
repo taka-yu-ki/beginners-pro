@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useEffect } from "react";
-import { Head, Link, useForm, useRemember } from "@inertiajs/react";
+import { useEffect, useState } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -16,7 +16,7 @@ export default function Create(props) {
         category_ids: props.note_record.categories.map((category) => category.id),
     });
     
-    const [titleLength, setTitleLength] = useRemember(0);
+    const [titleLength, setTitleLength] = useState(0);
     const maxTitleLength = 50;
     
     useEffect(() => {
@@ -63,6 +63,7 @@ export default function Create(props) {
             }
         >
             <Head title="Note_records Edit" />
+            
             <div>
                 <div className="sm:w-5/6 m-auto">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -106,7 +107,15 @@ export default function Create(props) {
                                 </div>
                                 
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="category" value="カテゴリー" />
+                                    <div className="flex">
+                                        <InputLabel htmlFor="category" value="カテゴリー（複数選択可）" />
+                                        <Link 
+                                            href={route("category.create")}
+                                            className="ml-5 text-sm text-gray-700 underline"
+                                        >
+                                            ＋ カテゴリーを追加する
+                                        </Link>
+                                    </div>
                                     <select
                                         id="category"
                                         name="category_ids"

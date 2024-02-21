@@ -11,13 +11,13 @@ export default function Authenticated({ auth, header, children, className }) {
         <div className="min-h-screen max-w-screen-2xl bg-gray-100 relative">
             <div className="fixed top-0 inset-x-0 z-40 max-w-screen-2xl">
                 <div className="mx-auto px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-100">
-                    <div className="flex justify-between h-16">
-                        <div className="flex items-center">
+                    <div className="flex justify-between items-center h-16">
+                        <div>
                             <Link href="/">
                                 <div className="font-bold text-black">Beginners Pro</div>
                             </Link>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex">
                             <UserIcon user={auth.user} linkClassName="mr-5" imgClassName="w-10 h-10" />
                             <div className="-mr-2 flex items-center">
                                 <button
@@ -47,7 +47,7 @@ export default function Authenticated({ auth, header, children, className }) {
                 </div>
 
                 <div className={(showingNavigationDropdown ? "block" : "hidden") + " sm:max-w-7xl sm:mx-auto sm:px-4 sm:hidden"}>
-                    <div className="pt-4 pb-1 bg-gray-100 border-t border-gray-200">
+                    <div className="pt-5 bg-gray-100 border-t border-gray-200">
                         <div className="px-4">
                             <div className="font-medium text-base text-gray-800">
                                 {auth.user.name}

@@ -24,6 +24,7 @@ export default function Community(props) {
             }
         >
             <Head title="Study_records Community" />
+            
             <div className="space-y-10 sm:space-y-20">
                 <GoalText goal_text={props.auth.user.goal_text} />
                 <GoalTimeBarChart week_time={props.week_time} goal_time={props.auth.user.goal_time} />

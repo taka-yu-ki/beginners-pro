@@ -16,7 +16,7 @@ class NoteRecordCommentController extends Controller
         $comment = NoteRecordComment::create([
             'user_id' => auth()->id(),
             'note_record_id' => $note_record->id,
-            'comment' => $data['comment'],
+            'body' => $data['body'],
         ]);
 
         return redirect()->route('note_record.show', $note_record);
