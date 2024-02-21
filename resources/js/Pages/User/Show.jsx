@@ -1,19 +1,16 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm, useRemember } from "@inertiajs/react";
+import { useState } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import StudyRecordsTimeLine from "@/Components/StudyRecordsTimeLine";
 import NoteRecordsTimeLine from "@/Components/NoteRecordsTimeLine";
 
 export default function Show(props) {
     const { delete: destroy, post, processing } = useForm();
-    const [selectedTab, setSelectedTab] = useRemember("study_records");
+    const [selectedTab, setSelectedTab] = useState("study_records");
     
     const handleTabChange = (tab) => {
         setSelectedTab(tab);
-    };
-    
-    const handleBack = () => {
-        window.history.back();
     };
     
     const handleFollow = (id) => {
@@ -25,6 +22,10 @@ export default function Show(props) {
     };
     
     const isfollowed = () => props.user.followers.some(follower => follower.id === props.auth.user.id);
+
+    const handleBack = () => {
+        window.history.back();
+    };
     
     return (
         <AuthenticatedLayout
@@ -35,16 +36,17 @@ export default function Show(props) {
                     <div className="font-semibold text-xl text-gray-800">
                         ユーザー
                     </div>
-                    <Link
+                    <button
                         onClick={handleBack}
                         className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                     >
                         戻る
-                    </Link>
+                    </button>
                 </div>
             }
         >
             <Head title="User Show" />
+            
             <div>
                 <div className="sm:w-5/6 m-auto bg-white shadow-sm sm:rounded-lg">
                     <div className="flex items-center px-5 sm:p-10 py-10">

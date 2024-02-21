@@ -17,7 +17,9 @@ class CategoryController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
         
-        return Inertia::render('Category/Index', ['categories' => $categories]);
+        return Inertia::render('Category/Index', [
+            'categories' => $categories
+        ]);
     }
     
     public function create() 
@@ -40,7 +42,9 @@ class CategoryController extends Controller
     
     public function edit(Category $category) 
     {
-        return Inertia::render('Category/Edit', ['category' => $category]);
+        return Inertia::render('Category/Edit', [
+            'category' => $category
+        ]);
     }
     
     public function update(CategoryRequest $request, Category $category) 

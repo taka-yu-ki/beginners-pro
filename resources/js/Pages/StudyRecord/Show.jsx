@@ -1,46 +1,13 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useEffect } from "react";
-import { Head, Link, useForm, useRemember } from "@inertiajs/react";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
+import { Head, Link, useForm } from "@inertiajs/react";
 import LexicalEditor from "@/Components/LexicalEditor";
 import UserIcon from "@/Components/UserIcon";
 import TimeFormatter from "@/Components/TimeFormatter";
+import CommentForm from "@/Components/CommentForm";
+import CommentList from "@/Components/CommentList";
 
 export default function Show(props) {
-    const { data, setData, delete: destroy, post, processing, errors, reset } = useForm({
-        comment: "",
-    });
-    
-    const [textLength, setTextLength] = useRemember(0);
-    const maxTextLength = 50;
-    
-    useEffect(() => {
-        setTextLength(data.comment.length);
-    }, [data.comment]);
-    
-    const handleChange = (event) => {
-        setData(event.target.name, event.target.value);
-    };
-    
-    const submit = (e) => {
-        e.preventDefault();
-        post(route("study_record.comment.store",{ study_record: props.study_record.id }), {
-            onSuccess: () => reset(),
-            preserveScroll: true,
-        });
-    };
-    
-    const handleCommentDelete = (study_record, comment) => {
-        const shouldDelete = window.confirm("コメントを削除します。本当によろしいですか。");
-        
-        if (shouldDelete) {
-            destroy(route("study_record.comment.destroy", { study_record: study_record, comment: comment }), {
-                preserveScroll: true,
-            });
-        }
-    };
+    const { delete: destroy, post, processing } = useForm();
     
     const handleLike = (id) => {
         post(route("study_record.like", id));
@@ -73,16 +40,17 @@ export default function Show(props) {
                     <div className="font-semibold text-xl text-gray-800">
                         学習記録
                     </div>
-                    <Link
+                    <button
                         onClick={handleBack}
                         className="font-semibold text-gray-600 underline decoration-solid hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                     >
                         戻る
-                    </Link>
+                    </button>
                 </div>
             }
         >
             <Head title="Study_records Show" />
+            
             <div>
                 <div className="sm:w-5/6 m-auto">
                     <div className="px-2 py-5 sm:p-10 bg-white shadow-sm sm:rounded-md">
@@ -90,6 +58,7 @@ export default function Show(props) {
                             <div className="flex justify-between sm:justify-start items-center">
                                 <UserIcon 
                                     user={props.study_record.user} 
+                                    linkClassName="items-center"
                                     imgClassName="w-10 h-10"
                                     name={
                                         <div className="ml-3">{props.study_record.user.name}</div>
@@ -151,71 +120,14 @@ export default function Show(props) {
                 </div>
             </div>
             <div className="pb-10 sm:pb-0">
-                <div className="px-2 sm:px-0 sm:w-5/6 mb-5 m-auto">
-                    <form onSubmit={submit}>
-                        <div className="mt-4">
-                            <div className="flex justify-between">
-                                <InputLabel htmlFor="comment" value="コメント" />
-                                <div>{textLength} / {maxTextLength}</div>
-                            </div>
-                            <textarea
-                                id="comment"
-                                name="comment"
-                                value={data.comment}
-                                className="block w-full mt-1"
-                                onChange={handleChange}
-                                required
-                                maxlength={maxTextLength}
-                            />
-                                
-                            <InputError message={errors.comment} className="mt-2" />
-                        </div>
-                        <div className="flex justify-end mt-4">
-                            <PrimaryButton processing={processing}>
-                                コメントする
-                            </PrimaryButton>
-                        </div>
-                    </form>
-                </div>
-                {props.study_record.study_record_comments.length > 0  && (
-                    <div className="sm:w-5/6 max-h-[500px] px-2 sm:px-0 m-auto border-y border-slate-400 overflow-y-auto">
-                        {props.study_record.study_record_comments.map((study_record_comment) => { return (
-                            <div className="border-b border-slate-300 p-3 flex">
-                                <div className="flex-none">
-                                    <UserIcon user={study_record_comment.user} imgClassName="w-8 h-8"/>
-                                </div>
-                                <div className="flex-auto px-3 py-1">
-                                    <div className="flex justify-between">
-                                        <div className="flex">
-                                            <Link 
-                                                href={route("user.show", study_record_comment.user.id)}
-                                                className="mr-5"
-                                            >
-                                                {study_record_comment.user.name}
-                                            </Link>
-                                            <div className="hidden sm:block">{study_record_comment.created_at}</div>
-                                        </div>
-                                        { study_record_comment.user.id === props.auth.user.id && (
-                                            <button 
-                                                className="underline" 
-                                                onClick={() => handleCommentDelete(props.study_record.id, study_record_comment.id)}
-                                                process={processing} 
-                                            >
-                                                削除する
-                                            </button>
-                                        )}
-                                    </div>
-                                    <div className="py-5 whitespace-pre-wrap break-all">
-                                        {study_record_comment.comment}
-                                    </div>
-                                    <div className="flex sm:hidden justify-end">
-                                        {study_record_comment.created_at}
-                                    </div>
-                                </div>
-                            </div>
-                        ); })}
-                    </div>
-                )}
+                <CommentForm
+                    study_record_id={props.study_record.id}
+                />
+                <CommentList 
+                    comments={props.study_record.study_record_comments}
+                    auth={props.auth}
+                    study_record_id={props.study_record.id}
+                />
             </div>
             <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 max-w-screen-2xl">
                 <div className="flex justify-between p-5 m-auto bg-slate-50 border-t">

@@ -16,7 +16,7 @@ class StudyRecordComment extends Model
     protected $fillable = [
         'user_id',
         'study_record_id',
-        'comment',
+        'body',
     ];
     
     public function user() {

@@ -16,7 +16,7 @@ class StudyRecordCommentController extends Controller
         $comment = StudyRecordComment::create([
             'user_id' => auth()->id(),
             'study_record_id' => $study_record->id,
-            'comment' => $data['comment'],
+            'body' => $data['body'],
         ]);
 
         return redirect()->route('study_record.show', $study_record);

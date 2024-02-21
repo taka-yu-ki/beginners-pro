@@ -4,6 +4,7 @@ import TimeFormatter from "@/Components/TimeFormatter";
 import Pagination from "@/Components/Pagination";
 
 export default function BarChartComponent({bar_chart_week, categories}) {
+    // 初期値
     const format_this_week = () => {
         const default_data = [];
     
@@ -15,13 +16,14 @@ export default function BarChartComponent({bar_chart_week, categories}) {
     
         return default_data;
     };
-  
+    
+    // データを配列に格納
     const data_array = Object.values(bar_chart_week.data);
 
     return (
         <div>
             <div className="h-60 p-2 sm:h-96 sm:p-5 bg-white sm:rounded-md">
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%"> 
                     <BarChart
                         data={data_array[0] || format_this_week()}
                         margin={{
@@ -34,7 +36,6 @@ export default function BarChartComponent({bar_chart_week, categories}) {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis 
                             dataKey="date"
-                            angle={45}
                             interval={0}
                             tick={(props) => (
                                 <text
@@ -60,8 +61,8 @@ export default function BarChartComponent({bar_chart_week, categories}) {
                                     <TimeFormatter time={payload.value} />
                                 </text>
                             )}                
-                        />
-                        <Tooltip />
+                        /> 
+                        <Tooltip /> 
                         <Legend verticalAlign="top" height={36} wrapperStyle={{ whiteSpace: "nowrap", overflowX: "scroll" }} />
                         {categories && categories.map((category) => { return (
                             <Bar dataKey={category.name} stackId="a" fill={category.color} />

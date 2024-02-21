@@ -35,28 +35,29 @@ export default function IndexFollowings(props) {
             }
         >
             <Head title="User Follower" />
+            
             <div>
                 <div className="sm:w-5/6 px-2 py-10 m-auto bg-gray-200 sm:rounded-md">
                     <div className="text-center">一覧</div>
                     <div className="border-y border-gray-500 overflow-y-auto max-h-[500px]">
                         {props.followings.map((user) => (
-                            <div className="flex relative p-5 items-center bg-white hover:bg-slate-50">
+                            <div className="flex relative p-5 bg-white hover:bg-slate-50">
                                 <Link 
                                     href={route("user.show", user.id)}
                                     key={user.id} 
                                     className="absolute inset-0"
                                 >
                                 </Link>
-                                <UserIcon user={user} linkClassName="mr-3" imgClassName="w-12 h-12" />
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-center">
-                                        <div className="text-center">{user.name}</div>
+                                <UserIcon user={user} linkClassName="mr-3 items-start" imgClassName="w-12 h-12" />
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex justify-between items-center h-12">
+                                        <div className="text-lg truncate">{user.name}</div>
                                         {user.id !== props.auth.user.id && (
                                             (isfollowed(user.id) ? ( 
                                                 <PrimaryButton 
                                                     onClick={() => handleUnfollow(user.id)} 
                                                     processing={processing} 
-                                                    className="z-10"
+                                                    className="z-10 shrink-0 ml-2"
                                                 >
                                                     フォローを外す
                                                 </PrimaryButton>
@@ -64,7 +65,7 @@ export default function IndexFollowings(props) {
                                                 <PrimaryButton 
                                                     onClick={() => handleFollow(user.id)} 
                                                     processing={processing} 
-                                                    className="z-10"
+                                                    className="z-10 shrink-0 ml-2"
                                                 >
                                                     フォローする
                                                 </PrimaryButton>

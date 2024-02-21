@@ -27,7 +27,7 @@ export default function Pagination({ paginator }) {
     } = paginator;
 
     return (
-        <div className="grid grid-flow-col justify-center gap-2 m-auto py-4 items-center text-gray-500">
+        <div className="grid grid-flow-col justify-center gap-0 sm:gap-4 m-auto py-4 items-center text-gray-500">
             <Link
                 href={first_page_url}
                 preserveScroll

@@ -14,7 +14,11 @@ class FollowController extends Controller
         $my_following_ids = auth()->user()->followings()->pluck('following_user_id');
         $user_id = $user->id;
         
-        return Inertia::render('User/IndexFollowings', ['followings' => $followings, 'my_following_ids' => $my_following_ids, 'user_id' => $user_id]);
+        return Inertia::render('User/IndexFollowings', [
+            'followings' => $followings, 
+            'my_following_ids' => $my_following_ids, 
+            'user_id' => $user_id
+        ]);
     }
     
     public function indexFollowers(User $user) 
@@ -23,7 +27,11 @@ class FollowController extends Controller
         $my_following_ids = auth()->user()->followings()->pluck('following_user_id');
         $user_id = $user->id;
         
-        return Inertia::render('User/IndexFollowers', ['followers' => $followers, 'my_following_ids' => $my_following_ids, 'user_id' => $user_id]);
+        return Inertia::render('User/IndexFollowers', [
+            'followers' => $followers, 
+            'my_following_ids' => $my_following_ids, 
+            'user_id' => $user_id
+        ]);
     }
     
     public function store(User $user) 

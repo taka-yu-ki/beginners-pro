@@ -86,10 +86,12 @@ class StudyRecordController extends Controller
             }
         }
         
+        // 週ごとにグループ化する
         $data_objects = collect($data_objects)->groupBy(function ($item) {
             return Carbon::parse($item['date'])->startOfWeek()->format('Y-m-d');
         });
         
+        // 週ごとのデータをカスタムページに格納する
         $per_page = 1;
         $current_page = request()->input('page', $data_objects->count());
         $current_items = $data_objects->skip(($current_page - 1) * $per_page)->take($per_page);
@@ -130,7 +132,9 @@ class StudyRecordController extends Controller
     public function create() {
         $categories = Category::where('user_id', auth()->id())->get();
 
-        return Inertia::render('StudyRecord/Create', ['categories' => $categories]);
+        return Inertia::render('StudyRecord/Create', [
+            'categories' => $categories
+        ]);
     }
 
     public function store(StudyRecordRequest $request) {
@@ -155,14 +159,20 @@ class StudyRecordController extends Controller
         
         $like_count = $study_record->study_record_likes()->count();
 
-        return Inertia::render('StudyRecord/Show', ['study_record' => $study_record, 'like_count' => $like_count]);
+        return Inertia::render('StudyRecord/Show', [
+            'study_record' => $study_record, 
+            'like_count' => $like_count
+        ]);
     }
 
     public function edit(StudyRecord $study_record) {
         $study_record->load('user', 'category');
         $categories = Category::where('user_id', auth()->id())->get();
 
-        return Inertia::render('StudyRecord/Edit', ['study_record' => $study_record, 'categories' => $categories]);
+        return Inertia::render('StudyRecord/Edit', [
+            'study_record' => $study_record, 
+            'categories' => $categories
+        ]);
     }
 
     public function update(StudyRecordRequest $request, StudyRecord $study_record) {
@@ -187,14 +197,14 @@ class StudyRecordController extends Controller
     
     public function community() {
         
-        // 全ユーザーの投稿
+        // --- 全ユーザーの投稿 ---
         $study_records = StudyRecord::query()
             ->with('user', 'category')
             ->orderBy('date', 'desc')
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        // 学習時間
+        // --- 学習時間 ---
         $start_of_this_week = Carbon::now()->startOfWeek();
         
         $today_time = StudyRecord::where('user_id', auth()->id())->whereDate('date', today())->sum('time');
@@ -202,7 +212,7 @@ class StudyRecordController extends Controller
         $month_time = StudyRecord::where('user_id', auth()->id())->whereMonth('date', now()->month)->sum('time');
         $total_time = StudyRecord::where('user_id', auth()->id())->sum('time');
         
-        // 棒グラフ用データ
+        // --- 棒グラフ用データ ---
         $bar_chart_datas = StudyRecord::with('category')->where('user_id', auth()->id())->select(['id', 'category_id', 'date', 'time'])->get();
         $oldest_data = StudyRecord::where('user_id', auth()->id())->orderBy('date', 'asc')->first();
         
@@ -253,7 +263,7 @@ class StudyRecordController extends Controller
         
         $categories = Category::where('user_id', auth()->id())->get();
         
-        // 円グラフ用データ
+        // --- 円グラフ用データ ---
         $pie_chart_data = DB::table('users')
             ->where('users.id', auth()->id())
             ->join('study_records', 'users.id', '=', 'study_records.user_id')

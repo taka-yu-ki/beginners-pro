@@ -3,6 +3,7 @@ import TimeFormatter from "@/Components/TimeFormatter";
 
 export default function PieChartComponent({pie_chart_data}) {
     
+    // 各データのパーセントを中央に配置する処理
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -35,8 +36,8 @@ export default function PieChartComponent({pie_chart_data}) {
                                 startAngle={90}
                                 endAngle={-270}              
                             >
-                                {pie_chart_data.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                {pie_chart_data.map((data, index) => (
+                                    <Cell key={`cell-${index}`} fill={data.color} />
                                 ))}
                             </Pie>
                         </PieChart>

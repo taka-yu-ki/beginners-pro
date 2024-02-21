@@ -29,6 +29,7 @@ export default function Index(props) {
             }
         >
             <Head title="Category Index" />
+            
             <div>
                 <div className="sm:w-5/6 px-2 py-5 sm:py-10 m-auto bg-gray-200 sm:rounded-md">
                     <div className="text-center">一覧</div>
@@ -36,11 +37,11 @@ export default function Index(props) {
                         {props.categories.map((category) => { return (
                             <div 
                                 key={category.id}
-                                className="sm:flex sm:justify-between px-5 py-5 sm:py-10 border border-gray-300"
+                                className="md:flex md:justify-between px-5 py-5 sm:py-10 border border-gray-300"
                                 style={{ backgroundColor: category.color }}
                             >
                                 <div className="sm:flex-auto text-center text-2xl text-gray-700 font-semibold">{category.name}</div>
-                                <div className="flex justify-end sm:block pt-2 sm:pt-0">
+                                <div className="flex justify-end md:block shrink-0 pt-2 sm:pt-0">
                                     <Link href={route("category.edit", category.id)}>
                                         <button className="px-4 py-2 ml-5 bg-green-500 text-white rounded-lg text-xs font-semibold hover:bg-green-600">
                                             編集

@@ -1,5 +1,4 @@
-import { useCallback, useEffect } from "react";
-import { useRemember } from "@inertiajs/react";
+import { useCallback, useEffect, useState } from "react";
 import { BsTextParagraph } from "react-icons/bs";
 import { LuHeading1, LuHeading2, LuHeading3 } from "react-icons/lu";
 import { MdFormatQuote, MdFormatListNumbered, MdFormatListBulleted, MdCode } from "react-icons/md";
@@ -12,6 +11,7 @@ import { $getNearestNodeOfType } from "@lexical/utils";
 import { $createCodeNode, CODE_LANGUAGE_FRIENDLY_NAME_MAP, $isCodeNode } from "@lexical/code";
 import { CODE_LANGUAGE_COMMAND } from "@/LexicalPlugins/CodeHighlightPlugin";
 
+// ツールタイプ
 const SupportedBlockType = {
   paragraph: "Paragraph",
   h1: "Heading 1",
@@ -23,6 +23,7 @@ const SupportedBlockType = {
   code: "Code Block",
 };
 
+// プログラミング言語の取得
 const CodeLanguagesOptions = Object.entries(CODE_LANGUAGE_FRIENDLY_NAME_MAP).map(
   ([value, label]) => ( { value, label })
 );
@@ -30,11 +31,12 @@ const CodeLanguagesOptions = Object.entries(CODE_LANGUAGE_FRIENDLY_NAME_MAP).map
 const button_style = "inline-flex items-center justify-center w-10 h-10 text-2xl rounded-md text-gray-400 hover:bg-gray-200 aria-checked:text-gray-600";
 
 export default function ToolbarPlugin() {
-  const [blockType, setBlockType] = useRemember("paragraph");
-  const [codeLanguage, setCodeLanguage] = useRemember("");
+  const [blockType, setBlockType] = useState("paragraph");
+  const [codeLanguage, setCodeLanguage] = useState("");
   
   const [editor] = useLexicalComposerContext();
   
+  // 標準ボタンの処理
   const formatParagraph = useCallback(() => {
     if (blockType !== "paragraph") {
       editor.update(() => {
@@ -46,6 +48,7 @@ export default function ToolbarPlugin() {
     }
   }, [blockType, editor]);
   
+  // ヘッダーボタンの処理
   const formatHeading = useCallback(
     (type) => {
       if (blockType !== type) {
@@ -60,6 +63,7 @@ export default function ToolbarPlugin() {
     [blockType, editor],
   );
   
+  // 引用ボタンの処理
   const formatQuote = useCallback(() => {
     if (blockType !== "quote") {
       editor.update(() => {
@@ -71,18 +75,21 @@ export default function ToolbarPlugin() {
     }
   }, [blockType, editor]);
   
+  // 番号リストボタンの処理
   const formatNumberedList = useCallback(() => {
     if (blockType !== "number") {
       editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
     }
   }, [blockType, editor]);
   
+  // リストボタンの処理
   const formatBulletedList = useCallback(() => {
     if (blockType !== "bullet") {
       editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
     }
   }, [blockType, editor]);
   
+  // コードボタンの処理
   const formatCode = useCallback(() => {
     if (blockType !== "code") {
       editor.update(() => {
@@ -94,6 +101,7 @@ export default function ToolbarPlugin() {
     }
   }, [blockType, editor]);
   
+  // 対応するボタンの切り替え
   useEffect(() => {
     return editor.registerUpdateListener(({ editorState }) => {
       editorState.read(() => {
@@ -133,7 +141,7 @@ export default function ToolbarPlugin() {
   }, [editor]);
 
   return (
-    <div className="flex space-x-2 m-1">
+    <div className="flex space-x-2 m-1 overflow-x-scroll">
       <button
         type="button"
         role="checkbox"
@@ -229,9 +237,9 @@ export default function ToolbarPlugin() {
             onChange={event =>
               editor.dispatchCommand(CODE_LANGUAGE_COMMAND, event.target.value)
             }
-            className="py-2 pl-2 pr-8 rounded-md border border-gray-300  cursor-pointer"
+            className="py-2 pl-2 pr-8 rounded-md border border-gray-300 cursor-pointer"
           >
-            <option value="">select...</option>
+            <option value="">選択する...</option>
             {CodeLanguagesOptions.map(item => (
               <option key={item.value} value={item.value}>
                 {item.label}

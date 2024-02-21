@@ -16,7 +16,7 @@ class NoteRecordComment extends Model
     protected $fillable = [
         'user_id',
         'note_record_id',
-        'comment',
+        'body',
     ];
     
     public function user() {
