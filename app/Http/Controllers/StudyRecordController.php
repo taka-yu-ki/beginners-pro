@@ -60,7 +60,7 @@ class StudyRecordController extends Controller
         
         if ($oldest_data) {
             $target_date = Carbon::parse($oldest_data->date)->startOfWeek();
-            $this_weekend = Carbon::now()->endOfWeek();;
+            $this_weekend = Carbon::now()->endOfWeek();
             
             // 最初の投稿から今週末まで投稿を$data_objectsの日付が一致する配列に入れる
             while ($target_date <= $this_weekend) {
