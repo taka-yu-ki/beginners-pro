@@ -1,66 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Begginers-pro
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<img width="1440" alt="ホーム画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/158c7919-758d-4ba7-851d-2e048e8bb3de">
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 概要
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+プログラミング初学者向けの学習時間記録アプリケーション。  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**目的：** 自身の学習進捗を可視化し、学習の方針を見直す手助けにする  
+**制作期間：** 2023年11月〜2024年1月
 
-## Learning Laravel
+## 制作の動機
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+プログラミング初学者にとって大事とされる言語の理解度。現代において、プログラミングは必須のスキルになりつつも、トレンドの変化やバージョンの更新などによって学習手順が不透明であり、学習の難易度が高まっている。  
+特定のプログラミング言語の理解度は非常に重要であるが、どの言語のどのバージョンを学ぶのか、学習するにつれて学ぶべき言語が増えるのか、その全ての選択肢を把握することは容易ではない。また、並行した学習においてその進捗や内容を把握する手段の不足、それに伴うモチベーションの低下などが生じる傾向があった。  
+こうした課題を解決するために、自身の学習を効果的に管理でき、同時にモチベーションを維持できるアプリケーションの制作に至った。
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 技術スタック
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Laravel 9.52.16
+- React 18.2.0
+- Inertia 0.6.11
+- Heroku
+- Heroku PostgreSQL 15.5
+- GitHub
+- Cloudinary
 
-## Laravel Sponsors
+## アーキテクチャ
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## 機能
 
-### Premium Partners
+### 主な機能
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- 学習時間や学習内容のCRUD機能
+<img width="1440" alt="学習記録一覧画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/cf6be26f-ab5e-4d18-8c37-886db588e903">  
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- 学習時間をグラフとして表示する機能
+<img width="1440" alt="グラフ機能画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/d6e34425-9ec9-4ffc-8800-59353c9274b5">
+    
+---
 
-## Code of Conduct
+- 学習内容をより具体的に書くリッチテキストエディタ機能
+<img width="1440" alt="リッチテキストエディタ画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/3539fa07-4be0-4d1d-8acb-a6cdb39d25e7">
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+- カテゴリー（言語）の追加・編集・削除機能
+<img width="1440" alt="カテゴリー一覧画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/43b79e57-89a8-4b70-b770-d231ac2961e4">
+    
+---  
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- プロフィール編集機能
+<img width="1440" alt="プロフィール情報画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/9139de40-1d17-47dd-8959-c66f74f993f8">
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 付属する機能
+- いいね機能
+<img width="1198" alt="投稿いいね画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/d30f4bd2-785e-4c63-8658-8920e558d7b0">
+
+---
+
+- コメント機能
+<img width="1440" alt="コメント画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/1e60b4b3-515d-4f41-ab1c-88d77419b3c0">
+
+---
+
+- フォロー機能
+<img width="1440" alt="フォロー完了画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/61120a4c-7266-463f-9fe0-ad934d7e4051">
+
+---
+
+- 認証機能（Laravel Breeze）
+<img width="1440" alt="登録画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/d23cb94c-848e-44ca-a58e-eecc5a009e9c">
+
+---
+
+- ユーザーアイコン追加・削除機能
+<img width="607" alt="プロフィール画像登録画面" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/38046d2f-26b0-48d5-945e-dfbf66b6deda">
+
+---
+
+- グラフデータのページネーション機能
+<img width="591" alt="グラフ機能画面のページネーション" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/f78d5c0d-8625-47c4-bd04-23e1311a24d6">
+
+---
+
+- カスタムエラーメッセージ機能
+  
+↓ バリデーションエラー
+  
+<img width="1203" alt="エラーメッセージ（バリデーションメッセージ）" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/b7320177-b3c6-4e84-86af-38cf5d8263b9">
+  
+↓ 例外処理
+  
+<img width="1440" alt="エラーメッセージ（flash）" src="https://github.com/taka-yu-ki/beginners-pro/assets/127290611/a6eca931-eb77-4980-a0ef-f5e0617f09ca">
+
+---
+
+## 工夫した点
+
+- グラフ機能用のデータ作成
+  
+    Reactのrechartsライブラリを使用し、グラフ機能へ送信するデータの加工を工夫した。週の学習時間の表示（棒グラフ）、目標時間に対する進行率の表示（棒グラフ）、カテゴリーにおける学習時間の割合（円グラフ）の3つのグラフを作成し、Laravelのコントローラーでそれぞれのデータを加工した。特に週の学習時間用のデータは、日付ごとのオブジェクトを用意し、各日付にデータが存在したらオブジェクトにデータを入れ、それを週ごとにページネーションするように加工した。
+  
+- リッチテキストエディタの初期値
+  
+    Reactのlexicalライブラリを使用し、リッチテキストエディタ機能の初期値を工夫した。データの統一性と可読性を考慮し、JSON型でデータを受け渡す方法を選択した。ただし、テキストが入力されていない状態でもJSON型のデータが存在しており、これに対処するためにisEmptyを用いて空状態をbooleanで取得し、テキストが入力されていない場合には空文字を返すようにした。
+
+- プロフィールの画像保存方法
+  
+    Laravel Breezeでのプロフィール機能にユーザーアイコンの追加・削除機能を実装した。その際、PUTCHメソッドではうまく動作せず、inertiaのドキュメントを調べたところ、「PUT、PATCH、またはDELETEのHTTPメソッドを使用している場合に、multipart/form-dataリクエストを使ったファイルのアップロードがネイティブにサポートされていないことがあります。」と書いてあったため、POSTメソッドに_method属性としてPATCHを指定することでファイルのアップロードを可能にした。
+
+- エラーメッセージのカスタム
+  
+    標準のエラーメッセージは英語表記であるため、日本語表記に変更し、ステータスコードによるエラーページやエラーメッセージをカスタムした。
+
+- レスポンシブデザイン
+  
+    ブラウザのサイズが320px~1536pxに対応するようにcssを設定した。
+
+## 今後追加したい機能
+
+- 無限スクロール機能
+- カテゴリーの共通化（タグ化）
+- セキュリティ対策
+- アカウント作成時のメール認証機能
+- 投稿の検索機能
+- ダイレクトメッセージ機能
+
